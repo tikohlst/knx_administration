@@ -1,3 +1,15 @@
+<%= link_to 'Users', {controller: :users, action: :index } %>
+|
+<%= link_to 'Administrates' , administrates_path %>
+|
+<%= link_to 'Rooms' , rooms_path %>
+|
+<%= link_to 'Widgets' , widgets_path %>
+|
+<%= link_to 'Rules' , rules_path %>
+|
+<%= link_to 'KNXModules' , knx_modules_path %>
+<br/>
 <p id="notice"><%= notice %></p>
 
 <h1>Widgets</h1>
@@ -5,6 +17,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Name</th>
       <th>Active</th>
       <th>Knx module</th>
@@ -16,6 +29,7 @@
   <tbody>
     <% @widgets.each do |widget| %>
       <tr>
+        <td><%= widget.id %></td>
         <td><%= widget.name %></td>
         <td><%= widget.active %></td>
         <td><%= widget.knx_module_id %></td>

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get 'users/index'
+  get 'users/:id' => 'users#show'
+  devise_for :users, :path_prefix => 'd'
+  resources :users, :only =>[:show]
+
   root to: 'widgets#show'
   resources :rules
   resources :widgets
