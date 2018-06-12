@@ -1,0 +1,22 @@
+<%= form_with(model: knx_module, local: true) do |form| %>
+  <% if knx_module.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(knx_module.errors.count, "error") %> prohibited this knx_module from being saved:</h2>
+
+      <ul>
+      <% knx_module.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

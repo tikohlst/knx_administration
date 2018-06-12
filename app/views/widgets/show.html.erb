@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @widget.name %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @widget.active %>
+</p>
+
+<p>
+  <strong>Knx module:</strong>
+  <%= @widget.knx_module_id %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @widget.room_id %>
+</p>
+
+<%= link_to 'Edit', edit_widget_path(@widget) %> |
+<%= link_to 'Back', widgets_path %>

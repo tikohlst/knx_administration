@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Knx Modules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @knx_modules.each do |knx_module| %>
+      <tr>
+        <td><%= knx_module.name %></td>
+        <td><%= link_to 'Show', knx_module %></td>
+        <td><%= link_to 'Edit', edit_knx_module_path(knx_module) %></td>
+        <td><%= link_to 'Destroy', knx_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Knx Module', new_knx_module_path %>

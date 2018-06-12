@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @administrate.user_id %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @administrate.room_id %>
+</p>
+
+<%= link_to 'Edit', edit_administrate_path(@administrate) %> |
+<%= link_to 'Back', administrates_path %>
