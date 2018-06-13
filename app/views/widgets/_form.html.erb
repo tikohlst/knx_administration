@@ -23,15 +23,55 @@
 
   <div class="field">
     <%= form.label :knx_module_id %>
-    <%= form.number_field :knx_module_id %>
+    <%= select("widget", "knx_module_id", KnxModule.all.collect {|p| [ p.name, p.id ] }) %>
   </div>
 
   <div class="field">
     <%= form.label :room_id %>
-    <%= form.number_field :room_id %>
+    <%= select("widget", "room_id", Room.all.collect {|p| [ p.name, p.id ] }) %>
   </div>
+  <br/>
+  <h3 class="card-header">Rules</h3>
+  <%= form.fields_for :rules do |fields| %>
+    <div class="field">
+      <%= fields.label :name %>
+      <%= fields.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= fields.label :status %>
+      <%= fields.check_box :status %>
+    </div>
+
+    <div class="field">
+      <%= fields.label :start_value %>
+      <%= fields.number_field :start_value %>
+    </div>
+
+    <div class="field">
+      <%= fields.label :end_value %>
+      <%= fields.number_field :end_value %>
+    </div>
+
+    <div class="field">
+      <%= fields.label :steps %>
+      <%= fields.text_field :steps %>
+    </div>
+
+    <div class="field">
+      <%= fields.label :widget_id %>
+      <%= fields.number_field :widget_id %>
+    </div>
+    <br>
+  <% end %>
+  <div id="div_id"></div>
+  <%= link_to "New Rule", new_rule_path, id: :new_widget_rules, remote: :true, method: :get %>
 
   <div class="actions">
     <%= form.submit %>
+  </div>
+
+  <div id="data">
+    <%= widget.rules.count %>
   </div>
 <% end %>

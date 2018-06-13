@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   devise_for :users, :path_prefix => 'd'
   resources :users, :only =>[:show]
 
+  # Route für Widget Controller-Methode rules
+  get 'widgets/:id/rules' => 'widgets#rules'
+  get 'widgets/rules' => 'widgets#rules'
+
   root to: 'widgets#show'
   resources :rules
   resources :widgets

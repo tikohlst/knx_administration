@@ -12,9 +12,17 @@ class WidgetsController < ApplicationController
   def show
   end
 
+  # GET /widgets/1/rules
+  def rules
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # GET /widgets/new
   def new
     @widget = Widget.new
+    @widget.rules.build
   end
 
   # GET /widgets/1/edit
@@ -69,6 +77,6 @@ class WidgetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def widget_params
-      params.require(:widget).permit(:name, :active, :knx_module_id, :room_id)
+      params.require(:widget).permit(:name, :active, :knx_module_id, :room_id, rules_attributes: [:id, :name, :status, :start_value, :end_value, :steps, :widget_id])
     end
 end

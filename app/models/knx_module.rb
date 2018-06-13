@@ -1,3 +1,3 @@
 class KnxModule < ApplicationRecord
-  belongs_to :widget, dependent: :destroy
+  has_one :widget, dependent: :destroy
 end
