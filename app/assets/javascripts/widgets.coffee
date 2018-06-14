@@ -30,7 +30,7 @@ $(document).ready ->
           $('#div_id').append $('<div></div>').load('rules #fifth')
           document.getElementById('data').innerHTML = 5
       counter++
-      # Es dürfen nicht mehr als fünf Öffnungszeiten erstellt werden
+      # Es dürfen nicht mehr als fünf Regeln erstellt werden
       if counter >= 5
         $('#new_martial_art_opening_times').hide()
       return
