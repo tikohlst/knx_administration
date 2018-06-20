@@ -31,6 +31,14 @@
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
+  <div class="field">
+    <div><b>Rooms</b></div>
+    <%= f.collection_check_boxes(:room_ids, Room.all, :id, :name) do |m| %>
+      <div class=""><%= m.check_box %></div>
+      <div><%= m.label %></div>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
