@@ -5,5 +5,14 @@
   <%= @room.name %>
 </p>
 
+<p>
+  <strong>Widgets:</strong><br/>
+  <% @room.widgets.each do |widget| %>
+    ID: <%= widget.id %><br/>
+    Name: <%= widget.name %><br/>
+    Active: <%= widget.active %><br/>
+    KNX Module ID: <%= widget.knx_module_id %><br/>
+  <% end %>
+</p>
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>
