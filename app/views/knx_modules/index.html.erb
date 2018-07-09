@@ -1,5 +1,3 @@
-<%= link_to 'Users', {controller: :users, action: :index } %>
-|
 <%= link_to 'Administrates' , administrates_path %>
 |
 <%= link_to 'Rooms' , rooms_path %>
@@ -30,7 +28,9 @@
         <td><%= knx_module.name %></td>
         <td><%= link_to 'Show', knx_module %></td>
         <td><%= link_to 'Edit', edit_knx_module_path(knx_module) %></td>
-        <td><%= link_to 'Destroy', knx_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if can? :destroy, knx_module %>
+          <td><%= link_to 'Destroy', knx_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -15,7 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
   # Never trust parameters from the scary internet, only allow the white list through.
   def account_update_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :current_password, room_ids:[])
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :current_password, room_ids:[], role_ids:[])
   end
 
 end
