@@ -26,8 +26,10 @@
       <tr>
         <td><%= room.id %></td>
         <td><%= room.name %></td>
-        <td><%= link_to 'Show', room %></td>
-        <% if can? :edit, room %>
+        <% if can? :read, room %>
+          <td><%= link_to 'Show', room %></td>
+        <% end %>
+        <% if can? :update, room %>
           <td><%= link_to 'Edit', edit_room_path(room) %></td>
         <% end %>
         <% if can? :destroy, room %>
@@ -40,4 +42,6 @@
 
 <br>
 
-<%= link_to 'New Room', new_room_path %>
+<% if can? :create, @rooms %>
+  <%= link_to 'New Room', new_room_path %>
+<% end %>

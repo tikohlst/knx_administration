@@ -14,5 +14,8 @@
     KNX Module ID: <%= widget.knx_module_id %><br/>
   <% end %>
 </p>
-<%= link_to 'Edit', edit_room_path(@room) %> |
+
+<% if can? :update, @room %>
+  <%= link_to 'Edit', edit_room_path(@room) %> |
+<% end %>
 <%= link_to 'Back', rooms_path %>

@@ -1,4 +1,6 @@
 class KnxModulesController < ApplicationController
+  # CanCan authorizes the resource automatically for every action
+  load_and_authorize_resource
   before_action :set_knx_module, only: [:show, :edit, :update, :destroy]
 
   # GET /knx_modules

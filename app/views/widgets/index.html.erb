@@ -32,8 +32,12 @@
         <td><%= widget.active %></td>
         <td><%= widget.knx_module_id %></td>
         <td><%= widget.room_id %></td>
-        <td><%= link_to 'Show', widget %></td>
-        <td><%= link_to 'Edit', edit_widget_path(widget) %></td>
+        <% if can? :read, widget %>
+          <td><%= link_to 'Show', widget %></td>
+        <% end %>
+        <% if can? :update, widget %>
+          <td><%= link_to 'Edit', edit_widget_path(widget) %></td>
+        <% end %>
         <% if can? :destroy, widget %>
           <td><%= link_to 'Destroy', widget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
@@ -44,4 +48,6 @@
 
 <br>
 
-<%= link_to 'New Widget', new_widget_path %>
+<% if can? :create, @widgets %>
+  <%= link_to 'New Widget', new_widget_path %>
+<% end %>

@@ -5,5 +5,7 @@
   <%= @knx_module.name %>
 </p>
 
-<%= link_to 'Edit', edit_knx_module_path(@knx_module) %> |
+<% if can? :update, @knx_module %>
+  <%= link_to 'Edit', edit_knx_module_path(@knx_module) %> |
+<% end %>
 <%= link_to 'Back', knx_modules_path %>

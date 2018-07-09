@@ -28,8 +28,12 @@
         <td><%= administrate.id %></td>
         <td><%= administrate.user_id %></td>
         <td><%= administrate.room_id %></td>
-        <td><%= link_to 'Show', administrate %></td>
-        <td><%= link_to 'Edit', edit_administrate_path(administrate) %></td>
+        <% if can? :read, administrate %>
+          <td><%= link_to 'Show', administrate %></td>
+        <% end %>
+        <% if can? :update, administrate %>
+          <td><%= link_to 'Edit', edit_administrate_path(administrate) %></td>
+        <% end %>
         <% if can? :destroy, administrate %>
           <td><%= link_to 'Destroy', administrate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
@@ -40,4 +44,6 @@
 
 <br>
 
-<%= link_to 'New Administrate', new_administrate_path %>
+<% if can? :create, @administrates %>
+  <%= link_to 'New Administrate', new_administrate_path %>
+<% end %>

@@ -36,8 +36,12 @@
         <td><%= rule.end_value %></td>
         <td><%= rule.steps %></td>
         <td><%= rule.widget_id %></td>
-        <td><%= link_to 'Show', rule %></td>
-        <td><%= link_to 'Edit', edit_rule_path(rule) %></td>
+        <% if can? :read, rule %>
+          <td><%= link_to 'Show', rule %></td>
+        <% end %>
+        <% if can? :update, rule %>
+          <td><%= link_to 'Edit', edit_rule_path(rule) %></td>
+        <% end %>
         <% if can? :destroy, rule %>
           <td><%= link_to 'Destroy', rule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
@@ -48,4 +52,6 @@
 
 <br>
 
-<%= link_to 'New Rule', new_rule_path %>
+<% if can? :create, @rules %>
+  <%= link_to 'New Rule', new_rule_path %>
+<% end %>

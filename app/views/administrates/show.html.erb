@@ -10,5 +10,7 @@
   <%= @administrate.room_id %>
 </p>
 
-<%= link_to 'Edit', edit_administrate_path(@administrate) %> |
+<% if can? :update, @administrate %>
+  <%= link_to 'Edit', edit_administrate_path(@administrate) %> |
+<% end %>
 <%= link_to 'Back', administrates_path %>

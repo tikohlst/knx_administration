@@ -20,5 +20,7 @@
   <%= @widget.room_id %>
 </p>
 
-<%= link_to 'Edit', edit_widget_path(@widget) %> |
+<% if can? :update, @widget %>
+  <%= link_to 'Edit', edit_widget_path(@widget) %> |
+<% end %>
 <%= link_to 'Back', widgets_path %>
