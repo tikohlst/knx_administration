@@ -1,6 +1,21 @@
 <h2>Edit <%= @user.email.to_s.humanize %></h2>
 
 <%= form_for(@user, html: { method: :put }) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="row margin">
+      <div class="col">
+        <div class="card alert alert-danger">
+          <div id="error_explanation" class="top10">
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :email %><br />

@@ -18,16 +18,18 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    params[:user].delete(:password) if params[:user][:password].blank?
-    params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
+    respond_to do |format|
+      @user = User.find(params[:id])
+      params[:user].delete(:password) if params[:user][:password].blank?
+      params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
 
-    if @user.update_attributes(user_params)
-    #if update_resource(@user, user_params)
-      flash[:notice] = "Successfully updated User."
-      redirect_to root_path
-    else
-      render :action => 'edit'
+      if @user.update(user_params)
+        format.html { redirect_to users_url, notice: 'User was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 
