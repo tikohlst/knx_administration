@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: "registrations"}
-  get 'users/index'
-  get 'users/:id' => 'users#show'
+  devise_for :users, path_prefix: 'my'
+  resources :users
 
   # Route für Widget Controller-Methode rules
   get 'widgets/:id/rules' => 'widgets#rules'

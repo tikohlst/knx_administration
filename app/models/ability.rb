@@ -30,15 +30,12 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
     if user.has_role? :admin
-      can :create, :all
-      can :read, :all
-      can :update, :all
-      can :destroy, :all
+      can :manage, :all
     elsif user.has_role? :editor
-      can :read, :all
-      can :update, :all
+      can :read, [Room, Widget, Rule]
+      can :update, [Room, Widget, Rule]
     elsif user.has_role? :observer
-      can :read, :all
+      can :read, [Room, Widget, Rule]
     else
       can :read, :none
     end

@@ -20,12 +20,21 @@
     <p class="navbar-text pull-right">
       <% if user_signed_in? %>
         Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Settings', {controller: :users, action: :index } %> |
+        Role: <strong><%=current_user.roles.pluck(:name).join(", ")%></strong>
+        <br/><br/>
+        <% if current_user.has_role? :admin %>
+          <%= link_to 'Administrates' , administrates_path %> |
+        <% end %>
+        <%= link_to 'Rooms' , rooms_path %> |
+        <%= link_to 'Widgets' , widgets_path %> |
+        <%= link_to 'Rules' , rules_path %> |
+        <% if current_user.has_role? :admin %>
+          <%= link_to 'KNXModules' , knx_modules_path %> |
+          <%= link_to 'Role Management', users_url %> |
+        <% end %>
+        <%= link_to 'Settings', edit_user_registration_path %> |
         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
       <% else %>
-        <% if User.count == 0 %>
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <% end %>
         <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
       <% end %>
     </p>
