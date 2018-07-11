@@ -20,13 +20,13 @@ class User < ApplicationRecord
   validate :atleast_one_role
 
   def atleast_one_role
-    errors.add(:base, "The user must have one role.") if self.roles.count < 1
+    errors.add(:base, "The user must have one role.") if self.roles.count < 1 && ENV['SEEDS'].blank?
   end
 
   def atleast_one_admin
     results = ActiveRecord::Base.connection.execute("SELECT user_id FROM users_roles
                                                      WHERE role_id=1 LIMIT 1;")
-    errors.add(:base, "There must be one admin.") if results.size < 1
+    errors.add(:base, "There must be one admin.") if results.size < 1 && ENV['SEEDS'].blank?
   end
 
 end
