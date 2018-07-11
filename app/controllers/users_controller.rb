@@ -8,12 +8,15 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      flash[:notice] = "Successfully created User."
-      redirect_to root_path
-    else
-      render :action => 'new'
+    respond_to do |format|
+      @user = User.new(user_params)
+      if @user.save
+        format.html { redirect_to users_url, notice: 'User was successfully created.' }
+        format.json { head :no_content }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -33,9 +36,19 @@ class UsersController < ApplicationController
     end
   end
 
+  # DELETE /users/1
+  # DELETE /users/1.json
+  def destroy
+    @user.destroy
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, room_ids:[], role_ids:[])
+    params.require(:user).permit(:name, :username, :password, :password_confirmation, room_ids:[], role_ids:[])
   end
 end
