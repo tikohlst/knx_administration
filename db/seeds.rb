@@ -26,14 +26,14 @@ end
 
 # User email:string password:string password_confirmation:string roles:int_array
 users_list = [
-    [ "test@mail.com", "123456", "123456", [ 1, 2, 3 ] ],
-    [ "test2@mail.com", "123456", "123456", [ 2, 3 ] ],
-    [ "test3@mail.com", "123456", "123456", [ 3 ] ],
-    [ "test4@mail.com", "123456", "123456", [ 2, 3 ] ],
+    [ "admin", "123456", "123456", [ 1, 2, 3 ] ],
+    [ "tikoh", "123456", "123456", [ 2, 3 ] ],
+    [ "user1", "123456", "123456", [ 3 ] ],
+    [ "user2", "123456", "123456", [ 2, 3 ] ],
 ]
 
-users_list.each do |email, password, password_confirmation, role_ids|
-  u = User.create!( email: email, password: password, password_confirmation: password_confirmation )
+users_list.each do |username, password, password_confirmation, role_ids|
+  u = User.create!( username: username, password: password, password_confirmation: password_confirmation )
 
   role_ids.each do |role_id|
     connection.execute("INSERT INTO users_roles (user_id, role_id) VALUES (#{u.id} , #{role_id});")

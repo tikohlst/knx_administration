@@ -2,9 +2,25 @@
 
 <%= form_for(@user) do |f| %>
 
+  <% if @user.errors.any? %>
+    <div class="row margin">
+      <div class="col">
+        <div class="card alert alert-danger">
+          <div id="error_explanation" class="top10">
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :username %><br />
+    <%= f.text_field :username%>
   </div>
 
   <div class="field">

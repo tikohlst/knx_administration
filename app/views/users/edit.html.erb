@@ -1,4 +1,4 @@
-<h2>Edit <%= @user.email.to_s.humanize %></h2>
+<h2>Edit <%= @user.username.to_s.humanize %></h2>
 
 <%= form_for(@user, html: { method: :put }) do |f| %>
   <% if @user.errors.any? %>
@@ -18,8 +18,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :username %><br />
+    <%= f.text_field :username%>
   </div>
 
   <div class="field">

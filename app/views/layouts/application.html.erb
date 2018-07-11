@@ -19,7 +19,7 @@
 
     <p class="navbar-text pull-right">
       <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
+        Logged in as <strong><%= current_user.username %></strong>.
         Role: <strong><%=current_user.roles.pluck(:name).join(", ")%></strong>
         <br/><br/>
         <% if current_user.has_role? :admin %>

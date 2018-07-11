@@ -6,7 +6,7 @@
   <thead>
   <tr>
     <th>ID</th>
-    <th>Email</th>
+    <th>Username</th>
     <th>Role(s)</th>
   </tr>
   </thead>
@@ -15,7 +15,7 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.id %></td>
-      <td><%= user.email %></td>
+      <td><%= user.username %></td>
       <td>
         <% for role in user.roles %>
           <%= role.name %>
@@ -25,7 +25,7 @@
         <% end %>
       </td>
       <td><%= link_to 'Edit', edit_user_path(user) %></td>
-      <td><%= link_to 'Destroy', {controller: :users, action: :index }, method: :delete, data: { confirm: "Are you sure?" } %></td>
+      <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
   </tbody>
