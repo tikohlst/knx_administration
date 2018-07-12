@@ -56,7 +56,7 @@ class WidgetsController < ApplicationController
         format.json { render :show, status: :ok, location: @widget }
 
         @widgets = Widget.all
-        ActionCable.server.broadcast 'widgets', html: render_to_string('widgets/index', layout: false)
+        ActionCable.server.broadcast 'widgets', html: render_to_string(partial: 'widgets/widgets', layout: false)
       else
         format.html { render :edit }
         format.json { render json: @widget.errors, status: :unprocessable_entity }

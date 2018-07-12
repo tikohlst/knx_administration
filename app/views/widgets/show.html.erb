@@ -21,4 +21,7 @@
 <% if can? :update, @widget %>
   <%= link_to 'Edit', edit_widget_path(@widget) %> |
 <% end %>
+<% if can? :destroy, @widget %>
+  <%= link_to 'Destroy', @widget, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<% end %>
 <%= link_to 'Back', widgets_path %>
