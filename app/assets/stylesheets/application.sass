@@ -9,7 +9,241 @@
  * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
- *
  */
 
-@import "bootstrap";
+@import "bootstrap"
+@import "bootstrap2-toggle"
+@import 'bootstrap/glyphicons'
+
+.row>form
+    width: 100%
+
+#table_users, .card-deck
+    margin-top: 1rem
+
+@media (min-width: 1400px)
+    .container
+        max-width: 100%
+
+.toggle-group
+    .btn.btn-primary.toggle-on
+        color: #fff
+        background-color: #428bca
+        border-color: #357ebd
+    .btn.btn-default.active.toggle-off
+        color: #333
+        background-color: #e6e6e6
+        border-color: #ccc !important
+    .btn.btn-default.toggle-handle
+        color: #333
+        background-color: #fff
+        border-color: #ccc !important
+
+.toggle
+    border-color: #ccc !important
+
+#main-container
+    padding: 15px
+    border: 1px solid rgba(0, 0, 0, 0.125)
+    border-radius: 0.25rem
+
+.width-40
+    width: 40px
+
+.left
+    float: left
+
+.right
+    float: right
+
+.padding-left
+    padding-left: 0px
+
+.padding-right
+    padding-right: 0px
+
+.flex
+    display: flex
+
+.center
+    justify-content: center
+
+.text-center
+    text-align: center
+
+.text-right
+    text-align: right
+
+.margin-auto
+    margin: 0 auto
+
+.margin
+    margin: 15px
+
+.margin-left
+    margin-left: 5px
+
+.margin-right
+    margin-right: 5px
+
+.margin-form
+    margin: 0px 5px
+
+.margin-index
+    margin: 10px 0px
+
+.top7
+    padding-top: 7px
+
+.top10
+    margin-top: 10px !important
+
+.top15
+    margin-top: 15px
+
+.bottom
+    margin-bottom: 10px
+
+.bold
+    font-weight: bold
+
+.block
+    display: inline-block
+
+.clear
+    clear: both
+
+div.col-8
+    float: left
+
+div.row.form
+    padding: 5px 0px
+
+span.sign.arrow, span.sign.arrow.up
+    margin-right: 5px
+
+span.sign.arrow
+    border-color: #000 transparent transparent transparent !important
+
+span.sign.arrow.up
+    border-color: transparent transparent #000 transparent !important
+
+#addresses-card-block
+    margin-bottom: -20px
+
+h6.card-header
+    height: 41px
+    border-bottom: 0px
+
+div.card
+    margin-bottom: 0px
+    margin-top: 10px
+
+div.widget
+    margin: 10px 0px 0px 10px !important
+
+
+////////////////////////////////////////////////////
+// Button
+//
+.btn-outline-success
+    color: #5cb85c
+    background-image: none
+    background-color: transparent
+    border-color: #5cb85c
+
+.button_to
+    display: inline-block
+
+////////////////////////////////////////////////////
+// Devise
+//
+div.form-group
+    margin-bottom: 40px
+
+.margin-devise
+    margin: 12px 0px 18px 0px
+
+
+////////////////////////////////////////////////////
+// Navigation
+//
+nav.navbar
+    border: 1px solid rgba(0, 0, 0, 0.125)
+    border-radius: 0.25rem
+
+a.nav-link
+    font-size: 110%
+
+#students-nav
+    width: 75px
+    .nav-item
+        width: 70px
+
+#martial-arts-nav
+    width: 125px
+    .nav-item
+        width: 120px
+
+#students-active, #visits-active
+    border-bottom: 4px solid black
+    padding: 8px 0px 0px 0px
+    color: #000
+    margin-right: 5px
+
+#students-inactive
+    padding-left: 0px
+
+#martial-arts-active
+    border-bottom: 4px solid black
+    padding: 8px 0px 0px 0px
+    margin-right: 5px
+    color: #000
+    margin-right: 7px
+
+
+////////////////////////////////////////////////////
+// Statistiken
+//
+#students-statistics, #martial_arts-statistics, #visits-statistics
+    position: relative
+    height: 160px
+    width: 100%
+
+#students-statistics-2
+    width: 40%
+
+[id="\32 _weeks"], [id="\34 _weeks"], [id="\31 0_weeks"]
+    color: #000
+    background-color: #C0C0C0
+    border: none
+
+[id="\34 _weeks"]
+    color: #fff
+
+
+////////////////////////////////////////////////////
+// Öffnungszeiten
+//
+div#data
+    display: none !important
+
+
+////////////////////////////////////////////////////
+// Pagination
+//
+nav.pagination
+    margin: 0 auto !important
+
+ul.pagination
+    margin-bottom: 0px
+
+
+////////////////////////////////////////////////////
+// Footer
+//
+div#footer
+    margin: 0px
+
+div#footer_left
+    flex: 1 auto
