@@ -1,8 +1,47 @@
-<h1>Users</h1>
+<div class="row">
+  <div class="col">
+    <h1>Users</h1>
+  </div>
+  <% if current_user.has_role? :admin %>
+    <div class="col">
+      <%= link_to 'New User', new_user_path, class: "btn btn-info right top10" %>
+    </div>
+  <% end %>
+</div>
 
-<table>
+<div class="row">
+  <div class="col">
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    Sort after:
+    <div class="btn-group btn-group-toggle">
+      <label class="btn btn-outline-secondary">
+        <input type="radio" name="options" id="option1" autocomplete="off"> ID
+      </label>
+      <label class="btn btn-outline-secondary active">
+        <input type="radio" name="options" id="option2" autocomplete="off"> Username
+      </label>
+      <label class="btn btn-outline-secondary">
+        <input type="radio" name="options" id="option3" autocomplete="off"> Role
+      </label>
+    </div>
+  </div>
+
+  <div class="col">
+    <%= form_tag users_path, class: "form-inline my-2 my-lg-0", style: "float: right;", method: :get do %>
+      <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
+      <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
+    <% end %>
+  </div>
+</div>
+
+<table class="table table-bordered table-hover table-striped sortable" id="table_users">
   <thead>
-  <tr>
+  <tr class="table-info">
     <th>ID</th>
     <th>Username</th>
     <th>Role(s)</th>
@@ -11,7 +50,7 @@
 
   <tbody>
   <% @users.each do |user| %>
-    <tr>
+    <tr data-link="<%= user.id %>">
       <td><%= user.id %></td>
       <td><%= user.username %></td>
       <td>
@@ -22,15 +61,7 @@
           <% end %>
         <% end %>
       </td>
-      <td><%= link_to 'Edit', edit_user_path(user) %></td>
-      <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
-
-<br/>
-
-<% if current_user.has_role? :admin %>
-  <%= link_to 'New User', new_user_path %>
-<% end %>

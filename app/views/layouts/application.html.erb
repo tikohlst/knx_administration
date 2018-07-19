@@ -9,36 +9,90 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-  <% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
-  <% end %>
-  <% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
+  <body class="margin">
+    <div class="" id="main-container">
+      <div class="row">
+        <div class="col">
+          <% if notice %>
+            <p class="alert alert-success"><%= notice %></p>
+          <% end %>
+          <% if alert %>
+            <p class="alert alert-danger"><%= alert %></p>
+          <% end %>
+        </div>
+      </div>
 
-    <p class="navbar-text pull-right">
+      <div class="row">
+        <div class="col">
+          <div class="left">
+            <%= image_tag "KNX-Logo.png", style: "width:120px" %>
+          </div>
+          <div class="right">
+            <% if user_signed_in? %>
+              <%= link_to widgets_path, class: 'btn btn-info' do %>
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              <% end %>
+              <% if current_user.has_role? :admin %>
+                <%= link_to users_url, class: 'btn btn-info' do %>
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <% end %>
+              <% end %>
+              <%= link_to edit_user_registration_path, class: 'btn btn-info' do %>
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              <% end %>
+              <%= link_to destroy_user_session_path, method: :delete, class: 'btn btn-info' do %>
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+              <% end %>
+            <% else %>
+              <%= link_to new_user_session_path, class: 'btn btn-info' do %>
+                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <hr>
+        </div>
+      </div>
+
+      <%= yield %>
+
       <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.username %></strong>.
-        Role: <strong><%=current_user.roles.pluck(:name).join(", ")%></strong>
-        <br/><br/>
-        <% if current_user.has_role? :admin %>
-          <%= link_to 'Administrates' , administrates_path %> |
-        <% end %>
-        <%= link_to 'Rooms' , rooms_path %> |
-        <%= link_to 'Widgets' , widgets_path %> |
-        <%= link_to 'Rules' , rules_path %> |
-        <% if current_user.has_role? :admin %>
-          <%= link_to 'KNXModules' , knx_modules_path %> |
-          <%= link_to 'Role Management', users_url %> |
-        <% end %>
-        <%= link_to 'Settings', edit_user_registration_path %> |
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-      <% else %>
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-      <% end %>
-    </p>
+        <div class="row" id="footer">
+          <div class="col padding-left padding-right">
+            <div class="card">
+              <h6 class="card-header">
+                <div class="pull-right flex">
+                  <div id="footer_left">
+                    Logged in as
+                    <div class="bold block">
+                      <%= current_user.username %>
+                    </div>
+                  </div>
+                  <div class="right">
+                    Role:
+                    <div class="bold block">
+                      <%=current_user.roles.pluck(:name).join(", ")%>
+                    </div>
+                  </div>
+                </div>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <%= yield %>
+      <div class="row">
+        <div class="col">
+          <%= link_to 'Administrates' , administrates_path %> |
+          <%= link_to 'Rooms' , rooms_path %> |
+          <%= link_to 'Rules' , rules_path %> |
+          <%= link_to 'KNXModules' , knx_modules_path %>
+        </div>
+      </div>
+    <% end %>
   </body>
 </html>

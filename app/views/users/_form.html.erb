@@ -1,0 +1,110 @@
+<div class="row">
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="row margin-index">
+      <div class="col">
+        <div class="card alert alert-danger">
+          <div id="error_explanation" class="top10">
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row margin-index">
+    <div class="col">
+      <%= link_to :back, class: "btn btn-secondary" do %>
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row margin-index">
+    <div class="col">
+      <div class="card">
+        <h3 class="card-header">
+          <% if @user.new_record? %>
+            New User
+          <% else %>
+            Edit <%= @user.username.to_s.humanize %>
+          <% end %>
+        </h3>
+        <div class="card-block">
+          <div class="row form" style="margin-left:1.25rem;">
+            <div class="col-4" style="padding-left:0px">
+              <%= f.label :username %>
+            </div>
+            <div class="col-8">
+              <%= f.text_field :username%>
+            </div>
+          </div>
+          <div class="row form" style="margin-left:1.25rem;">
+            <div class="col-4" style="padding-left:0px">
+              <%= f.label :password %>
+              <% if not @user.new_record? %>
+                <i>(leave blank if you don't want to change it)</i>
+              <% end %>
+            </div>
+            <div class="col-8">
+              <%= f.password_field :password, autocomplete: "off" %>
+              <% if @minimum_password_length %>
+                <br />
+                <em><%= @minimum_password_length %> characters minimum</em>
+              <% end %>
+            </div>
+          </div>
+          <div class="row form" style="margin-left:1.25rem;">
+            <div class="col-4" style="padding-left:0px">
+              <%= f.label :password_confirmation %><br />
+            </div>
+            <div class="col-8">
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+          </div>
+          <div class="row form" style="margin-left:1.25rem;">
+            <div class="col-4" style="padding-left:0px">
+              <%= f.label :rooms %>
+            </div>
+            <div class="col-8">
+              <%= f.collection_check_boxes :room_ids, Room.all, :id, :name do |m| %>
+                <div class=""><%= m.check_box %>&nbsp;<%= m.label %></div>
+              <% end %>
+            </div>
+          </div>
+          <div class="row form" style="margin-left:1.25rem;">
+            <div class="col-4" style="padding-left:0px">
+              <%= f.label :roles%>
+            </div>
+            <div class="col-8">
+              <%= f.collection_check_boxes :role_ids, Role.all, :id, :name do |m| %>
+                <div class=""><%= m.check_box %>&nbsp;<%= m.label %></div>
+              <% end %>
+            </div>
+          </div>
+          <div class="row form" style="margin-left: 1.25rem;margin-right: 1.25rem;display: block;margin-bottom: 50px;">
+            <% if not @user.new_record? %>
+              <div class="left" style="padding-left:0px">
+                <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              </div>
+            <% end %>
+            <div class="right">
+              <div class="actions">
+                <% if @user.new_record? %>
+                  <%= f.submit "Create", class: "btn btn-success" %>
+                <% else %>
+                  <%= f.submit "Update", class: "btn btn-success" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
