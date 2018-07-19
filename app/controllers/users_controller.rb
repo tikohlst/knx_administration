@@ -3,6 +3,15 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
+  def index
+    @users = if params[:term]
+      # Suche nach Username
+      User.where('username LIKE ?', "%#{params[:term]}%")
+    else
+      User.all
+    end
+  end
+
   def new
     @user = User.new
   end
