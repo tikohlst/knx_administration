@@ -8,6 +8,10 @@ gem 'rails', '~> 5.2.0'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'cancancan'
 gem 'rolify'
+gem 'bootstrap', '~> 4.1.1'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'bootstrap-toggle-rails'
+gem 'bootstrap-glyphicons'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
