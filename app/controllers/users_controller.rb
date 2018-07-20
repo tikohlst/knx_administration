@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = if params[:term]
-      # Suche nach Username
+      # Searching for username
       User.where('username LIKE ?', "%#{params[:term]}%")
     else
       User.all

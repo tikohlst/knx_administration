@@ -7,7 +7,7 @@ class WidgetsController < ApplicationController
   # GET /widgets.json
   def index
     @widgets = if params[:term]
-      # Suche nach Username
+      # Searching for name
       Widget.joins(:room).where('widgets.id LIKE :p OR widgets.name LIKE :p OR
       rooms.name LIKE :p', p: "%#{params[:term]}%")
     else
