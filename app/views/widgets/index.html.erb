@@ -16,34 +16,7 @@
 </div>
 
 <div class="row">
-  <div class="col-5">
-    Select:
-    <div class="btn-group btn-group-toggle">
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option1" autocomplete="off"> Lightings
-      </label>
-      <label class="btn btn-outline-secondary active">
-        <input type="radio" name="options" id="option2" autocomplete="off"> Shutters
-      </label>
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option3" autocomplete="off"> Blinds
-      </label>
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option4" autocomplete="off"> Dimmer
-      </label>
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option5" autocomplete="off"> Monitoring-Control
-      </label>
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option5" autocomplete="off"> Windows
-      </label>
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option5" autocomplete="off"> Weather
-      </label>
-    </div>
-  </div>
-
-  <div class="col-4">
+  <div class="col">
     Sort after:
     <div class="btn-group btn-group-toggle">
       <label class="btn btn-outline-secondary">
@@ -72,9 +45,39 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col">
+    <hr>
+  </div>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Lightings</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Shutters</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Blinds</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Dimmer</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Monitoring-Control</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Windows</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Weather</a>
+  </li>
+</ul>
+
 <br>
 
-<div class="row">
+<div class="row" style="padding-left: 5px;padding-right: 15px;">
   <% @widgets.each do |widget| %>
     <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
       <div class="card-body">
@@ -83,8 +86,11 @@
           <%= (Room.find_by id: widget.room_id).name %>
         </div>
         <div style="float: right;">
-          <%= widget.active %>
-          <input type="checkbox" checked data-toggle="toggle">
+          <% if widget.active %>
+            <input id="widget<%= widget.id %>" type="checkbox" checked data-toggle="toggle">
+          <% else %>
+            <input id="widget<%= widget.id %>" type="checkbox" data-toggle="toggle">
+          <% end %>
         </div>
       </div>
     </div>

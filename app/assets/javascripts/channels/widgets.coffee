@@ -7,4 +7,7 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
-    $("#actionWidget").html(data.html)
+    if (data.active == true)
+      $('#widget' + data.id).bootstrapToggle('on')
+    else
+      $('#widget' + data.id).bootstrapToggle('off')
