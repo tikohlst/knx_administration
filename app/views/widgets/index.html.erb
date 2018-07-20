@@ -83,13 +83,12 @@
       <div class="card-body">
         <h5 class="card-title"><%= widget.id %> - <%= widget.name %></h5>
         <div style="float: left;">
-          <%= (Room.find_by id: widget.room_id).name %>
+          <%= Room.find_by(id: widget.room_id).name %>
         </div>
         <div style="float: right;">
-          <% if widget.active %>
-            <input id="widget<%= widget.id %>" type="checkbox" checked data-toggle="toggle">
-          <% else %>
-            <input id="widget<%= widget.id %>" type="checkbox" data-toggle="toggle">
+          <%= form_for widget, remote: true do |f| %>
+            <%= f.check_box :active, value: false, data: { toggle: 'toggle' },
+                            id: "widget_active_#{widget.id}", class: "edit_widget" %>
           <% end %>
         </div>
       </div>

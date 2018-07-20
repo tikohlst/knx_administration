@@ -35,3 +35,8 @@ $(document).ready ->
         $('#new_martial_art_opening_times').hide()
       return
     return
+
+  # Submit the form of the clicked widget
+  $(".edit_widget").click ->
+    $('#' + $(this).attr('id')).submit()
+    return

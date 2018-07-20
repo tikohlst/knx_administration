@@ -1,5 +1,6 @@
 class WidgetsController < ApplicationController
   # CanCan authorizes the resource automatically for every action
+  skip_before_action :verify_authenticity_token
   load_and_authorize_resource
   before_action :set_widget, only: [:show, :edit, :update, :destroy]
 
@@ -57,12 +58,21 @@ class WidgetsController < ApplicationController
   # PATCH/PUT /widgets/1.json
   def update
     respond_to do |format|
-      if @widget.update(widget_params)
-        format.html { redirect_to @widget, notice: 'Widget was successfully updated.' }
-        format.json { render :show, status: :ok, location: @widget }
+      if widget_params.keys.count > 1
+        @errors = @widget.update(widget_params)
+      else
+        if widget_params.values[0] == "0"
+          @errors = @widget.update_attribute(:active, 1)
+        else
+          @errors = @widget.update_attribute(:active, 0)
+        end
+      end
 
-        @widgets = Widget.all
-        ActionCable.server.broadcast 'widgets', { id: @widget.id, active: @widget.active }
+      if @errors
+        format.html { redirect_to action: "index" }
+        #format.json { render :show, status: :ok, location: @widget }
+
+        ActionCable.server.broadcast 'widgets', @widget
       else
         format.html { render :edit }
         format.json { render json: @widget.errors, status: :unprocessable_entity }
