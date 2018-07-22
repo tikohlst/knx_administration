@@ -28,6 +28,14 @@
             <%= image_tag "KNX-Logo.png", style: "width:120px" %>
           </div>
           <div class="right">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <a class="btn btn-secondary">
+                <%= flag_icon(:gb, id: 'gb-flag') %>
+              </a>
+              <a class="btn btn-secondary">
+                <%= flag_icon(:de, id: 'de-flag') %>
+              </a>
+            </div>
             <% if user_signed_in? %>
               <%= link_to widgets_path, class: 'btn btn-info' do %>
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
