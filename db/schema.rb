@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_11_110829) do
+ActiveRecord::Schema.define(version: 2018_07_22_154821) do
 
   create_table "administrates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 2018_07_11_110829) do
     t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "use"
+    t.float "value"
     t.index ["knx_module_id"], name: "index_widgets_on_knx_module_id"
     t.index ["room_id"], name: "index_widgets_on_room_id"
   end

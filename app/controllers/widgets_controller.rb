@@ -1,5 +1,6 @@
 class WidgetsController < ApplicationController
   # CanCan authorizes the resource automatically for every action
+  # TODO: Without this i cant update widgets => undefined method `has_role?' for nil:NilClass
   skip_before_action :verify_authenticity_token
   load_and_authorize_resource
   before_action :set_widget, only: [:show, :edit, :update, :destroy]
@@ -58,14 +59,18 @@ class WidgetsController < ApplicationController
   # PATCH/PUT /widgets/1.json
   def update
     respond_to do |format|
-      if widget_params.keys.count > 1
-        @errors = @widget.update(widget_params)
-      else
-        if widget_params.values[0] == "0"
-          @errors = @widget.update_attribute(:active, 1)
+      if widget_params.keys[0] == "value"
+        if (@widget.use == "lighting")
+          if widget_params.values[0] == "0"
+            @errors = @widget.update_attribute(:value, 1)
+          else
+            @errors = @widget.update_attribute(:value, 0)
+          end
         else
-          @errors = @widget.update_attribute(:active, 0)
+          @errors = @widget.update_attribute(:value, widget_params.values[0])
         end
+      else
+        @errors = @widget.update(widget_params)
       end
 
       if @errors
@@ -98,6 +103,6 @@ class WidgetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def widget_params
-      params.require(:widget).permit(:name, :active, :knx_module_id, :room_id, rules_attributes: [:id, :name, :status, :start_value, :end_value, :steps, :widget_id])
+      params.require(:widget).permit(:name, :active, :value, :knx_module_id, :room_id, rules_attributes: [:id, :name, :status, :start_value, :end_value, :steps, :widget_id])
     end
 end

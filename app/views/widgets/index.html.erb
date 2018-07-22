@@ -51,49 +51,148 @@
   </div>
 </div>
 
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Lightings</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Shutters</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Blinds</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Dimmer</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Monitoring-Control</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Windows</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Weather</a>
-  </li>
-</ul>
-
-<br>
-
-<div class="row" style="padding-left: 5px;padding-right: 15px;">
-  <% @widgets.each do |widget| %>
-    <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
-      <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
-      <div class="card-body">
-        <div style="float: left;">
-          <%= Room.find_by(id: widget.room_id).name %>
-        </div>
-        <div style="float: right;">
-          <%= form_for widget, remote: true do |f| %>
-            <%= f.check_box :active, value: false, data: { toggle: 'toggle' },
-                            id: "widget_active_#{widget.id}", class: "edit_widget" %>
-          <% end %>
-        </div>
-      </div>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings" role="tab" aria-controls="nav-home" aria-selected="true">Lightings</a>
+    <a class="nav-item nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters" role="tab" aria-controls="nav-profile" aria-selected="false">Shutters</a>
+    <a class="nav-item nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds" role="tab" aria-controls="nav-contact" aria-selected="false">Blinds</a>
+    <a class="nav-item nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer" role="tab" aria-controls="nav-contact" aria-selected="false">Dimmer</a>
+    <a class="nav-item nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc" role="tab" aria-controls="nav-contact" aria-selected="false">Monitoring-Control</a>
+    <a class="nav-item nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows" role="tab" aria-controls="nav-contact" aria-selected="false">Windows</a>
+    <a class="nav-item nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather" role="tab" aria-controls="nav-contact" aria-selected="false">Weather</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "lighting" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div style="float: left;">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div style="float: right;">
+                <%= form_for widget, remote: true do |f| %>
+                  <%= f.check_box :value, data: { toggle: 'toggle' },
+                                  id: "widget_active_#{widget.id}", class: "edit_widget" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     </div>
-  <% end %>
+  </div>
+  <div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "shutter" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div style="float: left;">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div style="float: right;">
+                <%= form_for widget, remote: true do |f| %>
+                  <div class="slider-wrapper-vertical">
+                    <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "blind" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div style="float: left;">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div style="float: right;">
+                <%= form_for widget, remote: true do |f| %>
+                  <div class="slider-wrapper-vertical">
+                    <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "dimmer" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div style="float: left;">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div style="float: right;">
+                <%= form_for widget, remote: true do |f| %>
+                  <div class="slider-wrapper-horizontal">
+                    <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">Monitoring-Control</div>
+  <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "window" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div style="float: left;">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div style="float: right;">
+                <%= widget.value %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "weather" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div style="float: left;">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div style="float: right;">
+                <%= widget.value %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <br>

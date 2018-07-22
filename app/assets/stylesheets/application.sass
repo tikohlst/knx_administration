@@ -16,6 +16,9 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+.nav-link.active
+    margin-bottom: -2px
+
 .row>form
     width: 100%
 
@@ -146,18 +149,6 @@ div.widget
 
 
 ////////////////////////////////////////////////////
-// Button
-//
-.btn-outline-success
-    color: #5cb85c
-    background-image: none
-    background-color: transparent
-    border-color: #5cb85c
-
-.button_to
-    display: inline-block
-
-////////////////////////////////////////////////////
 // Devise
 //
 div.form-group
@@ -168,80 +159,6 @@ div.form-group
 
 
 ////////////////////////////////////////////////////
-// Navigation
-//
-nav.navbar
-    border: 1px solid rgba(0, 0, 0, 0.125)
-    border-radius: 0.25rem
-
-a.nav-link
-    font-size: 110%
-
-#students-nav
-    width: 75px
-    .nav-item
-        width: 70px
-
-#martial-arts-nav
-    width: 125px
-    .nav-item
-        width: 120px
-
-#students-active, #visits-active
-    border-bottom: 4px solid black
-    padding: 8px 0px 0px 0px
-    color: #000
-    margin-right: 5px
-
-#students-inactive
-    padding-left: 0px
-
-#martial-arts-active
-    border-bottom: 4px solid black
-    padding: 8px 0px 0px 0px
-    margin-right: 5px
-    color: #000
-    margin-right: 7px
-
-
-////////////////////////////////////////////////////
-// Statistiken
-//
-#students-statistics, #martial_arts-statistics, #visits-statistics
-    position: relative
-    height: 160px
-    width: 100%
-
-#students-statistics-2
-    width: 40%
-
-[id="\32 _weeks"], [id="\34 _weeks"], [id="\31 0_weeks"]
-    color: #000
-    background-color: #C0C0C0
-    border: none
-
-[id="\34 _weeks"]
-    color: #fff
-
-
-////////////////////////////////////////////////////
-// Öffnungszeiten
-//
-div#data
-    display: none !important
-
-
-////////////////////////////////////////////////////
-// Pagination
-//
-nav.pagination
-    margin: 0 auto !important
-
-ul.pagination
-    margin-bottom: 0px
-
-
-////////////////////////////////////////////////////
 // Footer
 //
 div#footer
@@ -249,3 +166,22 @@ div#footer
 
 div#footer_left
     flex: 1 auto
+
+.slider-wrapper-horizontal
+    display: inline-block
+    width: 150px
+    height: 20px
+    padding: 0
+
+.slider-wrapper-vertical
+    display: inline-block
+    width: 20px
+    height: 150px
+    padding: 0
+
+.vertical
+    width: 150px
+    height: 20px
+    margin: 0
+    transform-origin: 75px 75px
+    transform: rotate(-90deg)
