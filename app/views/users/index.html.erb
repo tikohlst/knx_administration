@@ -32,7 +32,7 @@
   </div>
 
   <div class="col">
-    <%= form_tag users_path, class: "form-inline my-2 my-lg-0", style: "float: right;", method: :get do %>
+    <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get do %>
       <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
       <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
     <% end %>

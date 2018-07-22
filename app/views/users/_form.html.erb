@@ -36,7 +36,7 @@
         </h3>
         <div class="card-block">
           <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4" style="padding-left:0px">
+            <div class="col-4 padding-left">
               <%= f.label :username %>
             </div>
             <div class="col-8">
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4" style="padding-left:0px">
+            <div class="col-4 padding-left">
               <%= f.label :password %>
               <% if not @user.new_record? %>
                 <i>(leave blank if you don't want to change it)</i>
@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4" style="padding-left:0px">
+            <div class="col-4 padding-left">
               <%= f.label :password_confirmation %><br />
             </div>
             <div class="col-8">
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4" style="padding-left:0px">
+            <div class="col-4 padding-left">
               <%= f.label :rooms %>
             </div>
             <div class="col-8">
@@ -77,7 +77,7 @@
             </div>
           </div>
           <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4" style="padding-left:0px">
+            <div class="col-4 padding-left">
               <%= f.label :roles%>
             </div>
             <div class="col-8">
@@ -88,7 +88,7 @@
           </div>
           <div class="row form" style="margin-left: 1.25rem;margin-right: 1.25rem;display: block;margin-bottom: 50px;">
             <% if not @user.new_record? %>
-              <div class="left" style="padding-left:0px">
+              <div class="left padding-left" style="padding-left:0px">
                 <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
               </div>
             <% end %>

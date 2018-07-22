@@ -38,7 +38,7 @@
   </div>
 
   <div class="col">
-    <%= form_tag widgets_path, class: "form-inline my-2 my-lg-0", style: "float:right;", method: :get do %>
+    <%= form_tag widgets_path, class: "form-inline my-2 my-lg-0 right", method: :get do %>
       <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
       <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
     <% end %>
@@ -67,13 +67,13 @@
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
       <% @widgets.each do |widget| %>
         <% if widget.use == "lighting" %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div style="float: left;">
+              <div class="left">
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
-              <div style="float: right;">
+              <div class="right">
                 <%= form_for widget, remote: true do |f| %>
                   <%= f.check_box :value, data: { toggle: 'toggle' },
                                   id: "widget_active_#{widget.id}", class: "edit_widget" %>
@@ -89,13 +89,13 @@
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
       <% @widgets.each do |widget| %>
         <% if widget.use == "shutter" %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div style="float: left;">
+              <div class="left">
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
-              <div style="float: right;">
+              <div class="right">
                 <%= form_for widget, remote: true do |f| %>
                   <div class="slider-wrapper-vertical">
                     <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
@@ -112,13 +112,13 @@
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
       <% @widgets.each do |widget| %>
         <% if widget.use == "blind" %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div style="float: left;">
+              <div class="left">
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
-              <div style="float: right;">
+              <div class="right">
                 <%= form_for widget, remote: true do |f| %>
                   <div class="slider-wrapper-vertical">
                     <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
@@ -135,13 +135,13 @@
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
       <% @widgets.each do |widget| %>
         <% if widget.use == "dimmer" %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div style="float: left;">
+              <div class="left">
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
-              <div style="float: right;">
+              <div class="right">
                 <%= form_for widget, remote: true do |f| %>
                   <div class="slider-wrapper-horizontal">
                     <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
@@ -159,13 +159,13 @@
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
       <% @widgets.each do |widget| %>
         <% if widget.use == "window" %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div style="float: left;">
+              <div class="left">
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
-              <div style="float: right;">
+              <div class="right">
                 <%= widget.value %>
               </div>
             </div>
@@ -178,13 +178,13 @@
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
       <% @widgets.each do |widget| %>
         <% if widget.use == "weather" %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div style="float: left;">
+              <div class="left">
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
-              <div style="float: right;">
+              <div class="right">
                 <%= widget.value %>
               </div>
             </div>
