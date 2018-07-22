@@ -57,9 +57,6 @@ GEM
       autoprefixer-rails (>= 6.0.3)
       popper_js (>= 1.12.9, < 2)
       sass (>= 3.5.2)
-    bootstrap-glyphicons (0.0.1)
-      railties (>= 3.0)
-      sass (>= 3.2)
     bootstrap-toggle-rails (2.2.1.0)
     builder (3.2.3)
     byebug (10.0.2)
@@ -98,6 +95,7 @@ GEM
       sass (~> 3.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    glyphicons (1.0.2)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -226,7 +224,6 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.1.1)
-  bootstrap-glyphicons
   bootstrap-toggle-rails
   byebug
   cancancan
@@ -235,6 +232,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise (~> 4.4, >= 4.4.3)
   flag-icons-rails
+  glyphicons
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3.1, >= 4.2.1)
   listen (>= 3.0.5, < 3.2)

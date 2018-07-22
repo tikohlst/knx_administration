@@ -11,7 +11,7 @@ gem 'rolify'
 gem 'bootstrap', '~> 4.1.1'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'bootstrap-toggle-rails'
-gem 'bootstrap-glyphicons'
+gem 'glyphicons'
 gem 'flag-icons-rails'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
