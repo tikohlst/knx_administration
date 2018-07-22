@@ -80,8 +80,8 @@
 <div class="row" style="padding-left: 5px;padding-right: 15px;">
   <% @widgets.each do |widget| %>
     <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="max-width: 18rem;">
+      <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
       <div class="card-body">
-        <h5 class="card-title"><%= widget.id %> - <%= widget.name %></h5>
         <div style="float: left;">
           <%= Room.find_by(id: widget.room_id).name %>
         </div>
@@ -97,7 +97,7 @@
 </div>
 
 <br>
-
+<!--
 <table>
   <thead>
     <tr>
@@ -125,3 +125,4 @@
     <% end %>
   </tbody>
 </table>
+-->
