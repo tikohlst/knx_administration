@@ -166,6 +166,30 @@
       <% end %>
     </div>
   </div>
+  <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
+    <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% @widgets.each do |widget| %>
+        <% if widget.use == "mc" %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
+            <div class="card-body">
+              <div class="left">
+                <%= Room.find_by(id: widget.room_id).name %>
+              </div>
+              <div class="right">
+                <%= form_for widget, remote: true do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                  <%= widget.value %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
   <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">Monitoring-Control</div>
   <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
