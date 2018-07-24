@@ -1,7 +1,5 @@
 class WidgetsController < ApplicationController
   # CanCan authorizes the resource automatically for every action
-  # TODO: Without this i cant update widgets => undefined method `has_role?' for nil:NilClass
-  skip_before_action :verify_authenticity_token
   load_and_authorize_resource
   before_action :set_widget, only: [:show, :edit, :update, :destroy]
 

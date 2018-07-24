@@ -74,7 +74,10 @@
                 <%= Room.find_by(id: widget.room_id).name %>
               </div>
               <div class="right">
-                <%= form_for widget, remote: true do |f| %>
+                <%= form_for widget, remote: true, html: {format: "js"} do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                   <%= f.check_box :value, data: { toggle: 'toggle' },
                                   id: "widget_active_#{widget.id}", class: "edit_widget" %>
                 <% end %>
@@ -97,6 +100,9 @@
               </div>
               <div class="right">
                 <%= form_for widget, remote: true do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                   <div class="slider-wrapper-vertical">
                     <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
                   </div>
@@ -120,6 +126,9 @@
               </div>
               <div class="right">
                 <%= form_for widget, remote: true do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                   <div class="slider-wrapper-vertical">
                     <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
                   </div>
@@ -143,6 +152,9 @@
               </div>
               <div class="right">
                 <%= form_for widget, remote: true do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                   <div class="slider-wrapper-horizontal">
                     <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
                   </div>
