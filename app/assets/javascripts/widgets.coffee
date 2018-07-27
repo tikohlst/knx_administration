@@ -6,5 +6,5 @@ $(document).ready ->
 
   # Submit the form of the clicked widget
   $(".edit_widget").click ->
-    $('#' + $(this).attr('id')).submit()
+    Rails.fire(document.querySelector('#' + $(this).attr('id')), 'submit')
     return

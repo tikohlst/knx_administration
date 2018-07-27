@@ -20,13 +20,6 @@ class WidgetsController < ApplicationController
   def show
   end
 
-  # GET /widgets/1/rules
-  def rules
-    respond_to do |format|
-      format.js
-    end
-  end
-
   # GET /widgets/new
   def new
     @widget = Widget.new
@@ -56,24 +49,24 @@ class WidgetsController < ApplicationController
   # PATCH/PUT /widgets/1
   # PATCH/PUT /widgets/1.json
   def update
-    respond_to do |format|
-      if widget_params.keys[0] == "value"
-        if (@widget.use == "lighting")
-          if widget_params.values[0] == "0"
-            @errors = @widget.update_attribute(:value, 1)
-          else
-            @errors = @widget.update_attribute(:value, 0)
-          end
+    if widget_params.keys[0] == "value"
+      if (@widget.use == "lighting")
+        if widget_params.values[0] == "0"
+          @errors = @widget.update_attribute(:value, 1)
         else
-          @errors = @widget.update_attribute(:value, widget_params.values[0])
+          @errors = @widget.update_attribute(:value, 0)
         end
       else
-        @errors = @widget.update(widget_params)
+        @errors = @widget.update_attribute(:value, widget_params.values[0])
       end
+    else
+      @errors = @widget.update(widget_params)
+    end
 
+    respond_to do |format|
       if @errors
-        format.html { redirect_to action: "index" }
-        #format.json { render :show, status: :ok, location: @widget }
+        format.html { redirect_to widgets_url }
+        format.json { head :no_content }
 
         ActionCable.server.broadcast 'widgets', @widget
       else
