@@ -2,11 +2,13 @@
   <div class="col">
     <h1>Widgets</h1>
   </div>
+  <!--
   <% if current_user.has_role? :admin %>
     <div class="col">
       <%= link_to 'New Widget', new_widget_path, class: "btn btn-info right top10" %>
     </div>
   <% end %>
+  -->
 </div>
 
 <div class="row">
@@ -17,7 +19,7 @@
 
 <div class="row">
   <div class="col">
-    Sort after:
+    Sort by:
     <div class="btn-group btn-group-toggle">
       <label class="btn btn-outline-secondary">
         <input type="radio" name="options" id="option1" autocomplete="off"> Gruppenadresse
@@ -68,10 +70,9 @@
       <% @widgets.each do |widget| %>
         <% if widget.use == "lighting" %>
           <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
               <div class="left">
-                <%= Room.find_by(id: widget.room_id).name %>
+                <h5 style="margin-top: 6px;"><%= widget.name %></h5>
               </div>
               <div class="right">
                 <%= form_for widget, remote: true, html: {format: "js"} do |f| %>
@@ -93,20 +94,23 @@
       <% @widgets.each do |widget| %>
         <% if widget.use == "shutter" %>
           <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div class="left">
-                <%= Room.find_by(id: widget.room_id).name %>
+              <div>
+                <h5 style="margin-top: 6px;"><%= widget.name %></h5>
               </div>
-              <div class="right">
-                <%= form_for widget, remote: true do |f| %>
-                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                     name: "authenticity_token" %>
-                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                  <div class="slider-wrapper-vertical">
-                    <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
-                  </div>
-                <% end %>
+              <div>
+                <div class="left">
+                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                </div>
+                <div class="right">
+                  <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                </div>
+              </div>
+              <br><br>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
               </div>
             </div>
           </div>
@@ -115,30 +119,37 @@
     </div>
   </div>
   <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
-    <div class="row" style="padding-left: 5px;padding-right: 15px;">
-      <% @widgets.each do |widget| %>
+    <% @widgets.each_with_index do |widget, count| %>
+      <% if count % 6 == 0 %>
+        <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <% end %>
         <% if widget.use == "blind" %>
           <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-            <h5 class="card-header"><%= widget.id %> - <%= widget.name %></h5>
             <div class="card-body">
-              <div class="left">
-                <%= Room.find_by(id: widget.room_id).name %>
+              <div>
+                <h5 style="margin-top: 6px;"><%= widget.name %></h5>
               </div>
-              <div class="right">
-                <%= form_for widget, remote: true do |f| %>
-                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                     name: "authenticity_token" %>
-                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                  <div class="slider-wrapper-vertical">
-                    <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "vertical", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
-                  </div>
-                <% end %>
+              <div>
+                <div class="left">
+                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                </div>
+                <div class="right">
+                  <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                </div>
+              </div>
+              <br><br>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
               </div>
             </div>
           </div>
         <% end %>
+      <% if count % 6 == 0 %>
+        </div>
       <% end %>
-    </div>
+    <% end %>
   </div>
   <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
     <div class="row" style="padding-left: 5px;padding-right: 15px;">
