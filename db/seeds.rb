@@ -8,11 +8,7 @@
 
 # ruby encoding: utf-8
 connection = ActiveRecord::Base.connection()
-connection.execute("TRUNCATE TABLE administrates;")
-connection.execute("TRUNCATE TABLE knx_modules;")
 connection.execute("TRUNCATE TABLE roles;")
-connection.execute("TRUNCATE TABLE rooms;")
-connection.execute("TRUNCATE TABLE rules;")
 connection.execute("TRUNCATE TABLE users;")
 connection.execute("TRUNCATE TABLE users_roles;")
 connection.execute("TRUNCATE TABLE widgets;")
@@ -40,54 +36,68 @@ users_list.each do |username, password, password_confirmation, role_ids|
   end
 end
 
-
-# Room name:string
-rooms_list = %w[ Wohnzimmer Schlafzimmer ]
-
-rooms_list.each do |name|
-  Room.create!( name: name )
-end
-
-# Administrate user_id:integer room_id:integer
-administrates_list = [
-    [1, 1],
-    [1, 2],
-    [2, 1],
-    [2, 2],
-    [3, 1],
-    [3, 2],
-    [4, 1]
-]
-
-administrates_list.each do |user_id, room_id|
-  Administrate.create!( user_id: user_id, room_id: room_id )
-end
-
-# KnxModule name:string
-knxmodules_list = %w[ KNX1 KNX2 KNX3 ]
-
-knxmodules_list.each do |name|
-  KnxModule.create!( name: name )
-end
-
-# Widget name:string active:boolean knx_module_id:integer room_id:integer
+# Widget name:string active:boolean use:string value:float
 widgets_list = [
-    ["Widget1", 1, 1, 1],
-    ["Widget2", 1, 2, 2],
-    ["Widget3", 1, 3, 1]
+    ["DG AZi Süd", 1, "lighting", 1],
+    ["DG AZi Ost", 1, "lighting", 1],
+    ["DG AZi Mitte/Wand", 1, "lighting", 1],
+    ["DG Speicher", 1, "lighting", 1],
+    ["DG SchZi", 1, "lighting", 1],
+    ["DG SchZi Schrank", 1, "lighting", 1],
+    ["DG Bad", 1, "lighting", 1],
+    ["DG Treppenhaus", 1, "lighting", 1],
+    ["OG Treppenhaus", 1, "lighting", 1],
+    ["OG Bad 1", 1, "lighting", 1],
+    ["OG Bad 2", 1, "lighting", 1],
+    ["OG Gästezimmer", 1, "lighting", 1],
+    ["KE Treppenhaus", 1, "lighting", 1],
+    ["KE Übergaberaum", 1, "lighting", 1],
+    ["KE Anja 1", 1, "lighting", 1],
+    ["KE Anja 2", 1, "lighting", 1],
+    ["KE Großer Keller", 1, "lighting", 1],
+    ["KE Bad Decke", 1, "lighting", 1],
+    ["KE Bad Becken", 1, "lighting", 1],
+    ["EG Diele", 1, "lighting", 1],
+    ["EG Küche 1", 1, "lighting", 1],
+    ["EG Küche 2", 1, "lighting", 1],
+    ["EG WZi Nord 1", 1, "lighting", 1],
+    ["EG WZi Nord 2", 1, "lighting", 1],
+    ["EG WZi Süd 1", 1, "lighting", 1],
+    ["EG WZi Süd 2", 1, "lighting", 1],
+    ["EG Terrasse", 1, "lighting", 1],
+    ["OG KiZi Süd 1", 1, "lighting", 1],
+    ["OG KiZi Süd 2", 1, "lighting", 1],
+    ["OG KiZi Nord 1", 1, "lighting", 1],
+    ["OG KiZi Nord 2", 1, "lighting", 1],
+
+    ["DG AZi Ost", 1, "shutter", 35],
+    ["DG AZi Süd", 1, "shutter", 100],
+    ["DG AZi West", 1, "shutter", 100],
+    ["DG Treppenhaus", 1, "shutter", 100],
+    ["DG Bad", 1, "shutter", 0],
+    ["DG SchZi", 1, "shutter", 100],
+    ["OG Nord", 1, "shutter", 0],
+    ["OG Süd Fenster", 1, "shutter", 100],
+    ["OG Süd Tür", 1, "shutter", 100],
+    ["OG Gäste Fenster", 1, "shutter", 100],
+    ["OG Gäste Tür", 1, "shutter", 100],
+    ["OG Süd Markise", 1, "shutter", 100],
+
+    ["OG Süd Markise", 1, "blind", 52],
+
+    ["KE Bad Becken", 1, "dimmer", 88],
+
+    ["Wasser im Keller", 1, "mc", 0],
+
+    ["DG Bad", 1, "window", 1],
+    ["DG TrHaus", 1, "window", 1],
+    ["DG SchZi", 1, "window", 1],
+
+    ["Temperatur", 1, "weather", 27.3],
+    ["Windgeschwindigkeit", 1, "weather", 22.1],
+    ["Helligkeit", 1, "weather", 12.8]
 ]
 
-widgets_list.each do |name, active, knx_module_id, room_id|
-  Widget.create!( name: name, active: active, knx_module_id: knx_module_id, room_id: room_id )
-end
-
-# Rule name:string status:boolean start_value:integer end_value:integer steps:float widget_id:integer
-rules_list = [
-    ["Rule1", 1, 20, 40, 2.5, 1],
-    ["Rule2", 0, 1, 10, 1, 2],
-    ["Rule3", 1, 0, 1, 0.1, 3]
-]
-
-rules_list.each do |name, status, start_value, end_value, steps, widget_id|
-  Rule.create!( name: name, status: status, start_value: start_value, end_value: end_value, steps: steps, widget_id: widget_id )
+widgets_list.each do |name, active, use, value|
+  Widget.create!( name: name, active: active, use: use, value: value )
 end

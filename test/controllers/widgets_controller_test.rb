@@ -17,7 +17,7 @@ class WidgetsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create widget" do
     assert_difference('Widget.count') do
-      post widgets_url, params: { widget: { active: @widget.active, knx_module_id: @widget.knx_module_id, name: @widget.name, room_id: @widget.room_id } }
+      post widgets_url, params: { widget: { active: @widget.active, use: @widget.use, name: @widget.name, value: @widget.value } }
     end
 
     assert_redirected_to widget_url(Widget.last)
@@ -34,7 +34,7 @@ class WidgetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update widget" do
-    patch widget_url(@widget), params: { widget: { active: @widget.active, knx_module_id: @widget.knx_module_id, name: @widget.name, room_id: @widget.room_id } }
+    patch widget_url(@widget), params: { widget: { active: @widget.active, use: @widget.use, name: @widget.name, value: @widget.value } }
     assert_redirected_to widget_url(@widget)
   end
 

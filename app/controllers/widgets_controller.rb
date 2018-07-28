@@ -93,6 +93,6 @@ class WidgetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def widget_params
-      params.require(:widget).permit(:name, :active, :value, :knx_module_id, :room_id, rules_attributes: [:id, :name, :status, :start_value, :end_value, :steps, :widget_id])
+      params.require(:widget).permit(:name, :active, :use, :value)
     end
 end

@@ -15,9 +15,9 @@ class WidgetsTest < ApplicationSystemTestCase
     click_on "New Widget"
 
     fill_in "Active", with: @widget.active
-    fill_in "Knx Module", with: @widget.knx_module_id
+    fill_in "Use", with: @widget.use
     fill_in "Name", with: @widget.name
-    fill_in "Room", with: @widget.room_id
+    fill_in "Value", with: @widget.value
     click_on "Create Widget"
 
     assert_text "Widget was successfully created"
@@ -29,9 +29,9 @@ class WidgetsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Active", with: @widget.active
-    fill_in "Knx Module", with: @widget.knx_module_id
+    fill_in "Use", with: @widget.use
     fill_in "Name", with: @widget.name
-    fill_in "Room", with: @widget.room_id
+    fill_in "Value", with: @widget.value
     click_on "Update Widget"
 
     assert_text "Widget was successfully updated"

@@ -3,11 +3,11 @@
 one:
   name: MyString
   active: false
-  knx_module_id: 1
-  room_id: 1
+  use: MyString
+  value: 1
 
 two:
   name: MyString
   active: false
-  knx_module_id: 1
-  room_id: 1
+  use: MyString
+  value: 1
