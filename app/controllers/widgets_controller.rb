@@ -8,8 +8,7 @@ class WidgetsController < ApplicationController
   def index
     @widgets = if params[:term]
       # Searching for name
-      Widget.joins(:room).where('widgets.id LIKE :p OR widgets.name LIKE :p OR
-      rooms.name LIKE :p', p: "%#{params[:term]}%")
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%")
     else
       Widget.all
     end

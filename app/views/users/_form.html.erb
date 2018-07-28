@@ -68,16 +68,6 @@
           </div>
           <div class="row form" style="margin-left:1.25rem;">
             <div class="col-4 padding-left">
-              <%= f.label :rooms %>
-            </div>
-            <div class="col-8">
-              <%= f.collection_check_boxes :room_ids, Room.all, :id, :name do |m| %>
-                <div class=""><%= m.check_box %>&nbsp;<%= m.label %></div>
-              <% end %>
-            </div>
-          </div>
-          <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4 padding-left">
               <%= f.label :roles%>
             </div>
             <div class="col-8">

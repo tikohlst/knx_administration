@@ -32,10 +32,10 @@ class Ability
     if user.has_role? :admin
       can :manage, :all
     elsif user.has_role? :editor
-      can :read, [Room, Widget, Rule]
-      can :update, [Room, Widget, Rule]
+      can :read, [Widget]
+      can :update, [Widget]
     elsif user.has_role? :observer
-      can :read, [Room, Widget, Rule]
+      can :read, [Widget]
     else
       can :read, :none
     end
