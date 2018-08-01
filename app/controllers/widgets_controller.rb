@@ -107,7 +107,7 @@ class WidgetsController < ApplicationController
   def update
     if widget_params.keys[0] == "value"
       if (@widget.use == "lighting")
-        if widget_params.values[0] == "0"
+        if widget_params.values[0] == "1"
           @errors = @widget.update_attribute(:value, 1)
         else
           @errors = @widget.update_attribute(:value, 0)
