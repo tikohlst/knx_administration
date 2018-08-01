@@ -12,6 +12,63 @@ class WidgetsController < ApplicationController
     else
       Widget.all
     end
+    @lightings = $lightings
+  end
+
+  def sort_by_org_units
+    @widgets = if params[:term]
+      # Searching for name
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%")
+    else
+      Widget.all
+    end
+    @lightings = $lightings
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def sort_by_locations
+    @widgets = if params[:term]
+      # Searching for name
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%")
+    else
+      Widget.all
+    end
+    @lightings = $lightings
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def sort_alphabetically
+    @widgets = if params[:term]
+      # Searching for name
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%").sort_by{|widget| widget.name}
+    else
+      Widget.all.sort_by{|widget| widget.name}
+    end
+    @lightings = $lightings
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def sort_backwards_alphabetically
+    @widgets = if params[:term]
+      # Searching for name
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%").sort_by{|widget| widget.name}.reverse!
+    else
+      Widget.all.sort_by{|widget| widget.name}.reverse!
+    end
+    @lightings = $lightings
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /widgets/1

@@ -1,0 +1,236 @@
+<div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
+  <div id="accordion" style="width: 100%;">
+    <div class="card" style="border: none;">
+      <div class="card-header" id="headingOne" style="padding: 0px;background-color: white;border-bottom: none;">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="padding-left: 0px;">
+            <!--% if "#nav-lightings" %-->
+            <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+            Wohneinheit oben
+          </button>
+        </h5>
+      </div>
+
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body" style="padding:0px 0px 10px 0px;">
+          <div class="row" style="padding-left: 5px;padding-right: 15px;">
+            <% @lightings.each do |lighting| %>
+              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                <div class="card-body">
+                  <div class="left">
+                    <h5 style="margin-top: 6px;"><%= lighting.desc %></h5>
+                  </div>
+                  <div class="right">
+                    <%= check_box(:lighting, :status, data: {toggle: 'toggle', onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+            Wohneinheit unten
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+          <div class="row" style="padding-left: 5px;padding-right: 15px;">
+            <% widgets.each do |widget| %>
+              <% if widget.use == "lighting" %>
+                <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  <div class="card-body">
+                    <div class="left">
+                      <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+                    </div>
+                    <div class="right">
+                      <%= form_for widget, remote: true do |f| %>
+                        <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                           name: "authenticity_token" %>
+                        <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                        <%= f.check_box :value, data: { toggle: 'toggle', width: "63", height: "39"},
+                                        id: "widget_active_#{widget.id}", class: "edit_widget" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+            Zentralfunktionen
+          </button>
+        </h5>
+      </div>
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
+  <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% widgets.each do |widget| %>
+      <% if widget.use == "shutter" %>
+        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+          <div class="card-body">
+            <div>
+              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+            </div>
+            <div>
+              <div class="left">
+                <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+              </div>
+              <div class="right">
+                <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+              </div>
+            </div>
+            <br><br>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
+  <% widgets.each_with_index do |widget, count| %>
+    <% if count % 6 == 0 %>
+      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% end %>
+    <% if widget.use == "blind" %>
+      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+        <div class="card-body">
+          <div>
+            <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+          </div>
+          <div>
+            <div class="left">
+              <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+            </div>
+            <div class="right">
+              <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+            </div>
+          </div>
+          <br><br>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if count % 6 == 0 %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
+  <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% widgets.each do |widget| %>
+      <% if widget.use == "dimmer" %>
+        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+          <div class="card-body">
+            <div>
+              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+            </div>
+            <div class="">
+              <%= form_for widget, remote: true do |f| %>
+                <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                   name: "authenticity_token" %>
+                <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                <div class="slider-wrapper-horizontal">
+                  <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
+  <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% widgets.each do |widget| %>
+      <% if widget.use == "mc" %>
+        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+          <div class="card-body">
+            <div>
+              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+            </div>
+            <div class="">
+              <%= form_for widget, remote: true do |f| %>
+                <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                   name: "authenticity_token" %>
+                <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                <%= widget.value %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">Monitoring-Control</div>
+<div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
+  <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% widgets.each do |widget| %>
+      <% if widget.use == "window" %>
+        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+          <div class="card-body">
+            <div class="left">
+              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+            </div>
+            <div class="right">
+              <% if widget.value == 0 %>
+                <div style="background-color: red;padding: 5px;border-radius: 8px;color: white;">Open</div>
+              <% else %>
+                <div style="background-color: green;padding: 5px;border-radius: 8px;color: white;">Close</div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
+  <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% widgets.each do |widget| %>
+      <% if widget.use == "weather" %>
+        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+          <div class="card-body">
+            <div>
+              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+            </div>
+            <div class="">
+              <%= widget.value %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

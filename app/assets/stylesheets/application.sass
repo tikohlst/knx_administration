@@ -16,6 +16,25 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+label.btn-outline-secondary > input
+    position: absolute
+    clip: rect(0, 0, 0, 0)
+    pointer-events: none
+
+.btn-right-radius
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+
+.btn-left-radius
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
+
+.btn:hover
+    text-decoration: none
+
+.btn-outline-secondary.focus
+    box-shadow: none
+
 .glyphicon-step-backward, .glyphicon-backward, .glyphicon-step-forward, .glyphicon-forward
     font-size: 1.3em
 
