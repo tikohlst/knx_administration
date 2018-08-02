@@ -12,11 +12,12 @@ $(document).ready ->
     return
 
   # Make sure the triangles turn
-  $(document).on 'click', '#accordion > .card > .card-header > .mb-0 > .btn', ->
+  $(document).on 'click', '.accordion > .card > .card-header > .mb-0 > .btn', ->
     if ($(this).children('span').hasClass('glyphicon-triangle-bottom'))
       $(this).children('span').toggleClass('glyphicon-triangle-bottom glyphicon-triangle-right')
     else
-      $('.glyphicon-triangle-bottom').toggleClass('glyphicon-triangle-bottom glyphicon-triangle-right')
+      accordion_id = $(this).parent().parent().parent().parent().attr('id')
+      $('#' + accordion_id + ' .glyphicon-triangle-bottom').toggleClass('glyphicon-triangle-bottom glyphicon-triangle-right')
       $(this).children('span').toggleClass('glyphicon-triangle-right glyphicon-triangle-bottom')
 
 
