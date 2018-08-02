@@ -1,2 +1,5 @@
+var currentTab = $('#nav-tabContent > .show.active').attr('id');
 $('#nav-tabContent').html("<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets}) %>");
+$('#nav-lightings').removeClass('show active');
+$('#' + currentTab).addClass('show active');
 $(':checkbox').bootstrapToggle();
