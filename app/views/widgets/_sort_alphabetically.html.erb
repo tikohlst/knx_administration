@@ -7,7 +7,7 @@
             <h5 style="margin-top: 6px;"><%= lighting.desc %></h5>
           </div>
           <div class="right">
-            <%= check_box(:lighting, :status, data: {toggle: 'toggle', onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
+            <%= check_box(:lighting, :status, data: {toggle: 'toggle', width: "63", height: "39", onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
           </div>
         </div>
       </div>
@@ -64,37 +64,33 @@
   </div>
 </div>
 <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
-  <% @widgets.each_with_index do |widget, count| %>
-    <% if count % 6 == 0 %>
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
-    <% end %>
-    <% if widget.use == "blind" %>
-      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-        <div class="card-body">
-          <div>
-            <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-          </div>
-          <div>
-            <div class="left">
-              <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
-              <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+  <div class="row" style="padding-left: 5px;padding-right: 15px;">
+    <% @widgets.each do |widget| %>
+      <% if widget.use == "blind" %>
+        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+          <div class="card-body">
+            <div>
+              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
             </div>
-            <div class="right">
-              <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-              <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+            <div>
+              <div class="left">
+                <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+              </div>
+              <div class="right">
+                <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+              </div>
             </div>
-          </div>
-          <br><br>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
+            <br><br>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
-    <% if count % 6 == 0 %>
-      </div>
-    <% end %>
-  <% end %>
+  </div>
 </div>
 <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
   <div class="row" style="padding-left: 5px;padding-right: 15px;">
