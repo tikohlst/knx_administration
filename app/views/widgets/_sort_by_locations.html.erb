@@ -19,7 +19,7 @@
           <div class="card-body" style="padding:0px 0px 10px 0px;">
             <div class="row" style="padding-left: 5px;padding-right: 15px;">
               <% widgets.each do |widget| %>
-                <% if widget.location == location %>
+                <% if widget.location == location and widget.use == "lighting" %>
                   <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                     <div class="card-body">
                       <div class="left">
