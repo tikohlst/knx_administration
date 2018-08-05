@@ -3,23 +3,27 @@ class WidgetsController < ApplicationController
   load_and_authorize_resource
   before_action :set_widget, only: [:show, :edit, :update, :destroy]
 
+  $params = nil
+
   # GET /widgets
   # GET /widgets.json
   def index
-    @widgets = if params[:term]
-      # Searching for name
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%")
+    @widgets = if params[:term] || $params
+      $params = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params}%")
     else
+      $params = nil
       Widget.all
     end
     @lightings = $lightings
   end
 
   def sort_by_org_units
-    @widgets = if params[:term]
-      # Searching for name
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%")
+    @widgets = if params[:term] || $params
+      $params = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params}%")
     else
+      $params = nil
       Widget.all
     end
     @lightings = $lightings
@@ -30,10 +34,11 @@ class WidgetsController < ApplicationController
   end
 
   def sort_by_locations
-    @widgets = if params[:term]
-      # Searching for name
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%")
+    @widgets = if params[:term] || $params
+      $params = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params}%")
     else
+      $params = nil
       Widget.all
     end
     @lightings = $lightings
@@ -44,10 +49,11 @@ class WidgetsController < ApplicationController
   end
 
   def sort_alphabetically
-    @widgets = if params[:term]
-      # Searching for name
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%").sort_by{|widget| widget.name}
+    @widgets = if params[:term] || $params
+      $params = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params}%").sort_by{|widget| widget.name}
     else
+      $params = nil
       Widget.all.sort_by{|widget| widget.name}
     end
     @lightings = $lightings
@@ -58,10 +64,11 @@ class WidgetsController < ApplicationController
   end
 
   def sort_backwards_alphabetically
-    @widgets = if params[:term]
-      # Searching for name
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{params[:term]}%").sort_by{|widget| widget.name}.reverse!
+    @widgets = if params[:term] || $params
+      $params = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params}%").sort_by{|widget| widget.name}.reverse!
     else
+      $params = nil
       Widget.all.sort_by{|widget| widget.name}.reverse!
     end
     @lightings = $lightings
