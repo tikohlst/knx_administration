@@ -5,12 +5,12 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
   </head>
 
-  <body class="margin">
-    <div class="" id="main-container">
+  <body>
+    <div id="main-container">
       <div class="row">
         <div class="col">
           <% if notice %>
@@ -37,22 +37,22 @@
               </a>
             </div>
             <% if user_signed_in? %>
-              <%= link_to widgets_path, class: 'btn btn-info' do %>
+              <%= link_to widgets_path, class: 'btn btn-success' do %>
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
               <% end %>
               <% if current_user.has_role? :admin %>
-                <%= link_to users_url, class: 'btn btn-info' do %>
+                <%= link_to users_url, class: 'btn btn-success' do %>
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <% end %>
               <% end %>
-              <%= link_to edit_user_registration_path, class: 'btn btn-info' do %>
+              <%= link_to edit_user_registration_path, class: 'btn btn-success' do %>
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
               <% end %>
-              <%= link_to destroy_user_session_path, method: :delete, class: 'btn btn-info' do %>
+              <%= link_to destroy_user_session_path, method: :delete, class: 'btn btn-success' do %>
                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
               <% end %>
             <% else %>
-              <%= link_to new_user_session_path, class: 'btn btn-info' do %>
+              <%= link_to new_user_session_path, class: 'btn btn-success' do %>
                 <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
               <% end %>
             <% end %>
@@ -62,36 +62,32 @@
 
       <div class="row">
         <div class="col">
-          <hr>
+          <br>
         </div>
       </div>
 
       <%= yield %>
 
       <% if user_signed_in? %>
-        <div class="row" id="footer">
-          <div class="col padding-left padding-right">
-            <div class="card">
-              <h6 class="card-header">
-                <div class="pull-right flex">
-                  <div id="footer_left">
-                    Logged in as
-                    <div class="bold block">
-                      <%= current_user.username %>
-                    </div>
-                  </div>
-                  <div class="right">
-                    Role:
-                    <div class="bold block">
-                      <%=current_user.roles.pluck(:name).join(", ")%>
-                    </div>
-                  </div>
+        <div class="card">
+          <h6 class="card-header">
+            <div class="pull-right flex">
+              <div id="footer_left">
+                Logged in as
+                <div class="bold block">
+                  <%= current_user.username %>
                 </div>
-              </h6>
+              </div>
+              <div class="right">
+                Role:
+                <div class="bold block">
+                  <%=current_user.roles.pluck(:name).join(", ")%>
+                </div>
+              </div>
             </div>
-          </div>
+          </h6>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </body>
 </html>

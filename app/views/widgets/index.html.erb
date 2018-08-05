@@ -2,81 +2,80 @@
   <div class="col">
     <h1>Widgets</h1>
   </div>
-  <!--
-  <% if current_user.has_role? :admin %>
-    <div class="col">
-      <%= link_to 'New Widget', new_widget_path, class: "btn btn-info right top10" %>
+</div>
+
+<div class="card">
+  <div>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <div class="navbar-brand">
+        Sort by:
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <%= link_to sort_by_org_units_widgets_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-right-radius" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" id="option1" autocomplete="off">Org-Unit
+            </label>
+          <% end %>
+          <%= link_to sort_by_locations_widgets_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" id="option2" autocomplete="off" checked>Location
+            </label>
+          <% end %>
+          <%= link_to sort_alphabetically_widgets_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-left-radius btn-right-radius" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" id="option3" autocomplete="off">A-Z
+            </label>
+          <% end %>
+          <%= link_to sort_backwards_alphabetically_widgets_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-left-radius" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" id="option4" autocomplete="off">Z-A
+            </label>
+          <% end %>
+        </div>
+      </div>
+      <%= form_tag widgets_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
+        <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
+        <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
+      <% end %>
+    </nav>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
+      <li class="nav-item">
+        <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
+           role="tab" aria-controls="nav-home" aria-selected="true">Lightings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters"
+           role="tab" aria-controls="nav-profile" aria-selected="false">Shutters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds"
+           role="tab" aria-controls="nav-contact" aria-selected="false">Blinds</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
+           role="tab" aria-controls="nav-contact" aria-selected="false">Dimmer</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
+           role="tab" aria-controls="nav-contact" aria-selected="false">Monitoring-Control</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
+           role="tab" aria-controls="nav-contact" aria-selected="false">Windows</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
+           role="tab" aria-controls="nav-contact" aria-selected="false">Weather</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content" id="nav-tabContent">
+      <%= render partial: 'sort_by_locations', locals: {widgets: @widgets} %>
     </div>
-  <% end %>
-  -->
-</div>
-
-<div class="row">
-  <div class="col">
-    <hr>
   </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    Sort by:
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <%= link_to sort_by_org_units_widgets_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-right-radius">
-          <input type="radio" name="options" id="option1" autocomplete="off">Org-Unit
-        </label>
-      <% end %>
-      <%= link_to sort_by_locations_widgets_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active">
-          <input type="radio" name="options" id="option2" autocomplete="off" checked>Location
-        </label>
-      <% end %>
-      <%= link_to sort_alphabetically_widgets_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-left-radius btn-right-radius">
-          <input type="radio" name="options" id="option3" autocomplete="off">A-Z
-        </label>
-      <% end %>
-      <%= link_to sort_backwards_alphabetically_widgets_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-left-radius">
-          <input type="radio" name="options" id="option4" autocomplete="off">Z-A
-        </label>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="col">
-    <%= form_tag widgets_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
-      <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
-      <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    <hr>
-  </div>
-</div>
-
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-lightings-tab" data-toggle="tab"
-       href="#nav-lightings" role="tab" aria-controls="nav-home" aria-selected="true">Lightings</a>
-    <a class="nav-item nav-link" id="nav-shutters-tab" data-toggle="tab"
-       href="#nav-shutters" role="tab" aria-controls="nav-profile" aria-selected="false">Shutters</a>
-    <a class="nav-item nav-link" id="nav-blinds-tab" data-toggle="tab"
-       href="#nav-blinds" role="tab" aria-controls="nav-contact" aria-selected="false">Blinds</a>
-    <a class="nav-item nav-link" id="nav-dimmer-tab" data-toggle="tab"
-       href="#nav-dimmer" role="tab" aria-controls="nav-contact" aria-selected="false">Dimmer</a>
-    <a class="nav-item nav-link" id="nav-mc-tab" data-toggle="tab"
-       href="#nav-mc" role="tab" aria-controls="nav-contact" aria-selected="false">Monitoring-Control</a>
-    <a class="nav-item nav-link" id="nav-windows-tab" data-toggle="tab"
-       href="#nav-windows" role="tab" aria-controls="nav-contact" aria-selected="false">Windows</a>
-    <a class="nav-item nav-link" id="nav-weather-tab" data-toggle="tab"
-       href="#nav-weather" role="tab" aria-controls="nav-contact" aria-selected="false">Weather</a>
-  </div>
-</nav>
-
-<div class="tab-content" id="nav-tabContent">
-  <%= render partial: 'sort_by_locations', locals: {widgets: @widgets} %>
 </div>

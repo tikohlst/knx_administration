@@ -12,7 +12,7 @@ $(document).ready ->
     return
 
   # Make sure the triangles turn
-  $(document).on 'click', '.accordion > .card > .card-header > .mb-0 > .btn', ->
+  $(document).on 'click', '.accordion > div > div > .mb-0 > .btn', ->
     if ($(this).children('span').hasClass('glyphicon-triangle-bottom'))
       $(this).children('span').toggleClass('glyphicon-triangle-bottom glyphicon-triangle-right')
     else
