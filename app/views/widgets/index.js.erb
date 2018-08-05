@@ -1,0 +1,21 @@
+/* Save current tab to display the same tab after changing the sort order */
+var currentTab = $('#nav-tabContent > .show.active').attr('id');
+var render;
+var currentSort = $('a label.active').text().replace(/\s/g,'');
+switch(currentSort) {
+    case "Org-Unit":
+        render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets }) %>";
+        break;
+    case "Location":
+        render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets }) %>";
+        break;
+    case "A-Z":
+        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>";
+        break;
+    case "Z-A":
+        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>";
+}
+$('#nav-tabContent').html(render);
+$('#nav-lightings').removeClass('show active');
+$('#' + currentTab).addClass('show active');
+$(':checkbox').bootstrapToggle();
