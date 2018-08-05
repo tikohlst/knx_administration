@@ -121,7 +121,6 @@ class WidgetsController < ApplicationController
 
     respond_to do |format|
       if @errors
-        format.html { redirect_to widgets_url }
         format.json { head :no_content }
 
         ActionCable.server.broadcast 'widgets', @widget
