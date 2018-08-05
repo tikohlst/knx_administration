@@ -232,17 +232,29 @@
                     </div>
                     <div>
                       <div class="left">
-                        <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
-                        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+                        <div class="btn-group" role="group" style="height: 35px;">
+                          <button type="button" class="btn btn-grey">
+                            <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                          </button>
+                          <button type="button" class="btn btn-grey">
+                            <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                          </button>
+                        </div>
                       </div>
                       <div class="right">
-                        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                        <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                        <div class="btn-group" role="group" style="height: 35px;">
+                          <button type="button" class="btn btn-grey">
+                            <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                          </button>
+                          <button type="button" class="btn btn-grey">
+                            <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                     <br><br>
                     <div class="progress">
-                      <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%"></div>
+                      <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
                     </div>
                   </div>
                 </div>
