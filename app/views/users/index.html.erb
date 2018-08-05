@@ -17,29 +17,35 @@
 
 <div class="row">
   <div class="col">
-    Sort after:
-    <div class="btn-group btn-group-toggle">
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option1" autocomplete="off"> ID
-      </label>
-      <label class="btn btn-outline-secondary active">
-        <input type="radio" name="options" id="option2" autocomplete="off"> Username
-      </label>
-      <label class="btn btn-outline-secondary">
-        <input type="radio" name="options" id="option3" autocomplete="off"> Role
-      </label>
+    Sort by:
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <%= link_to sort_by_ids_users_path, remote: true do %>
+        <label class="btn btn-outline-secondary btn-right-radius">
+          <input type="radio" name="options" autocomplete="off"> ID
+        </label>
+      <% end %>
+      <%= link_to sort_by_usernames_users_path, remote: true do %>
+        <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active">
+          <input type="radio" name="options" autocomplete="off" checked> Username
+        </label>
+      <% end %>
+      <%= link_to sort_by_roles_users_path, remote: true do %>
+        <label class="btn btn-outline-secondary btn-left-radius">
+          <input type="radio" name="options" autocomplete="off"> Role
+        </label>
+      <% end %>
     </div>
   </div>
 
   <div class="col">
-    <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get do %>
+    <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
       <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
       <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
     <% end %>
   </div>
 </div>
 
-<table class="table table-bordered table-hover table-striped sortable" id="table_users">
+<table class="table table-bordered table-hover table-striped" id="table_users">
   <thead>
   <tr class="table-info">
     <th>ID</th>
@@ -49,19 +55,6 @@
   </thead>
 
   <tbody>
-  <% @users.each do |user| %>
-    <tr data-link="<%= user.id %>">
-      <td><%= user.id %></td>
-      <td><%= user.username %></td>
-      <td>
-        <% for role in user.roles %>
-          <%= role.name %>
-          <% if (role.id != user.roles.last.id) %>
-            +
-          <% end %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
+    <%= render partial: 'sort_by_usernames', locals: {users: @users} %>
   </tbody>
 </table>

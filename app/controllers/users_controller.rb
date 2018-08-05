@@ -3,11 +3,52 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
+  $params = nil
+
   def index
-    @users = if params[:term]
-      # Searching for username
-      User.where('username LIKE ?', "%#{params[:term]}%")
+    puts params[:term]
+    @users = if (params[:term] && params[:term] != "") || $params
+      $params = params[:term] if params[:term]
+      # Searching for username or id
+      User.where('username LIKE :p OR id LIKE :p', p: "%#{$params}%")
+
+      # Searching for role
+      #User.joins(:roles).merge(Role.where('name LIKE :p', p: "%#{params[:term]}%"))
     else
+      $params = nil
+      User.all
+    end
+  end
+
+  def sort_by_ids
+    @users = if (params[:term] && params[:term] != "") || $params
+      $params = params[:term] if params[:term]
+      # Searching for username or id
+      User.where('username LIKE :p OR id LIKE :p', p: "%#{$params}%")
+    else
+      $params = nil
+      User.all
+    end
+  end
+
+  def sort_by_usernames
+    @users = if (params[:term] && params[:term] != "") || $params
+      $params = params[:term] if params[:term]
+      # Searching for username or id
+      User.where('username LIKE :p OR id LIKE :p', p: "%#{$params}%")
+    else
+      $params = nil
+      User.all
+    end
+  end
+
+  def sort_by_roles
+    @users = if (params[:term] && params[:term] != "") || $params
+      $params = params[:term] if params[:term]
+      # Searching for username or id
+      User.where('username LIKE :p OR id LIKE :p', p: "%#{$params}%")
+    else
+      $params = nil
       User.all
     end
   end

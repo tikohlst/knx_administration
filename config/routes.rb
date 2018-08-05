@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root to: 'widgets#index'
   devise_for :users, path_prefix: 'my'
-  resources :users
+  resources :users do
+    get 'sort_by_ids', on: :collection
+    get 'sort_by_roles', on: :collection
+    get 'sort_by_usernames', on: :collection
+  end
   resources :widgets do
     get 'sort_by_org_units', on: :collection
     get 'sort_by_locations', on: :collection

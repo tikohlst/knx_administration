@@ -1,0 +1,14 @@
+var render;
+var currentSort = $('a label.active').text().replace(/\s/g,'');
+switch(currentSort) {
+    case "ID":
+        render = "<%= escape_javascript(render partial: 'sort_by_ids', locals: {users: @users }) %>";
+        break;
+    case "Username":
+        render = "<%= escape_javascript(render partial: 'sort_by_usernames', locals: {users: @users }) %>";
+        break;
+    case "Role":
+        render = "<%= escape_javascript(render partial: 'sort_by_roles', locals: {users: @users }) %>";
+        break;
+}
+$('#table_users > tbody').html(render);
