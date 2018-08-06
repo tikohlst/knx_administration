@@ -31,7 +31,7 @@
                             <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                                name: "authenticity_token" %>
                             <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                            <%= f.check_box :value, data: { toggle: 'toggle', width: "63", height: "39"},
+                            <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
                                             id: "widget_active_#{widget.id}", class: "edit_widget" %>
                           <% end %>
                         </div>

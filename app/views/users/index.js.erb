@@ -4,9 +4,11 @@ switch(currentSort) {
     case "ID":
         render = "<%= escape_javascript(render partial: 'sort_by_ids', locals: {users: @users }) %>";
         break;
+    case "Benutzername":
     case "Username":
         render = "<%= escape_javascript(render partial: 'sort_by_usernames', locals: {users: @users }) %>";
         break;
+    case "Rolle":
     case "Role":
         render = "<%= escape_javascript(render partial: 'sort_by_roles', locals: {users: @users }) %>";
         break;

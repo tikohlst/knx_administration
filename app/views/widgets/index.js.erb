@@ -6,6 +6,7 @@ switch(currentSort) {
     case "Org-Unit":
         render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets }) %>";
         break;
+    case "Ort":
     case "Location":
         render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets }) %>";
         break;

@@ -29,12 +29,12 @@
           </div>
           <div class="right">
             <div class="btn-group" role="group">
-              <a class="btn btn-secondary">
+              <%= link_to "http://localhost:3000/en#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}", class: 'btn btn-secondary' do %>
                 <%= flag_icon(:gb, id: 'gb-flag') %>
-              </a>
-              <a class="btn btn-secondary">
+              <% end %>
+              <%= link_to "http://localhost:3000/de#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}", class: 'btn btn-secondary' do %>
                 <%= flag_icon(:de, id: 'de-flag') %>
-              </a>
+              <% end %>
             </div>
             <% if user_signed_in? %>
               <%= link_to widgets_path, class: 'btn btn-success' do %>
@@ -73,13 +73,13 @@
           <h6 class="card-header">
             <div class="pull-right flex">
               <div id="footer_left">
-                Logged in as
+                <%= t 'views.logged_in_as' %>
                 <div class="bold block">
                   <%= current_user.username %>
                 </div>
               </div>
               <div class="right">
-                Role:
+                <%= t 'views.role' %>:
                 <div class="bold block">
                   <%=current_user.roles.pluck(:name).join(", ")%>
                 </div>

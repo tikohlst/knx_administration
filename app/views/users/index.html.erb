@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col">
-    <h1>Users</h1>
+    <h1><%= t 'views.user' %></h1>
   </div>
   <% if current_user.has_role? :admin %>
     <div class="col">
-      <%= link_to 'New User', new_user_path, class: "btn btn-success right top10" %>
+      <%= link_to t('views.new_user'), new_user_path, class: "btn btn-success right top10" %>
     </div>
   <% end %>
 </div>
@@ -17,7 +17,7 @@
 
 <div class="row">
   <div class="col">
-    Sort by:
+    <%= t 'views.sortby' %>:
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <%= link_to sort_by_ids_users_path, remote: true do %>
         <label class="btn btn-outline-secondary btn-right-radius">
@@ -26,12 +26,12 @@
       <% end %>
       <%= link_to sort_by_usernames_users_path, remote: true do %>
         <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active">
-          <input type="radio" name="options" autocomplete="off" checked> Username
+          <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
         </label>
       <% end %>
       <%= link_to sort_by_roles_users_path, remote: true do %>
         <label class="btn btn-outline-secondary btn-left-radius">
-          <input type="radio" name="options" autocomplete="off"> Role
+          <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
         </label>
       <% end %>
     </div>
@@ -40,7 +40,7 @@
   <div class="col">
     <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
       <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
-      <%= submit_tag 'Suchen', name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
+      <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
     <% end %>
   </div>
 </div>
@@ -49,8 +49,8 @@
   <thead>
   <tr class="table-info">
     <th>ID</th>
-    <th>Username</th>
-    <th>Role(s)</th>
+    <th><%= t 'views.username' %></th>
+    <th><%= t 'views.role' %></th>
   </tr>
   </thead>
 

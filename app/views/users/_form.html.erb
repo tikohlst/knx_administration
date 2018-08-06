@@ -29,15 +29,15 @@
       <div class="card">
         <h3 class="card-header">
           <% if @user.new_record? %>
-            New User
+            <%= t 'views.new_user' %>
           <% else %>
-            Edit <%= @user.username.to_s.humanize %>
+            <%= @user.username.to_s.humanize %>
           <% end %>
         </h3>
         <div class="card-block">
           <div class="row form" style="margin-left:1.25rem;">
             <div class="col-4 padding-left">
-              <%= f.label :username %>
+              <%= t 'views.username' %>
             </div>
             <div class="col-8">
               <%= f.text_field :username%>
@@ -47,7 +47,7 @@
             <div class="col-4 padding-left">
               <%= f.label :password %>
               <% if not @user.new_record? %>
-                <i>(leave blank if you don't want to change it)</i>
+                <i><%= t 'views.note' %></i>
               <% end %>
             </div>
             <div class="col-8">
@@ -68,7 +68,7 @@
           </div>
           <div class="row form" style="margin-left:1.25rem;">
             <div class="col-4 padding-left">
-              <%= f.label :roles%>
+              <%= t 'views.role' %>
             </div>
             <div class="col-8">
               <%= f.collection_check_boxes :role_ids, Role.all, :id, :name do |m| %>
@@ -79,15 +79,15 @@
           <div class="row form" style="margin-left: 1.25rem;margin-right: 1.25rem;display: block;margin-bottom: 50px;">
             <% if not @user.new_record? %>
               <div class="left padding-left" style="padding-left:0px">
-                <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+                <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
               </div>
             <% end %>
             <div class="right">
               <div class="actions">
                 <% if @user.new_record? %>
-                  <%= f.submit "Create", class: "btn btn-success" %>
+                  <%= f.submit t('views.create'), class: "btn btn-success" %>
                 <% else %>
-                  <%= f.submit "Update", class: "btn btn-success" %>
+                  <%= f.submit t('views.update'), class: "btn btn-success" %>
                 <% end %>
               </div>
             </div>
