@@ -9,39 +9,34 @@
   <% end %>
 </div>
 
-<div class="row">
-  <div class="col">
-    <hr>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    <%= t 'views.sortby' %>:
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <%= link_to sort_by_ids_users_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-right-radius">
-          <input type="radio" name="options" autocomplete="off"> ID
-        </label>
+<div class="card">
+  <div>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <div class="navbar-brand">
+        <%= t 'views.sortby' %>:
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <%= link_to sort_by_ids_users_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-right-radius" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" autocomplete="off"> ID
+            </label>
+          <% end %>
+          <%= link_to sort_by_usernames_users_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
+            </label>
+          <% end %>
+          <%= link_to sort_by_roles_users_path, remote: true do %>
+            <label class="btn btn-outline-secondary btn-left-radius" style="margin-bottom: 0rem !important;">
+              <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+      <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
+        <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
+        <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
       <% end %>
-      <%= link_to sort_by_usernames_users_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active">
-          <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
-        </label>
-      <% end %>
-      <%= link_to sort_by_roles_users_path, remote: true do %>
-        <label class="btn btn-outline-secondary btn-left-radius">
-          <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
-        </label>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="col">
-    <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
-      <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
-      <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
-    <% end %>
+    </nav>
   </div>
 </div>
 

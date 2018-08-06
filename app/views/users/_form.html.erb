@@ -31,7 +31,7 @@
           <% if @user.new_record? %>
             <%= t 'views.new_user' %>
           <% else %>
-            <%= @user.username.to_s.humanize %>
+            <%= @user.username %>
           <% end %>
         </h3>
         <div class="card-block">
