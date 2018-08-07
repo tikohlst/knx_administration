@@ -16,10 +16,10 @@
             <% @lightings.each do |lighting| %>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
-                  <div class="left">
+                  <div class="float-left">
                     <h5 style="margin-top: 6px;"><%= lighting.desc %></h5>
                   </div>
-                  <div class="right">
+                  <div class="float-right">
                     <%= check_box(:lighting, :status, data: {toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39", onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
                   </div>
                 </div>
@@ -45,10 +45,10 @@
               <% if widget.use == "lighting" %>
                 <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                   <div class="card-body">
-                    <div class="left">
+                    <div class="float-left">
                       <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                     </div>
-                    <div class="right">
+                    <div class="float-right">
                       <%= form_for widget, remote: true do |f| %>
                         <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                            name: "authenticity_token" %>
@@ -105,7 +105,7 @@
                       <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                     </div>
                     <div>
-                      <div class="left">
+                      <div class="float-left">
                         <div class="btn-group" role="group" style="height: 35px;">
                           <button type="button" class="btn btn-grey">
                             <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -115,7 +115,7 @@
                           </button>
                         </div>
                       </div>
-                      <div class="right">
+                      <div class="float-right">
                         <div class="btn-group" role="group" style="height: 35px;">
                           <button type="button" class="btn btn-grey">
                             <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -158,7 +158,7 @@
                       <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                     </div>
                     <div>
-                      <div class="left">
+                      <div class="float-left">
                         <div class="btn-group" role="group" style="height: 35px;">
                           <button type="button" class="btn btn-grey">
                             <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -168,7 +168,7 @@
                           </button>
                         </div>
                       </div>
-                      <div class="right">
+                      <div class="float-right">
                         <div class="btn-group" role="group" style="height: 35px;">
                           <button type="button" class="btn btn-grey">
                             <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -231,7 +231,7 @@
                       <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                     </div>
                     <div>
-                      <div class="left">
+                      <div class="float-left">
                         <div class="btn-group" role="group" style="height: 35px;">
                           <button type="button" class="btn btn-grey">
                             <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -241,7 +241,7 @@
                           </button>
                         </div>
                       </div>
-                      <div class="right">
+                      <div class="float-right">
                         <div class="btn-group" role="group" style="height: 35px;">
                           <button type="button" class="btn btn-grey">
                             <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -350,10 +350,10 @@
               <% if widget.use == "window" %>
                 <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                   <div class="card-body">
-                    <div class="left">
+                    <div class="float-left">
                       <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                     </div>
-                    <div class="right">
+                    <div class="float-right">
                       <% if widget.value == 0 %>
                         <div style="background-color: red;padding: 5px;border-radius: 8px;color: white;">Open</div>
                       <% else %>

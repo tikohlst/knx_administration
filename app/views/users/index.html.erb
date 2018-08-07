@@ -1,46 +1,56 @@
-<div class="row">
-  <div class="col">
-    <h1><%= t 'views.user' %></h1>
-  </div>
-  <% if current_user.has_role? :admin %>
-    <div class="col">
-      <%= link_to t('views.new_user'), new_user_path, class: "btn btn-success right top10" %>
-    </div>
-  <% end %>
-</div>
-
 <div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm">
+        <h1 class="float-left"><%= t 'views.user' %></h1>
+        <% if current_user.has_role? :admin %>
+          <div class="float-right">
+            <%= link_to t('views.new_user'), new_user_path, class: "btn btn-success top10" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
   <div>
     <nav class="navbar navbar-light bg-light justify-content-between">
-      <div class="navbar-brand">
+      <div class="col-md-2">
         <%= t 'views.sortby' %>:
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <%= link_to sort_by_ids_users_path, remote: true do %>
-            <label class="btn btn-outline-secondary btn-right-radius" style="margin-bottom: 0rem !important;">
-              <input type="radio" name="options" autocomplete="off"> ID
-            </label>
-          <% end %>
-          <%= link_to sort_by_usernames_users_path, remote: true do %>
-            <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active" style="margin-bottom: 0rem !important;">
-              <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
-            </label>
-          <% end %>
-          <%= link_to sort_by_roles_users_path, remote: true do %>
-            <label class="btn btn-outline-secondary btn-left-radius" style="margin-bottom: 0rem !important;">
-              <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
-            </label>
+      </div>
+      <div class="col-md-4">
+        <div class="navbar-brand">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <%= link_to sort_by_ids_users_path, remote: true do %>
+              <label class="btn btn-outline-secondary btn-right-radius" style="margin-bottom: 0rem !important;">
+                <input type="radio" name="options" autocomplete="off"> ID
+              </label>
+            <% end %>
+            <%= link_to sort_by_usernames_users_path, remote: true do %>
+              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active" style="margin-bottom: 0rem !important;">
+                <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
+              </label>
+            <% end %>
+            <%= link_to sort_by_roles_users_path, remote: true do %>
+              <label class="btn btn-outline-secondary btn-left-radius" style="margin-bottom: 0rem !important;">
+                <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="float-md-right">
+          <%= form_tag users_path, class: "form-inline my-2 my-lg-0 float-right", method: :get, remote: true do %>
+            <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;" %>
+            <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0", style: "width: 28%;margin-left: 2%;" %>
           <% end %>
         </div>
       </div>
-      <%= form_tag users_path, class: "form-inline my-2 my-lg-0 right", method: :get, remote: true do %>
-        <%= text_field_tag :term, params[:term], class: "form-control mr-sm-2" %>
-        <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0" %>
-      <% end %>
     </nav>
   </div>
 </div>
 
-<table class="table table-bordered table-hover table-striped" id="table_users">
+<table class="table table-bordered table-hover table-striped" id="table_users" style="margin-top:10px;">
   <thead>
   <tr class="table-info">
     <th>ID</th>

@@ -35,39 +35,36 @@
           <% end %>
         </h3>
         <div class="card-block">
-          <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4 padding-left">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">
               <%= t 'views.username' %>
-            </div>
-            <div class="col-8">
-              <%= f.text_field :username%>
+            </label>
+            <div class="col-sm-8">
+              <%= f.text_field :username, class: "form-control" %>
             </div>
           </div>
-          <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4 padding-left">
+
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">
               <%= f.label :password %>
               <% if not @user.new_record? %>
                 <i><%= t 'views.note' %></i>
               <% end %>
-            </div>
-            <div class="col-8">
-              <%= f.password_field :password, autocomplete: "off" %>
-              <% if @minimum_password_length %>
-                <br />
-                <em><%= @minimum_password_length %> characters minimum</em>
-              <% end %>
+            </label>
+            <div class="col-sm-8">
+              <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
             </div>
           </div>
-          <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4 padding-left">
-              <%= f.label :password_confirmation %><br />
+          <div class="form-group row">
+            <div class="col-sm-4 col-form-label">
+              <%= f.label :password_confirmation %>
             </div>
-            <div class="col-8">
-              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            <div class="col-sm-8">
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
             </div>
           </div>
-          <div class="row form" style="margin-left:1.25rem;">
-            <div class="col-4 padding-left">
+          <div class="form-group row">
+            <div class="col-4">
               <%= t 'views.role' %>
             </div>
             <div class="col-8">
@@ -78,11 +75,11 @@
           </div>
           <div class="row form" style="margin-left: 1.25rem;margin-right: 1.25rem;display: block;margin-bottom: 50px;">
             <% if not @user.new_record? %>
-              <div class="left padding-left" style="padding-left:0px">
+              <div class="float-left padding-left" style="padding-left:0px">
                 <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
               </div>
             <% end %>
-            <div class="right">
+            <div class="float-right">
               <div class="actions">
                 <% if @user.new_record? %>
                   <%= f.submit t('views.create'), class: "btn btn-success" %>

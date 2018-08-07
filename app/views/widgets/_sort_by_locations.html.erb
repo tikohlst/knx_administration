@@ -23,10 +23,10 @@
                   <% if widget.location == location and widget.use == "lighting" %>
                     <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                       <div class="card-body">
-                        <div class="left">
+                        <div class="float-left">
                           <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                         </div>
-                        <div class="right">
+                        <div class="float-right">
                           <%= form_for widget, remote: true do |f| %>
                             <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                                name: "authenticity_token" %>
@@ -75,7 +75,7 @@
                           <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                         </div>
                         <div>
-                          <div class="left">
+                          <div class="float-left">
                             <div class="btn-group" role="group" style="height: 35px;">
                               <button type="button" class="btn btn-grey">
                                 <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -85,7 +85,7 @@
                               </button>
                             </div>
                           </div>
-                          <div class="right">
+                          <div class="float-right">
                             <div class="btn-group" role="group" style="height: 35px;">
                               <button type="button" class="btn btn-grey">
                                 <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -141,7 +141,7 @@
                           <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                         </div>
                         <div>
-                          <div class="left">
+                          <div class="float-left">
                             <div class="btn-group" role="group" style="height: 35px;">
                               <button type="button" class="btn btn-grey">
                                 <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -151,7 +151,7 @@
                               </button>
                             </div>
                           </div>
-                          <div class="right">
+                          <div class="float-right">
                             <div class="btn-group" role="group" style="height: 35px;">
                               <button type="button" class="btn btn-grey">
                                 <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
@@ -212,7 +212,7 @@
                                                name: "authenticity_token" %>
                             <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                             <div class="slider-wrapper-horizontal">
-                              <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                              <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
                             </div>
                           <% end %>
                         </div>
@@ -279,10 +279,10 @@
                     <% if widget.location == location and widget.use == "window" %>
                       <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                         <div class="card-body">
-                          <div class="left">
+                          <div class="float-left">
                             <h5 style="margin-top: 6px;"><%= widget.name %></h5>
                           </div>
-                          <div class="right">
+                          <div class="float-right">
                             <% if widget.value == 0 %>
                               <div style="background-color: red;padding: 5px;border-radius: 8px;color: white;">Open</div>
                             <% else %>

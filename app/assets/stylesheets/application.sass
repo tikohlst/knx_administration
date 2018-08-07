@@ -16,6 +16,57 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+div#navbarTogglerDemo01
+    ul
+        margin-top: 0 !important
+        li > h3
+            margin-top: 15px
+    form, form > ul
+        margin-bottom: 0 !important
+        margin-top: 0 !important
+        ul > li.nav-item > a
+            text-align: left
+            color: black
+            @media (min-width: 768px)
+                text-align: center
+            span
+                width: 48px
+                margin: 2px auto 4px auto
+                top: 3px
+                line-height: 24px
+                position: relative
+                font-size: 24px
+                @media (min-width: 768px)
+                    display: block
+                    top: 0
+
+
+.nav-item
+    margin-bottom: -2px
+
+div.form-group
+    margin-bottom: 0px
+    padding: 10px 20px
+
+.slider-wrapper-horizontal
+    display: inline-block
+    width: 150px
+    height: 20px
+    padding: 0
+
+.slider-wrapper-vertical
+    display: inline-block
+    width: 20px
+    height: 150px
+    padding: 0
+
+.vertical
+    width: 150px
+    height: 20px
+    margin: 0
+    transform-origin: 75px 75px
+    transform: rotate(-90deg)
+
 label.btn-outline-secondary > input
     position: absolute
     clip: rect(0, 0, 0, 0)
@@ -44,18 +95,8 @@ label.btn-outline-secondary > input
 .glyphicon-step-forward, .glyphicon-backward
     margin-left: -5px
 
-.nav-link.active
-    margin-bottom: -2px
-
 .row>form
     width: 100%
-
-#table_users, .card-deck
-    margin-top: 1rem
-
-@media (min-width: 1400px)
-    .container
-        max-width: 100%
 
 .toggle-group
     .btn.btn-primary.toggle-on
@@ -74,26 +115,11 @@ label.btn-outline-secondary > input
 .toggle
     border-color: #ccc !important
 
-#main-container
-    padding: 15px
-
-.width-40
-    width: 40px
-
-.left
-    float: left
-
-.right
-    float: right
-
 .padding-left
     padding-left: 0px
 
 .padding-right
     padding-right: 0px
-
-.flex
-    display: flex
 
 .center
     justify-content: center
@@ -104,35 +130,11 @@ label.btn-outline-secondary > input
 .text-right
     text-align: right
 
-.margin-auto
-    margin: 0 auto
-
-.margin
-    margin: 15px
-
-.margin-left
-    margin-left: 5px
-
-.margin-right
-    margin-right: 5px
-
-.margin-form
-    margin: 0px 5px
-
 .margin-index
     margin: 10px 0px
 
-.top7
-    padding-top: 7px
-
 .top10
     margin-top: 10px !important
-
-.top15
-    margin-top: 15px
-
-.bottom
-    margin-bottom: 10px
 
 .bold
     font-weight: bold
@@ -140,30 +142,8 @@ label.btn-outline-secondary > input
 .block
     display: inline-block
 
-.clear
-    clear: both
-
-div.col-8
-    float: left
-
 div.row.form
     padding: 5px 0px
-
-span.sign.arrow, span.sign.arrow.up
-    margin-right: 5px
-
-span.sign.arrow
-    border-color: #000 transparent transparent transparent !important
-
-span.sign.arrow.up
-    border-color: transparent transparent #000 transparent !important
-
-#addresses-card-block
-    margin-bottom: -20px
-
-h6.card-header
-    height: 41px
-    border-bottom: 0px
 
 div.card
     margin-bottom: 0px
@@ -175,39 +155,3 @@ div.widget
     max-width: 18rem
     min-width: 290px
     border: 1px solid rgba(0, 0, 0, 0.125) !important
-
-
-////////////////////////////////////////////////////
-// Devise
-//
-div.form-group
-    margin-bottom: 40px
-
-.margin-devise
-    margin: 12px 0px 18px 0px
-
-
-////////////////////////////////////////////////////
-// Footer
-//
-div#footer_left
-    flex: 1 auto
-
-.slider-wrapper-horizontal
-    display: inline-block
-    width: 150px
-    height: 20px
-    padding: 0
-
-.slider-wrapper-vertical
-    display: inline-block
-    width: 20px
-    height: 150px
-    padding: 0
-
-.vertical
-    width: 150px
-    height: 20px
-    margin: 0
-    transform-origin: 75px 75px
-    transform: rotate(-90deg)

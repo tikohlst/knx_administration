@@ -10,8 +10,8 @@
   </head>
 
   <body>
-    <div id="main-container">
-      <div class="row">
+    <div class="container-fluid">
+      <div class="row" style=" margin-top: 10px;">
         <div class="col">
           <% if notice %>
             <p class="alert alert-success"><%= notice %></p>
@@ -22,70 +22,90 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="left">
+      <div class="card" style=" margin-top: 0px;">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+          <a class="navbar-brand" href="#">
             <%= image_tag "KNX-Logo.png", style: "width:120px" %>
-          </div>
-          <div class="right">
-            <div class="btn-group" role="group">
-              <%= link_to "http://localhost:3000/en#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}", class: 'btn btn-secondary' do %>
-                <%= flag_icon(:gb, id: 'gb-flag') %>
-              <% end %>
-              <%= link_to "http://localhost:3000/de#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}", class: 'btn btn-secondary' do %>
-                <%= flag_icon(:de, id: 'de-flag') %>
-              <% end %>
-            </div>
-            <% if user_signed_in? %>
-              <%= link_to widgets_path, class: 'btn btn-success' do %>
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-              <% end %>
-              <% if current_user.has_role? :admin %>
-                <%= link_to users_url, class: 'btn btn-success' do %>
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          </a>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                  data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li><h3>Home-Automation</h3></li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <div class="btn-group" role="group">
+                  <%= link_to "http://localhost:3000/en#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}",
+                              class: 'btn btn-secondary', style: "height: 40px;margin-top: 15px;" do %>
+                    <%= flag_icon(:gb, id: 'gb-flag') %>
+                  <% end %>
+                  <%= link_to "http://localhost:3000/de#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}",
+                              class: 'btn btn-secondary', style: "height: 40px;margin-top: 15px;" do %>
+                    <%= flag_icon(:de, id: 'de-flag') %>
+                  <% end %>
+                </div>
+                <% if user_signed_in? %>
+                  <li class="nav-item">
+                    <%= link_to widgets_path, class: 'nav-link' do %>
+                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home
+                    <% end %>
+                  </li>
+                  <% if current_user.has_role? :admin %>
+                    <li class="nav-item">
+                      <%= link_to users_url, class: 'nav-link' do %>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Users
+                      <% end %>
+                    </li>
+                  <% end %>
+                  <li class="nav-item">
+                    <%= link_to edit_user_registration_path, class: 'nav-link' do %>
+                      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Settings
+                    <% end %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Logout
+                    <% end %>
+                  </li>
+                <% else %>
+                  <li class="nav-item">
+                    <%= link_to new_user_session_path, class: 'nav-link' do %>
+                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>Login
+                    <% end %>
+                  </li>
                 <% end %>
-              <% end %>
-              <%= link_to edit_user_registration_path, class: 'btn btn-success' do %>
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              <% end %>
-              <%= link_to destroy_user_session_path, method: :delete, class: 'btn btn-success' do %>
-                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-              <% end %>
-            <% else %>
-              <%= link_to new_user_session_path, class: 'btn btn-success' do %>
-                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-              <% end %>
-            <% end %>
+              </ul>
+            </form>
           </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <br>
-        </div>
+        </nav>
       </div>
 
       <%= yield %>
 
       <% if user_signed_in? %>
         <div class="card">
-          <h6 class="card-header">
-            <div class="pull-right flex">
-              <div id="footer_left">
-                <%= t 'views.logged_in_as' %>
-                <div class="bold block">
-                  <%= current_user.username %>
-                </div>
+          <div class="card-header">
+            <div class="row">
+            <div class="col-sm">
+              <%= t 'views.logged_in_as' %>
+              <div class="bold block">
+                <%= current_user.username %>
               </div>
-              <div class="right">
+            </div>
+            <div class="col-sm">
+              <div class="float-sm-right">
                 <%= t 'views.role' %>:
                 <div class="bold block">
                   <%=current_user.roles.pluck(:name).join(", ")%>
                 </div>
               </div>
             </div>
-          </h6>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
