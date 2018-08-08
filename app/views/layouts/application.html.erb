@@ -51,30 +51,30 @@
                 <% if user_signed_in? %>
                   <li class="nav-item">
                     <%= link_to widgets_path, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home
+                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span><%= t 'views.home' %>
                     <% end %>
                   </li>
                   <% if current_user.has_role? :admin %>
                     <li class="nav-item">
                       <%= link_to users_url, class: 'nav-link' do %>
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Users
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><%= t 'views.user' %>
                       <% end %>
                     </li>
                   <% end %>
                   <li class="nav-item">
                     <%= link_to edit_user_registration_path, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Settings
+                      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span><%= t 'views.settings' %>
                     <% end %>
                   </li>
                   <li class="nav-item">
                     <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Logout
+                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span><%= t 'views.to_logout' %>
                     <% end %>
                   </li>
                 <% else %>
                   <li class="nav-item">
                     <%= link_to new_user_session_path, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>Login
+                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span><%= t 'views.to_login' %>
                     <% end %>
                   </li>
                 <% end %>

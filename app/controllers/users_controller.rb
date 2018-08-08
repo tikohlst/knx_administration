@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       @user = User.new(user_params)
       if @user.save
-        format.html { redirect_to users_url, notice: 'User was successfully created.' }
+        format.html { redirect_to users_url, notice: (t ('views.created'), created: (t ('views.single_user'))) }
         format.json { head :no_content }
       else
         format.html { render :new }
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
       params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
 
       if @user.update(user_params)
-        format.html { redirect_to users_url, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_url, notice: (t ('views.updated'), updated: (t ('views.single_user'))) }
         format.json { head :no_content }
       else
         format.html { render :edit }
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: (t ('views.destroyed'), destroyed: (t ('views.single_user'))) }
       format.json { head :no_content }
     end
   end
