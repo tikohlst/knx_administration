@@ -1,5 +1,14 @@
+/* Save current tab to display the same tab after changing the sort algorithm */
 var currentTab = $('#nav-tabContent > .show.active').attr('id');
-$('#nav-tabContent').html("<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>");
-$('#nav-lightings').removeClass('show active');
+/* Positioning the rendered partial */
+$('#widgets_card').html("<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>");
+/* Remove class of current tab in card-header */
+$('.nav-link.active').removeClass('active');
+/* Add class active to the same tab as before */
+$('#' + currentTab + "-tab").addClass('active');
+/* Remove class of current tab in card-body */
+$('.tab-content > .tab-pane.fade.show.active').removeClass('show active');
+/* Add class active to the same tab as before */
 $('#' + currentTab).addClass('show active');
+/* Activate all toggles */
 $(':checkbox').bootstrapToggle();

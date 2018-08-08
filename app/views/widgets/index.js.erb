@@ -1,6 +1,7 @@
-/* Save current tab to display the same tab after changing the sort order */
-var currentTab = $('#nav-tabContent > .show.active').attr('id');
 var render;
+/* Save current tab to display the same tab after entering the search */
+var currentTab = $('#nav-tabContent > .show.active').attr('id');
+/* Save current sort to display the same sort after entering the search */
 var currentSort = $('a label.active').text().replace(/\s/g,'');
 switch(currentSort) {
     case "Org-Unit":
@@ -16,7 +17,31 @@ switch(currentSort) {
     case "Z-A":
         render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>";
 }
-$('#nav-tabContent').html(render);
-$('#nav-lightings').removeClass('show active');
-$('#' + currentTab).addClass('show active');
+/* Positioning the rendered partial */
+$('#widgets_card').html(render);
+/* Remove class of current tab in card-header */
+$('.nav-link.active').removeClass('active');
+if ($('#' + currentTab + '-tab').length > 0)
+{
+    /* Add class active if there exists the same tab as before */
+    $('#' + currentTab + '-tab').addClass('active');
+}
+else
+{
+    /* Else add class active to the first tab */
+    $('#nav-tab > .nav-item > .nav-link').first().addClass('active');
+}
+/* Remove class of current tab in card-body */
+$('.tab-content > .tab-pane.fade.show.active').removeClass('show active');
+if ($('#' + currentTab).length > 0)
+{
+    /* Add class active if there exists the same tab as before */
+    $('#' + currentTab).addClass('show active');
+}
+else
+{
+    /* Else add class active to the first tab */
+    $('#widgets_card > .card-body > .tab-content > .tab-pane.fade').first().addClass('show active');
+}
+/* Activate all toggles */
 $(':checkbox').bootstrapToggle();
