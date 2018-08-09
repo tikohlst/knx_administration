@@ -76,3 +76,5 @@ en:
     remember_me: "Remember me"
     logged_in_as: "Logged in as"
     language: "Language"
+    all_off: "Turn all off"
+    close_all: "Close all"

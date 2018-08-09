@@ -52,16 +52,25 @@
           <% if widgets.where(location: location, use: 'lighting').exists? %>
             <div>
               <div id="heading<%= key %>_lighting" style="padding: 0px;background-color: white;border-bottom: none;">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_lighting" aria-expanded="true" aria-controls="collapse<%= key %>_lighting" style="padding-left: 0px;">
-                    <% if index == 1 %>
-                      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <% else %>
-                      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <% end %>
-                    <%= location %>
-                  </button>
-                </h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_lighting" aria-expanded="true" aria-controls="collapse<%= key %>_lighting" style="padding-left: 0px;">
+                        <% if index == 1 %>
+                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                        <% else %>
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <% end %>
+                        <%= location %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col">
+                    <div class="float-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div id="collapse<%= key %>_lighting" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
@@ -101,16 +110,25 @@
           <% if widgets.where(location: location, use: 'shutter').exists? %>
             <div>
               <div id="heading<%= key %>_shutter" style="padding: 0px;background-color: white;border-bottom: none;">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_shutter" aria-expanded="true" aria-controls="collapse<%= key %>_shutter" style="padding-left: 0px;">
-                    <% if index == 1 %>
-                      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <% else %>
-                      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <% end %>
-                    <%= location %>
-                  </button>
-                </h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_shutter" aria-expanded="true" aria-controls="collapse<%= key %>_shutter" style="padding-left: 0px;">
+                        <% if index == 1 %>
+                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                        <% else %>
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <% end %>
+                        <%= location %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col">
+                    <div class="float-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.close_all' %></button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div id="collapse<%= key %>_shutter" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_shutter" data-parent="#accordion-shutters">
                 <div class="card-body" style="padding:0px 0px 10px 0px;">
@@ -166,18 +184,26 @@
           <% if widgets.where(location: location, use: 'blind').exists? %>
             <div>
               <div id="heading<%= key %>_blind" style="padding: 0px;background-color: white;border-bottom: none;">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_blind" aria-expanded="true" aria-controls="collapse<%= key %>_blind" style="padding-left: 0px;">
-                    <% if index == 0 %>
-                      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <% else %>
-                      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <% end %>
-                    <%= location %>
-                  </button>
-                </h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_blind" aria-expanded="true" aria-controls="collapse<%= key %>_blind" style="padding-left: 0px;">
+                        <% if index == 0 %>
+                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                        <% else %>
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <% end %>
+                        <%= location %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col">
+                    <div class="float-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.close_all' %></button>
+                    </div>
+                  </div>
+                </div>
               </div>
-
               <div id="collapse<%= key %>_blind" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_blind" data-parent="#accordion-blinds">
                 <div class="card-body" style="padding:0px 0px 10px 0px;">
                   <div class="row" style="padding-left: 5px;padding-right: 15px;">
@@ -232,16 +258,25 @@
           <% if widgets.where(location: location, use: 'dimmer').exists? %>
             <div>
               <div id="heading<%= key %>_dimmer" style="padding: 0px;background-color: white;border-bottom: none;">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_dimmer" aria-expanded="true" aria-controls="collapse<%= key %>_dimmer" style="padding-left: 0px;">
-                    <% if index == 1 %>
-                      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <% else %>
-                      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <% end %>
-                    <%= location %>
-                  </button>
-                </h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_dimmer" aria-expanded="true" aria-controls="collapse<%= key %>_dimmer" style="padding-left: 0px;">
+                        <% if index == 1 %>
+                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                        <% else %>
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <% end %>
+                        <%= location %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col">
+                    <div class="float-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div id="collapse<%= key %>_dimmer" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
