@@ -76,6 +76,12 @@ class UsersController < ApplicationController
       params[:user].delete(:password) if params[:user][:password].blank?
       params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
 
+      # If there is a new role, delete the old role and insert the new one into the database
+      if params[:user][:role_ids] != @user.role_ids.first.to_s
+        ActiveRecord::Base.connection.execute("DELETE FROM users_roles WHERE user_id = #{params[:id]};")
+        ActiveRecord::Base.connection.execute("INSERT INTO users_roles VALUES (#{params[:id]}, #{params[:user][:role_ids]});")
+      end
+
       if @user.update(user_params)
         format.html { redirect_to users_url, notice: (t ('views.updated'), updated: (t ('views.single_user'))) }
         format.json { head :no_content }

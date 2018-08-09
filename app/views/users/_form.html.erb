@@ -64,12 +64,14 @@
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-4">
+            <div class="col-sm-4 col-form-label">
               <%= t 'views.role' %>
             </div>
-            <div class="col-8">
-              <%= f.collection_check_boxes :role_ids, Role.all, :id, :name do |m| %>
-                <div class=""><%= m.check_box %>&nbsp;<%= m.label %></div>
+            <div class="col-sm-8">
+              <% if @user.new_record? %>
+                <%= f.select( :role_ids, Role.all.collect {|p| [ p.name, p.id ] }, {selected: 3}, {class: "form-control"}) %>
+              <% else %>
+                <%= f.select( :role_ids, Role.all.collect {|p| [ p.name, p.id ] }, {}, {class: "form-control"}) %>
               <% end %>
             </div>
           </div>
