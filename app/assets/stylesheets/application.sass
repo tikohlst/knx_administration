@@ -16,6 +16,9 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+.btn-secondary:focus, .btn-secondary.focus, .btn-outline-secondary:focus, .btn-outline-secondary.focus
+    box-shadow: none
+
 div#navbarTogglerDemo01
     ul
         margin-top: 0 !important
@@ -40,9 +43,8 @@ div#navbarTogglerDemo01
                     display: block
                     top: 0
 
-
 .nav-item
-    margin-bottom: -2px
+    margin-bottom: -2px !important
 
 div.form-group
     margin-bottom: 0px
@@ -83,8 +85,6 @@ label.btn-outline-secondary > input
 .btn:hover
     text-decoration: none
 
-.btn-outline-secondary.focus
-    box-shadow: none
 
 .glyphicon-step-backward, .glyphicon-backward, .glyphicon-step-forward, .glyphicon-forward
     top: 0px

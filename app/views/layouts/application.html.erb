@@ -38,16 +38,6 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <div class="btn-group" role="group">
-                  <%= link_to "http://localhost:3000/en#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}",
-                              class: 'btn btn-secondary', style: "height: 40px;margin-top: 15px;" do %>
-                    <%= flag_icon(:gb, id: 'gb-flag') %>
-                  <% end %>
-                  <%= link_to "http://localhost:3000/de#{request.env['PATH_INFO'].gsub(/de\/|en\//, '')}",
-                              class: 'btn btn-secondary', style: "height: 40px;margin-top: 15px;" do %>
-                    <%= flag_icon(:de, id: 'de-flag') %>
-                  <% end %>
-                </div>
                 <% if user_signed_in? %>
                   <li class="nav-item">
                     <%= link_to widgets_path, class: 'nav-link' do %>
