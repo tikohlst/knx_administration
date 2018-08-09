@@ -1,21 +1,5 @@
 <div class="row">
 <%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div class="row margin-index">
-      <div class="col">
-        <div class="card alert alert-danger">
-          <div id="error_explanation" class="top10">
-            <ul>
-              <% @user.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
   <div class="row margin-index">
     <div class="col">
       <%= link_to :back, class: "btn btn-secondary" do %>

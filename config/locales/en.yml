@@ -1,4 +1,8 @@
 en:
+  error:
+    single: "error"
+    several: "errors"
+    fixed: " must be fixed"
   errors:
     format: "%{attribute} %{message}"
     messages:

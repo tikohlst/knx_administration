@@ -13,11 +13,30 @@
     <div class="container-fluid">
       <div class="row" style=" margin-top: 10px;">
         <div class="col">
+          <% if defined? @user %>
+            <% if  @user.errors.any? %>
+              <div class="alert alert-danger alert-dismissible fade show">
+                <a href="#" data-dismiss="alert" class="close">×</a>
+                <strong>
+                  <%= pluralize(@user.errors.count, t('error.single'), t('error.several')) %><%= t('error.fixed') %>
+                </strong>
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
           <% if notice %>
-            <p class="alert alert-success"><%= notice %></p>
+            <div class="alert alert-success fade show">
+              <a href="#" data-dismiss="alert" class="close">×</a>
+              <%= notice %>
+            </div>
           <% end %>
           <% if alert %>
-            <p class="alert alert-danger"><%= alert %></p>
+            <div class="alert alert-danger alert-dismissible fade show">
+              <a href="#" data-dismiss="alert" class="close">×</a>
+              <%= alert %>
+            </div>
           <% end %>
         </div>
       </div>
