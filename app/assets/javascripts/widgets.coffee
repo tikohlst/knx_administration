@@ -23,8 +23,8 @@ $(document).ready ->
   # Hash for saving intervals with id of the progress bar as key
   intervals = {}
 
-  $(document).on 'click', '.glyphicon-step-forward', ->
-    self_id = $(this).attr('id')
+  $(document).on 'click', '.card-body > div > .float-right > .btn-group > .btn:last-child', ->
+    self_id = $(this).children(":last").attr('id')
     if intervals[self_id]
       # If the progress bar is active, stop progress
       clearInterval intervals[self_id]
@@ -49,8 +49,8 @@ $(document).ready ->
           $('#progressbar-' + self_id).css("width", percent + '%')
     return
 
-  $(document).on 'click', '.glyphicon-forward', ->
-    self_id = $(this).attr('id')
+  $(document).on 'click', '.card-body > div > .float-right > .btn-group > .btn:first-child', ->
+    self_id = $(this).children(":first").attr('id')
     if intervals[self_id]
       # If the progress bar is active, stop progress
       clearInterval intervals[self_id]
@@ -66,8 +66,8 @@ $(document).ready ->
       $('#progressbar-' + self_id).css("width", percent + '%')
     return
 
-  $(document).on 'click', '.glyphicon-step-backward', ->
-    self_id = $(this).attr('id')
+  $(document).on 'click', '.card-body > div > .float-left > .btn-group > .btn:first-child', ->
+    self_id = $(this).children(":first").attr('id')
     if intervals[self_id]
       # If the progress bar is active, stop progress
       clearInterval intervals[self_id]
@@ -92,8 +92,8 @@ $(document).ready ->
           $('#progressbar-' + self_id).css("width", percent + '%')
     return
 
-  $(document).on 'click', '.glyphicon-backward', ->
-    self_id = $(this).attr('id')
+  $(document).on 'click', '.card-body > div > .float-left > .btn-group > .btn:last-child', ->
+    self_id = $(this).children(":first").attr('id')
     if intervals[self_id]
       # If the progress bar is active, stop progress
       clearInterval intervals[self_id]
