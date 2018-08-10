@@ -414,7 +414,7 @@
                                                name: "authenticity_token" %>
                             <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                             <div class="slider-wrapper-horizontal">
-                              <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                              <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
                             </div>
                           <% end %>
                         </div>
