@@ -43,6 +43,50 @@
       </li>
     <% end %>
   </ul>
+  <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
+    <% if widgets.any?{|widget| widget.use == 'lighting'} %>
+      <li>
+        <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
+           role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
+      </li>
+    <% end %>
+    <% if widgets.any?{|widget| widget.use == 'shutter'} %>
+      <li>
+        <a class="nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters"
+           role="tab" aria-controls="nav-profile" aria-selected="false"><%= t 'views.widget.shutters' %></a>
+      </li>
+    <% end %>
+    <% if widgets.any?{|widget| widget.use == 'blind'} %>
+      <li>
+        <a class="nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds"
+           role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
+      </li>
+    <% end %>
+    <% if widgets.any?{|widget| widget.use == 'dimmer'} %>
+      <li>
+        <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
+           role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
+      </li>
+    <% end %>
+    <% if widgets.any?{|widget| widget.use == 'mc'} %>
+      <li>
+        <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
+           role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
+      </li>
+    <% end %>
+    <% if widgets.any?{|widget| widget.use == 'window'} %>
+      <li>
+        <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
+           role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
+      </li>
+    <% end %>
+    <% if widgets.any?{|widget| widget.use == 'weather'} %>
+      <li>
+        <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
+           role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
+      </li>
+    <% end %>
+  </ul>
 </div>
 <div class="card-body">
   <div class="tab-content" id="nav-tabContent">

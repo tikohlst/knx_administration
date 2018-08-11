@@ -16,6 +16,19 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+ul
+    &#nav-tab
+        display: none
+    &#nav-tab-responsive
+        display: block
+
+@media (min-width: 868px)
+    ul
+        &#nav-tab
+            display: flex
+        &#nav-tab-responsive
+            display: none !important
+
 .btn-secondary:focus, .btn-secondary.focus, .btn-outline-secondary:focus, .btn-outline-secondary.focus
     box-shadow: none
 
