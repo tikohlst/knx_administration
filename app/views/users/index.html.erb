@@ -40,7 +40,7 @@
       </div>
       <div class="col-md-6">
         <div class="float-md-right">
-          <%= form_tag users_path, class: "form-inline my-2 my-lg-0 float-right", method: :get, remote: true do %>
+          <%= form_tag users_path, class: "form-inline my-2 my-lg-0", method: :get, remote: true do %>
             <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;" %>
             <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0", style: "width: 28%;margin-left: 2%;" %>
           <% end %>
