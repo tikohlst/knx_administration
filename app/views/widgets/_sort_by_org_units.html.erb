@@ -455,12 +455,16 @@
       <div id="accordion-windows" class="accordion" style="width: 100%;">
         <div>
           <div id="headingOne_window">
-            <h5 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_window" aria-expanded="true" aria-controls="collapseOne_window" style="padding-left: 0px;">
-                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                <%= t 'views.org_unit_1' %>
-              </button>
-            </h5>
+            <div class="row">
+              <div class="col">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_window" aria-expanded="true" aria-controls="collapseOne_window" style="padding-left: 0px;">
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                    <%= t 'views.org_unit_1' %>
+                  </button>
+                </h5>
+              </div>
+            </div>
           </div>
 
           <div id="collapseOne_window" class="collapse show" aria-labelledby="headingOne_window" data-parent="#accordion-windows">

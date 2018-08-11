@@ -343,16 +343,20 @@
             <% if widgets.where(location: location, use: 'window').exists? %>
               <div>
                 <div id="heading<%= key %>_window" style="padding: 0px;background-color: white;border-bottom: none;">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window" style="padding-left: 0px;">
-                      <% if index == 1 %>
-                        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                      <% else %>
-                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                      <% end %>
-                      <%= location %>
-                    </button>
-                  </h5>
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window" style="padding-left: 0px;">
+                          <% if index == 1 %>
+                            <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                          <% else %>
+                            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                          <% end %>
+                          <%= location %>
+                        </button>
+                      </h5>
+                    </div>
+                  </div>
                 </div>
 
                 <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
