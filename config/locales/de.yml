@@ -58,7 +58,7 @@ de:
     'on': "An"
     'off': "Aus"
     create: "Erstellen"
-    update: "Aktualisieren"
+    update: "Speichern"
     destroy: "Löschen"
     created: "%{created} wurde erfolgreich erstellt."
     updated: "%{updated} wurde erfolgreich aktualisiert."
