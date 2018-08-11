@@ -11,11 +11,11 @@
 
   <body>
     <div class="container-fluid">
-      <div class="row" style=" margin-top: 10px;">
+      <div class="row mt-3">
         <div class="col">
           <% if defined? @user %>
             <% if  @user.errors.any? %>
-              <div class="alert alert-danger alert-dismissible fade show">
+              <div class="alert alert-danger alert-dismissible fade show mb-2">
                 <a href="#" data-dismiss="alert" class="close">×</a>
                 <strong>
                   <%= pluralize(@user.errors.count, t('error.single'), t('error.several')) %><%= t('error.fixed') %>
@@ -41,7 +41,7 @@
         </div>
       </div>
 
-      <div class="card" style=" margin-top: 0px;">
+      <div class="card mt-0 mb-2">
         <nav class="navbar navbar-expand-md navbar-light bg-light">
           <a class="navbar-brand" href="#">
             <%= image_tag "KNX-Logo.png", style: "width:120px" %>
@@ -96,19 +96,19 @@
       <%= yield %>
 
       <% if user_signed_in? %>
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-header">
             <div class="row">
             <div class="col-sm">
               <%= t 'views.logged_in_as' %>
-              <div class="bold block">
+              <div class="font-weight-bold d-inline-block">
                 <%= current_user.username %>
               </div>
             </div>
             <div class="col-sm">
               <div class="float-sm-right">
                 <%= t 'views.role' %>:
-                <div class="bold block">
+                <div class="font-weight-bold d-inline-block">
                   <%=current_user.roles.pluck(:name).join(", ")%>
                 </div>
               </div>

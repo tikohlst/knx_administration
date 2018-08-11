@@ -91,12 +91,12 @@
 <div class="card-body">
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% @lightings.each do |lighting| %>
           <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="card-body">
               <div class="float-left">
-                <h5 style="margin-top: 6px;"><%= lighting.desc %></h5>
+                <h5 class="mt-2"><%= lighting.desc %></h5>
               </div>
               <div class="float-right">
                 <%= check_box(:lighting, :status, data: {toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39", onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
@@ -109,7 +109,7 @@
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
                 <div class="float-left">
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+                  <h5 class="mt-2"><%= widget.name %></h5>
                 </div>
                 <div class="float-right">
                   <%= form_for widget, remote: true do |f| %>
@@ -127,17 +127,15 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% @widgets.each do |widget| %>
           <% if widget.use == "shutter" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div>
                   <div class="float-left">
-                    <div class="btn-group" role="group" style="height: 35px;">
+                    <div class="btn-group h-35" role="group">
                       <button type="button" class="btn btn-grey">
                         <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
                       </button>
@@ -147,7 +145,7 @@
                     </div>
                   </div>
                   <div class="float-right">
-                    <div class="btn-group" role="group" style="height: 35px;">
+                    <div class="btn-group h-35" role="group">
                       <button type="button" class="btn btn-grey">
                         <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
                       </button>
@@ -168,17 +166,15 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% @widgets.each do |widget| %>
           <% if widget.use == "blind" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div>
                   <div class="float-left">
-                    <div class="btn-group" role="group" style="height: 35px;">
+                    <div class="btn-group h-35" role="group">
                       <button type="button" class="btn btn-grey">
                         <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
                       </button>
@@ -188,7 +184,7 @@
                     </div>
                   </div>
                   <div class="float-right">
-                    <div class="btn-group" role="group" style="height: 35px;">
+                    <div class="btn-group h-35" role="group">
                       <button type="button" class="btn btn-grey">
                         <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
                       </button>
@@ -209,14 +205,12 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
           <% if widget.use == "dimmer" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div class="">
                   <%= form_for widget, remote: true do |f| %>
                     <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
@@ -234,14 +228,12 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
           <% if widget.use == "mc" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div class="">
                   <%= form_for widget, remote: true do |f| %>
                     <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
@@ -258,19 +250,19 @@
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">Monitoring-Control</div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
           <% if widget.use == "window" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
                 <div class="float-left">
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
+                  <h5 class="mt-2"><%= widget.name %></h5>
                 </div>
                 <div class="float-right">
                   <% if widget.value == 0 %>
-                    <div style="background-color: red;padding: 5px;border-radius: 8px;color: white;"><%= t 'views.widget.window.open' %></div>
+                    <div class="red-note"><%= t 'views.widget.window.open' %></div>
                   <% else %>
-                    <div style="background-color: green;padding: 5px;border-radius: 8px;color: white;"><%= t 'views.widget.window.closed' %></div>
+                    <div class="green-note"><%= t 'views.widget.window.closed' %></div>
                   <% end %>
                 </div>
               </div>
@@ -280,14 +272,12 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
           <% if widget.use == "weather" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div class="">
                   <%= widget.value %>
                 </div>

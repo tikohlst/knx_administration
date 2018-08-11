@@ -91,15 +91,15 @@
 <div class="card-body">
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
-      <div id="accordion-lightings" class="accordion" style="width: 100%;">
+      <div id="accordion-lightings" class="accordion">
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'lighting').exists? %>
             <div>
-              <div id="heading<%= key %>_lighting" style="padding: 0px;background-color: white;border-bottom: none;">
+              <div id="heading<%= key %>_lighting">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_lighting" aria-expanded="true" aria-controls="collapse<%= key %>_lighting" style="padding-left: 0px;">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_lighting" aria-expanded="true" aria-controls="collapse<%= key %>_lighting">
                         <% if index == 1 %>
                           <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                         <% else %>
@@ -118,29 +118,27 @@
               </div>
 
               <div id="collapse<%= key %>_lighting" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
-                <div class="card-body" style="padding:0px 0px 10px 0px;">
-                  <div class="row" style="padding-left: 5px;padding-right: 15px;">
-                    <% widgets.each do |widget| %>
-                      <% if widget.location == location and widget.use == "lighting" %>
-                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                          <div class="card-body">
-                            <div class="float-left">
-                              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                            </div>
-                            <div class="float-right">
-                              <%= form_for widget, remote: true do |f| %>
-                                <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                                   name: "authenticity_token" %>
-                                <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                                <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                                id: "widget_active_#{widget.id}", class: "edit_widget" %>
-                              <% end %>
-                            </div>
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.location == location and widget.use == "lighting" %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= widget.name %></h5>
+                          </div>
+                          <div class="float-right">
+                            <%= form_for widget, remote: true do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                              id: "widget_active_#{widget.id}", class: "edit_widget" %>
+                            <% end %>
                           </div>
                         </div>
-                      <% end %>
+                      </div>
                     <% end %>
-                  </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -149,15 +147,15 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
-      <div id="accordion-shutters" class="accordion" style="width: 100%;">
+      <div id="accordion-shutters" class="accordion">
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'shutter').exists? %>
             <div>
-              <div id="heading<%= key %>_shutter" style="padding: 0px;background-color: white;border-bottom: none;">
+              <div id="heading<%= key %>_shutter">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_shutter" aria-expanded="true" aria-controls="collapse<%= key %>_shutter" style="padding-left: 0px;">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_shutter" aria-expanded="true" aria-controls="collapse<%= key %>_shutter">
                         <% if index == 1 %>
                           <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                         <% else %>
@@ -175,46 +173,42 @@
                 </div>
               </div>
               <div id="collapse<%= key %>_shutter" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_shutter" data-parent="#accordion-shutters">
-                <div class="card-body" style="padding:0px 0px 10px 0px;">
-                  <div class="row" style="padding-left: 5px;padding-right: 15px;">
-                    <% widgets.each do |widget| %>
-                      <% if widget.location == location and widget.use == "shutter" %>
-                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                          <div class="card-body">
-                            <div>
-                              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                            </div>
-                            <div>
-                              <div class="float-left">
-                                <div class="btn-group" role="group" style="height: 35px;">
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="float-right">
-                                <div class="btn-group" role="group" style="height: 35px;">
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                </div>
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.location == location and widget.use == "shutter" %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <h5 class="mt-2"><%= widget.name %></h5>
+                          <div>
+                            <div class="float-left">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
                               </div>
                             </div>
-                            <br><br>
-                            <div class="progress">
-                              <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                            <div class="float-right">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                              </div>
                             </div>
                           </div>
+                          <br><br>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                          </div>
                         </div>
-                      <% end %>
+                      </div>
                     <% end %>
-                  </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -223,15 +217,15 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
-      <div id="accordion-blinds" class="accordion" style="width: 100%;">
+      <div id="accordion-blinds" class="accordion">
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'blind').exists? %>
             <div>
-              <div id="heading<%= key %>_blind" style="padding: 0px;background-color: white;border-bottom: none;">
+              <div id="heading<%= key %>_blind">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_blind" aria-expanded="true" aria-controls="collapse<%= key %>_blind" style="padding-left: 0px;">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_blind" aria-expanded="true" aria-controls="collapse<%= key %>_blind">
                         <% if index == 0 %>
                           <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                         <% else %>
@@ -249,46 +243,42 @@
                 </div>
               </div>
               <div id="collapse<%= key %>_blind" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_blind" data-parent="#accordion-blinds">
-                <div class="card-body" style="padding:0px 0px 10px 0px;">
-                  <div class="row" style="padding-left: 5px;padding-right: 15px;">
-                    <% widgets.each do |widget| %>
-                      <% if widget.location == location and widget.use == "blind" %>
-                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                          <div class="card-body">
-                            <div>
-                              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                            </div>
-                            <div>
-                              <div class="float-left">
-                                <div class="btn-group" role="group" style="height: 35px;">
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="float-right">
-                                <div class="btn-group" role="group" style="height: 35px;">
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                  <button type="button" class="btn btn-grey">
-                                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                  </button>
-                                </div>
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.location == location and widget.use == "blind" %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <h5 class="mt-2"><%= widget.name %></h5>
+                          <div>
+                            <div class="float-left">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
                               </div>
                             </div>
-                            <br><br>
-                            <div class="progress">
-                              <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                            <div class="float-right">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                              </div>
                             </div>
                           </div>
+                          <br><br>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                          </div>
                         </div>
-                      <% end %>
+                      </div>
                     <% end %>
-                  </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -297,15 +287,15 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
-      <div id="accordion-dimmers" class="accordion" style="width: 100%;">
+      <div id="accordion-dimmers" class="accordion">
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'dimmer').exists? %>
             <div>
-              <div id="heading<%= key %>_dimmer" style="padding: 0px;background-color: white;border-bottom: none;">
+              <div id="heading<%= key %>_dimmer">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_dimmer" aria-expanded="true" aria-controls="collapse<%= key %>_dimmer" style="padding-left: 0px;">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_dimmer" aria-expanded="true" aria-controls="collapse<%= key %>_dimmer">
                         <% if index == 1 %>
                           <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                         <% else %>
@@ -324,30 +314,26 @@
               </div>
 
               <div id="collapse<%= key %>_dimmer" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
-                <div class="card-body" style="padding:0px 0px 10px 0px;">
-                  <div class="row" style="padding-left: 5px;padding-right: 15px;">
-                    <% widgets.each do |widget| %>
-                      <% if widget.location == location and widget.use == "dimmer" %>
-                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                          <div class="card-body">
-                            <div>
-                              <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                            </div>
-                            <div class="">
-                              <%= form_for widget, remote: true do |f| %>
-                                <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                                   name: "authenticity_token" %>
-                                <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                                <div class="slider-wrapper-horizontal">
-                                  <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
-                                </div>
-                              <% end %>
-                            </div>
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.location == location and widget.use == "dimmer" %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <h5 class="mt-2"><%= widget.name %></h5>
+                          <div class="">
+                            <%= form_for widget, remote: true do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <div class="slider-wrapper-horizontal">
+                                <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                              </div>
+                            <% end %>
                           </div>
                         </div>
-                      <% end %>
+                      </div>
                     <% end %>
-                  </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -356,14 +342,12 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
           <% if widget.use == "mc" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div class="">
                   <%= form_for widget, remote: true do |f| %>
                     <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
@@ -379,15 +363,15 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
-      <div id="accordion-windows" class="accordion" style="width: 100%;">
+      <div id="accordion-windows" class="accordion">
           <% $locations.each_with_index do |(key, location), index| %>
             <% if widgets.where(location: location, use: 'window').exists? %>
               <div>
-                <div id="heading<%= key %>_window" style="padding: 0px;background-color: white;border-bottom: none;">
+                <div id="heading<%= key %>_window">
                   <div class="row">
                     <div class="col">
                       <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window" style="padding-left: 0px;">
+                        <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window">
                           <% if index == 1 %>
                             <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
                           <% else %>
@@ -401,27 +385,25 @@
                 </div>
 
                 <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
-                  <div class="card-body" style="padding:0px 0px 10px 0px;">
-                    <div class="row" style="padding-left: 5px;padding-right: 15px;">
-                      <% widgets.each do |widget| %>
-                        <% if widget.location == location and widget.use == "window" %>
-                          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                            <div class="card-body">
-                              <div class="float-left">
-                                <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                              </div>
-                              <div class="float-right">
-                                <% if widget.value == 0 %>
-                                  <div style="background-color: red;padding: 5px;border-radius: 8px;color: white;"><%= t 'views.widget.window.open' %></div>
-                                <% else %>
-                                  <div style="background-color: green;padding: 5px;border-radius: 8px;color: white;"><%= t 'views.widget.window.closed' %></div>
-                                <% end %>
-                              </div>
+                  <div class="d-flex align-content-start flex-wrap">
+                    <% widgets.each do |widget| %>
+                      <% if widget.location == location and widget.use == "window" %>
+                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                          <div class="card-body">
+                            <div class="float-left">
+                              <h5 class="mt-2"><%= widget.name %></h5>
+                            </div>
+                            <div class="float-right">
+                              <% if widget.value == 0 %>
+                                <div class="red-note"><%= t 'views.widget.window.open' %></div>
+                              <% else %>
+                                <div class="green-note"><%= t 'views.widget.window.closed' %></div>
+                              <% end %>
                             </div>
                           </div>
-                        <% end %>
+                        </div>
                       <% end %>
-                    </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -431,14 +413,12 @@
     </div>
     <% if widgets.where(use: 'weather').exists? %>
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
-      <div class="row" style="padding-left: 5px;padding-right: 15px;">
+      <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
           <% if widget.use == "weather" %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6" style="min-width: 20rem;">
+            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <div>
-                  <h5 style="margin-top: 6px;"><%= widget.name %></h5>
-                </div>
+                <h5 class="mt-2"><%= widget.name %></h5>
                 <div class="">
                   <%= widget.value %>
                   <% if widget.name == "Temperatur"%>

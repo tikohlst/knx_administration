@@ -16,6 +16,31 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+#nav-weather > div > div
+    min-width: 20rem
+
+.red-note
+    background-color: red
+    padding: 5px
+    border-radius: 8px
+    color: white
+
+.green-note
+    background-color: green
+    padding: 5px
+    border-radius: 8px
+    color: white
+
+// Height for Buttons
+.h-35
+    height: 35px
+
+div.collapse.show
+    margin-bottom:  10px
+
+.accordion
+    width: 100%
+
 @media (max-width: 400px)
     .navbar.justify-content-between
         padding: 0.5rem 0rem
@@ -106,7 +131,6 @@ label.btn-outline-secondary > input
 .btn:hover
     text-decoration: none
 
-
 .glyphicon-step-backward, .glyphicon-backward, .glyphicon-step-forward, .glyphicon-forward
     top: 0px
 
@@ -115,9 +139,6 @@ label.btn-outline-secondary > input
 
 .glyphicon-step-forward, .glyphicon-backward
     margin-left: -5px
-
-.row>form
-    width: 100%
 
 .toggle-group
     .btn.btn-primary.toggle-on
@@ -136,41 +157,8 @@ label.btn-outline-secondary > input
 .toggle
     border-color: #ccc !important
 
-.padding-left
-    padding-left: 0px
-
-.padding-right
-    padding-right: 0px
-
-.center
-    justify-content: center
-
-.text-center
-    text-align: center
-
-.text-right
-    text-align: right
-
-.margin-index
-    margin: 10px 0px
-
-.top10
-    margin-top: 10px !important
-
-.bold
-    font-weight: bold
-
-.block
-    display: inline-block
-
-div.row.form
-    padding: 5px 0px
-
-div.card
-    margin-bottom: 10px
-
 div.widget
-    margin: 10px 0px 0px 10px !important
+    margin: 0px 10px 10px 0px !important
     padding: 0
     max-width: 18rem
     min-width: 290px

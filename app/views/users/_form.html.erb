@@ -1,83 +1,85 @@
 <div class="row">
-<%= form_for(@user) do |f| %>
-  <div class="row margin-index">
-    <div class="col">
-      <%= link_to :back, class: "btn btn-secondary" do %>
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="row margin-index">
-    <div class="col">
-      <div class="card">
-        <h3 class="card-header">
-          <% if @user.new_record? %>
-            <%= t 'views.new_user' %>
-          <% else %>
-            <%= @user.username %>
+  <div class="col">
+    <%= form_for(@user) do |f| %>
+      <div class="row mb-2">
+        <div class="col">
+          <%= link_to :back, class: "btn btn-secondary" do %>
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
           <% end %>
-        </h3>
-        <div class="card-block">
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">
-              <%= t 'views.username' %>
-            </label>
-            <div class="col-sm-8">
-              <%= f.text_field :username, class: "form-control" %>
-            </div>
-          </div>
+        </div>
+      </div>
 
-          <div class="form-group row">
-            <label class="col-sm-4 col-form-label">
-              <%= f.label :password %>
-              <% if not @user.new_record? %>
-                <i><%= t 'views.note' %></i>
-              <% end %>
-            </label>
-            <div class="col-sm-8">
-              <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-4 col-form-label">
-              <%= f.label :password_confirmation %>
-            </div>
-            <div class="col-sm-8">
-              <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-4 col-form-label">
-              <%= t 'views.role' %>
-            </div>
-            <div class="col-sm-8">
+      <div class="row mb-2">
+        <div class="col">
+          <div class="card">
+            <h3 class="card-header">
               <% if @user.new_record? %>
-                <%= f.select( :role_ids, Role.all.collect {|p| [ p.name, p.id ] }, {selected: 3}, {class: "form-control"}) %>
+                <%= t 'views.new_user' %>
               <% else %>
-                <%= f.select( :role_ids, Role.all.collect {|p| [ p.name, p.id ] }, {}, {class: "form-control"}) %>
+                <%= @user.username %>
               <% end %>
-            </div>
-          </div>
-          <div class="row form" style="margin-left: 1.25rem;margin-right: 1.25rem;display: block;margin-bottom: 50px;">
-            <% if not @user.new_record? %>
-              <div class="float-left padding-left" style="padding-left:0px">
-                <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            </h3>
+            <div class="card-block">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">
+                  <%= t 'views.username' %>
+                </label>
+                <div class="col-sm-8">
+                  <%= f.text_field :username, class: "form-control" %>
+                </div>
               </div>
-            <% end %>
-            <div class="float-right">
-              <div class="actions">
-                <% if @user.new_record? %>
-                  <%= f.submit t('views.create'), class: "btn btn-success" %>
-                <% else %>
-                  <%= f.submit t('views.update'), class: "btn btn-success" %>
+
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">
+                  <%= f.label :password %>
+                  <% if not @user.new_record? %>
+                    <i><%= t 'views.note' %></i>
+                  <% end %>
+                </label>
+                <div class="col-sm-8">
+                  <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                  <%= f.label :password_confirmation %>
+                </div>
+                <div class="col-sm-8">
+                  <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                  <%= t 'views.role' %>
+                </div>
+                <div class="col-sm-8">
+                  <% if @user.new_record? %>
+                    <%= f.select( :role_ids, Role.all.collect {|p| [ p.name, p.id ] }, {selected: 3}, {class: "form-control"}) %>
+                  <% else %>
+                    <%= f.select( :role_ids, Role.all.collect {|p| [ p.name, p.id ] }, {}, {class: "form-control"}) %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="form-group row">
+                <% if not @user.new_record? %>
+                  <div class="col">
+                    <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+                  </div>
                 <% end %>
+                <div class="col">
+                  <div class="actions float-right">
+                    <% if @user.new_record? %>
+                      <%= f.submit t('views.create'), class: "btn btn-success" %>
+                    <% else %>
+                      <%= f.submit t('views.update'), class: "btn btn-success" %>
+                    <% end %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
-<% end %>
 </div>

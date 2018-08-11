@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-2">
   <div class="card-header">
     <div class="row">
       <div class="col-sm">
@@ -16,22 +16,22 @@
         <div class="navbar-brand">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <%= link_to sort_by_org_units_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-right-radius" style="margin-bottom: 0rem !important;">
+              <label class="btn btn-outline-secondary btn-right-radius mb-0">
                 <input type="radio" name="options" id="option1" autocomplete="off">Org-Unit
               </label>
             <% end %>
             <%= link_to sort_by_locations_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active" style="margin-bottom: 0rem !important;">
+              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius mb-0 active">
                 <input type="radio" name="options" id="option2" autocomplete="off" checked><%= t 'views.location' %>
               </label>
             <% end %>
             <%= link_to sort_alphabetically_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius" style="margin-bottom: 0rem !important;">
+              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius mb-0">
                 <input type="radio" name="options" id="option3" autocomplete="off">A-Z
               </label>
             <% end %>
             <%= link_to sort_backwards_alphabetically_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius" style="margin-bottom: 0rem !important;">
+              <label class="btn btn-outline-secondary btn-left-radius mb-0">
                 <input type="radio" name="options" id="option4" autocomplete="off">Z-A
               </label>
             <% end %>
@@ -50,6 +50,6 @@
   </div>
 </div>
 
-<div class="card" id="widgets_card">
+<div class="card mb-2" id="widgets_card">
   <%= render partial: 'sort_by_locations', locals: {widgets: @widgets} %>
 </div>
