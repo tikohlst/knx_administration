@@ -100,11 +100,7 @@
                   <div class="col">
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_lighting" aria-expanded="true" aria-controls="collapse<%= key %>_lighting">
-                        <% if index == 1 %>
-                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                        <% else %>
-                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <% end %>
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                         <%= location %>
                       </button>
                     </h5>
@@ -117,7 +113,7 @@
                 </div>
               </div>
 
-              <div id="collapse<%= key %>_lighting" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
+              <div id="collapse<%= key %>_lighting" class="collapse" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets.each do |widget| %>
                     <% if widget.location == location and widget.use == "lighting" %>
@@ -156,11 +152,7 @@
                   <div class="col">
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_shutter" aria-expanded="true" aria-controls="collapse<%= key %>_shutter">
-                        <% if index == 1 %>
-                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                        <% else %>
-                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <% end %>
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                         <%= location %>
                       </button>
                     </h5>
@@ -172,7 +164,7 @@
                   </div>
                 </div>
               </div>
-              <div id="collapse<%= key %>_shutter" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_shutter" data-parent="#accordion-shutters">
+              <div id="collapse<%= key %>_shutter" class="collapse" aria-labelledby="heading<%= key %>_shutter" data-parent="#accordion-shutters">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets.each do |widget| %>
                     <% if widget.location == location and widget.use == "shutter" %>
@@ -242,7 +234,7 @@
                   </div>
                 </div>
               </div>
-              <div id="collapse<%= key %>_blind" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_blind" data-parent="#accordion-blinds">
+              <div id="collapse<%= key %>_blind" class="collapse" aria-labelledby="heading<%= key %>_blind" data-parent="#accordion-blinds">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets.each do |widget| %>
                     <% if widget.location == location and widget.use == "blind" %>
@@ -296,11 +288,7 @@
                   <div class="col">
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_dimmer" aria-expanded="true" aria-controls="collapse<%= key %>_dimmer">
-                        <% if index == 1 %>
-                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                        <% else %>
-                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <% end %>
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                         <%= location %>
                       </button>
                     </h5>
@@ -313,7 +301,7 @@
                 </div>
               </div>
 
-              <div id="collapse<%= key %>_dimmer" class="collapse <% if index == 1 %>show<% end %>" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
+              <div id="collapse<%= key %>_dimmer" class="collapse" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets.each do |widget| %>
                     <% if widget.location == location and widget.use == "dimmer" %>
@@ -372,11 +360,7 @@
                     <div class="col">
                       <h5 class="mb-0">
                         <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window">
-                          <% if index == 1 %>
-                            <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                          <% else %>
-                            <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                          <% end %>
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                           <%= location %>
                         </button>
                       </h5>

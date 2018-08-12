@@ -4,6 +4,18 @@
 
 $(document).ready ->
 
+  ### Open first entry in every tab ###
+  array = $('#widgets_card > .card-body > .tab-content > .tab-pane.fade > .accordion')
+    .map(->@id).get()
+  $.each array, (index, value) ->
+    ### Turn first triangle ###
+    $('#' + value + ' > div > div > .row > .col > .mb-0 > button > span').first()
+      .removeClass('glyphicon-triangle-right').addClass 'glyphicon-triangle-bottom'
+    ### Show first content ###
+    $('#' + value + ' > div > .collapse').first().addClass 'show'
+    return
+
+
   # All functions need on-click-event for working after rendering
 
   # Submit the form of the clicked widget
