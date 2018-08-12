@@ -16,7 +16,6 @@ class WidgetsController < ApplicationController
       $params[current_user.username] = nil
       Widget.all
     end
-    @lightings = $lightings
   end
 
   def sort_by_org_units
@@ -26,11 +25,6 @@ class WidgetsController < ApplicationController
     else
       $params[current_user.username] = nil
       Widget.all
-    end
-    @lightings = $lightings
-
-    respond_to do |format|
-      format.js
     end
   end
 
@@ -42,11 +36,6 @@ class WidgetsController < ApplicationController
       $params[current_user.username] = nil
       Widget.all
     end
-    @lightings = $lightings
-
-    respond_to do |format|
-      format.js
-    end
   end
 
   def sort_alphabetically
@@ -57,11 +46,6 @@ class WidgetsController < ApplicationController
       $params[current_user.username] = nil
       Widget.all.sort_by{|widget| widget.name}
     end
-    @lightings = $lightings
-
-    respond_to do |format|
-      format.js
-    end
   end
 
   def sort_backwards_alphabetically
@@ -71,11 +55,6 @@ class WidgetsController < ApplicationController
     else
       $params[current_user.username] = nil
       Widget.all.sort_by{|widget| widget.name}.reverse!
-    end
-    @lightings = $lightings
-
-    respond_to do |format|
-      format.js
     end
   end
 
