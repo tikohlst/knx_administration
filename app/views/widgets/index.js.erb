@@ -20,11 +20,13 @@ switch(currentSort) {
 /* Positioning the rendered partial */
 $('#widgets_card').html(render);
 /* Remove class of current tab in card-header */
-$('.nav-link.active').removeClass('active');
+$('#widgets_card > .card-header > ul#nav-tab > li.nav-item > .nav-link.active').removeClass('active');
+$('#widgets_card > .card-header > ul#nav-tab-responsive > li > .nav-link.active').removeClass('active');
 if ($('#' + currentTab + '-tab').length > 0)
 {
     /* Add class active if there exists the same tab as before */
-    $('#' + currentTab + '-tab').addClass('active');
+    $('ul#nav-tab > li > #' + currentTab + "-tab").addClass('active');
+    $('ul#nav-tab-responsive > li > #' + currentTab + "-tab").addClass('active');
 }
 else
 {
