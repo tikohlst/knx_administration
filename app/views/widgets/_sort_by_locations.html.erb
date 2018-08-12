@@ -95,7 +95,7 @@
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'lighting').exists? %>
             <div>
-              <div id="heading<%= key %>_lighting">
+              <div class="mb-2" id="heading<%= key %>_lighting">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
@@ -105,14 +105,13 @@
                       </button>
                     </h5>
                   </div>
-                  <div class="col">
-                    <div class="float-right">
+                  <div class="col-sm">
+                    <div class="float-sm-right">
                       <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div id="collapse<%= key %>_lighting" class="collapse" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets.each do |widget| %>
@@ -147,7 +146,7 @@
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'shutter').exists? %>
             <div>
-              <div id="heading<%= key %>_shutter">
+              <div class="mb-2" id="heading<%= key %>_shutter">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
@@ -157,8 +156,8 @@
                       </button>
                     </h5>
                   </div>
-                  <div class="col">
-                    <div class="float-right">
+                  <div class="col-sm">
+                    <div class="float-sm-right">
                       <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.close_all' %></button>
                     </div>
                   </div>
@@ -213,7 +212,7 @@
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'blind').exists? %>
             <div>
-              <div id="heading<%= key %>_blind">
+              <div class="mb-2" id="heading<%= key %>_blind">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
@@ -227,8 +226,8 @@
                       </button>
                     </h5>
                   </div>
-                  <div class="col">
-                    <div class="float-right">
+                  <div class="col-sm">
+                    <div class="float-sm-right">
                       <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.close_all' %></button>
                     </div>
                   </div>
@@ -283,7 +282,7 @@
         <% $locations.each_with_index do |(key, location), index| %>
           <% if widgets.where(location: location, use: 'dimmer').exists? %>
             <div>
-              <div id="heading<%= key %>_dimmer">
+              <div class="mb-2" id="heading<%= key %>_dimmer">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
@@ -293,14 +292,13 @@
                       </button>
                     </h5>
                   </div>
-                  <div class="col">
-                    <div class="float-right">
+                  <div class="col-sm">
+                    <div class="float-sm-right">
                       <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div id="collapse<%= key %>_dimmer" class="collapse" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets.each do |widget| %>
@@ -355,7 +353,7 @@
           <% $locations.each_with_index do |(key, location), index| %>
             <% if widgets.where(location: location, use: 'window').exists? %>
               <div>
-                <div id="heading<%= key %>_window">
+                <div class="mb-2" id="heading<%= key %>_window">
                   <div class="row">
                     <div class="col">
                       <h5 class="mb-0">
@@ -367,7 +365,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
                   <div class="d-flex align-content-start flex-wrap">
                     <% widgets.each do |widget| %>
