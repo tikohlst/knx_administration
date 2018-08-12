@@ -43,9 +43,9 @@
 
       <div class="card mt-0 mb-2">
         <nav class="navbar navbar-expand-md navbar-light bg-light">
-          <a class="navbar-brand" href="#">
+          <%= link_to widgets_path, class: 'navbar-brand' do %>
             <%= image_tag "KNX-Logo.png", style: "width:120px" %>
-          </a>
+          <% end %>
           <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
                   data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
                   aria-expanded="false" aria-label="Toggle navigation">
