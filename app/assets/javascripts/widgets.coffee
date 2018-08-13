@@ -15,8 +15,16 @@ $(document).ready ->
     $('#' + value + ' > div > .collapse').first().addClass 'show'
     return
 
+  ###############################################################################
+  ### All following functions need on-click-event for working after rendering ###
+  ###############################################################################
 
-  # All functions need on-click-event for working after rendering
+  ### Scroll to the widgets after clicking on sort-type or widgets-group in mobile display ###
+  $(document).on 'click', '#widgets_card > .card-header > .nav > li > a,
+    .justify-content-between > .col-md-4 > .navbar-brand > .btn-group ', ->
+    if ($('#nav-tab-responsive').css('display') == 'block')
+      window.scrollTo(0, document.getElementById('nav-tabContent').offsetTop)
+    return
 
   # Submit the form of the clicked widget
   $(document).on 'click', '.edit_widget', ->
