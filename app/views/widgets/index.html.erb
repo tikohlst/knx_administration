@@ -41,7 +41,7 @@
       <div class="col-md-6">
         <div class="float-md-right">
           <%= form_tag widgets_path, class: "form-inline my-2 my-lg-0", method: :get, remote: true do %>
-            <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;", value: "#{$params[current_user.username]}" %>
+            <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;", value: "#{$widgets_search_params[current_user.username]}" %>
             <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0", style: "width: 28%;margin-left: 2%;" %>
           <% end %>
         </div>

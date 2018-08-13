@@ -14,6 +14,13 @@ module KnxAdministration
     config.time_zone = 'Berlin'
     config.active_record.default_timezone = :local
 
+    # Default language
+    config.i18n.default_locale = :en
+
+    # Save the search params for each user
+    $widgets_search_params = {}
+    $users_search_params = {}
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

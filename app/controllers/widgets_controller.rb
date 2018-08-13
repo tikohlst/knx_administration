@@ -3,59 +3,61 @@ class WidgetsController < ApplicationController
   load_and_authorize_resource
   before_action :set_widget, only: [:show, :edit, :update, :destroy]
 
-  # Save search params for each user
-  $params = {}
-
   # GET /widgets
   # GET /widgets.json
   def index
-    @widgets = if params[:term] || $params[current_user.username]
-      $params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params[current_user.username]}%")
+    @widgets = if (params[:term] && params[:term] != "") || $widgets_search_params[current_user.username]
+      $widgets_search_params[current_user.username] = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%")
     else
-      $params[current_user.username] = nil
+      $widgets_search_params[current_user.username] = nil
       Widget.all
     end
+    @lightings = $lightings
   end
 
   def sort_by_org_units
-    @widgets = if params[:term] || $params[current_user.username]
-      $params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params[current_user.username]}%")
+    @widgets = if params[:term] || $widgets_search_params[current_user.username]
+      $widgets_search_params[current_user.username] = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%")
     else
-      $params[current_user.username] = nil
+      $widgets_search_params[current_user.username] = nil
       Widget.all
     end
+    @lightings = $lightings
   end
 
   def sort_by_locations
-    @widgets = if params[:term] || $params[current_user.username]
-      $params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params[current_user.username]}%")
+    @widgets = if params[:term] || $widgets_search_params[current_user.username]
+      $widgets_search_params[current_user.username] = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%")
     else
-      $params[current_user.username] = nil
+      $widgets_search_params[current_user.username] = nil
       Widget.all
     end
+    @lightings = $lightings
   end
 
   def sort_alphabetically
-    @widgets = if params[:term] || $params[current_user.username]
-      $params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params[current_user.username]}%").sort_by{|widget| widget.name}
+    @widgets = if params[:term] || $widgets_search_params[current_user.username]
+      $widgets_search_params[current_user.username] = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%").sort_by{|widget| widget.name}
     else
-      $params[current_user.username] = nil
+      $widgets_search_params[current_user.username] = nil
       Widget.all.sort_by{|widget| widget.name}
     end
+    @lightings = $lightings
   end
 
   def sort_backwards_alphabetically
-    @widgets = if params[:term] || $params[current_user.username]
-      $params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$params[current_user.username]}%").sort_by{|widget| widget.name}.reverse!
+    @widgets = if params[:term] || $widgets_search_params[current_user.username]
+      $widgets_search_params[current_user.username] = params[:term] if params[:term]
+      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%").sort_by{|widget| widget.name}.reverse!
     else
-      $params[current_user.username] = nil
+      $widgets_search_params[current_user.username] = nil
       Widget.all.sort_by{|widget| widget.name}.reverse!
     end
+    @lightings = $lightings
   end
 
   # GET /widgets/1
