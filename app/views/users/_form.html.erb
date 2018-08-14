@@ -49,6 +49,23 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-4 col-form-label">
+                  <%= t 'views.language' %>
+                </label>
+                <div class="col-sm-8">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary <% if @user.language == "en" %>active<% end %>">
+                      <%= flag_icon(:gb, id: 'gb-flag') %>
+                      <%= f.radio_button :language, "en" %>
+                    </label>
+                    <label class="btn btn-secondary <% if @user.language == "de" %>active<% end %>">
+                      <%= flag_icon(:de, id: 'de-flag') %>
+                      <%= f.radio_button :language, "de" %>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
                 <div class="col-sm-4 col-form-label">
                   <%= t 'views.role' %>
                 </div>
