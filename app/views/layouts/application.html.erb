@@ -29,7 +29,11 @@
           <% if notice %>
             <div class="alert alert-success fade show">
               <a href="#" data-dismiss="alert" class="close">×</a>
-              <%= notice %>
+              <% if notice == "Signed in successfully." || "Erfolgreich angemeldet." %>
+                <%= t('devise.sessions.signed_in') %>
+              <% else %>
+                <%= notice %>
+              <% end %>
             </div>
           <% end %>
           <% if alert %>

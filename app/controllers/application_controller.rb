@@ -1,15 +1,22 @@
 class ApplicationController < ActionController::Base
+  prepend_before_action :set_locale
+  protect_from_forgery prepend: true
   before_action :authenticate_user!
-  before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def set_locale
-    I18n.locale = if ["de", "en"].include? params.try(:[], :user).try(:[], :language)
-      params[:user][:language]
-    elsif ["de", "en"].include? params[:locale]
-      params[:locale]
-    else
-      I18n.default_locale
+    # Only if no parameter "id" exists or the parameter "id" matches the ID of the current user,
+    # the language may be changed
+    if params.try(:[], :id) == nil or params.try(:[], :id).to_i == current_user.try("id").to_i
+      # Whitelist locales available for the application
+      locales = I18n.available_locales.map(&:to_s)
+      I18n.locale = if locales.include? params.try(:[], :user).try(:[], :language)
+        params[:user][:language]
+      elsif locales.include? params[:locale]
+        params[:locale]
+      else
+        I18n.default_locale
+      end
     end
   end
 
@@ -18,6 +25,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    # Set the user language after the sign in
+    if resource.is_a?(User) && resource.language != I18n.locale
+      I18n.locale = resource.language
+    end
+
+    # Get to the widgets path after the sign in
     widgets_url
   end
 

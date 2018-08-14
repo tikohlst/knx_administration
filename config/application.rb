@@ -14,6 +14,9 @@ module KnxAdministration
     config.time_zone = 'Berlin'
     config.active_record.default_timezone = :local
 
+    # Whitelist locales available for the application
+    config.i18n.available_locales = [:en, :de]
+
     # Default language
     config.i18n.default_locale = :en
 
