@@ -4,14 +4,14 @@
 
 $(document).ready ->
 
-  ### Open first entry in every tab ###
+  # Open first entry in every tab
   array = $('#widgets_card > .card-body > .tab-content > .tab-pane.fade > .accordion')
     .map(->@id).get()
   $.each array, (index, value) ->
-    ### Turn first triangle ###
+    # Turn first triangle
     $('#' + value + ' > div > div > .row > .col > .mb-0 > button > span').first()
       .removeClass('glyphicon-triangle-right').addClass 'glyphicon-triangle-bottom'
-    ### Show first content ###
+    # Show first content
     $('#' + value + ' > div > .collapse').first().addClass 'show'
     return
 
@@ -19,7 +19,7 @@ $(document).ready ->
   ### All following functions need on-click-event for working after rendering ###
   ###############################################################################
 
-  ### Scroll to the widgets after clicking on sort-type or widgets-group in mobile display ###
+  # Scroll to the widgets after clicking on sort-type or widgets-group in mobile display
   $(document).on 'click', '#widgets_card > .card-header > .nav > li > a,
     .justify-content-between > .col-md-4 > .navbar-brand > .btn-group ', ->
     if ($('#nav-tab-responsive').css('display') == 'block')
@@ -43,6 +43,7 @@ $(document).ready ->
   # Hash for saving intervals with id of the progress bar as key
   intervals = {}
 
+  # Start closing the shutter or blind
   $(document).on 'click', '.card-body > div > .float-right > .btn-group > .btn:last-child', ->
     self_id = $(this).children(":last").attr('id')
     if intervals[self_id]
@@ -69,6 +70,7 @@ $(document).ready ->
           $('#progressbar-' + self_id).css("width", percent + '%')
     return
 
+  # One step closing the shutter or blind
   $(document).on 'click', '.card-body > div > .float-right > .btn-group > .btn:first-child', ->
     self_id = $(this).children(":first").attr('id')
     if intervals[self_id]
@@ -86,6 +88,7 @@ $(document).ready ->
       $('#progressbar-' + self_id).css("width", percent + '%')
     return
 
+  # Start opening the shutter or blind
   $(document).on 'click', '.card-body > div > .float-left > .btn-group > .btn:first-child', ->
     self_id = $(this).children(":first").attr('id')
     if intervals[self_id]
@@ -112,6 +115,7 @@ $(document).ready ->
           $('#progressbar-' + self_id).css("width", percent + '%')
     return
 
+  # One step opening the shutter or blind
   $(document).on 'click', '.card-body > div > .float-left > .btn-group > .btn:last-child', ->
     self_id = $(this).children(":first").attr('id')
     if intervals[self_id]

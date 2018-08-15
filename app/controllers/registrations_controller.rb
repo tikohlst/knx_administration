@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def update_resource(resource, params)
     if params["current_password"] == "" && params["password"] == "" && params["password_confirmation"] == ""
-      # If the user just want to change the language he doesn't need the password
+      # If the user just want to change the language, he doesn't need the password
       params.delete("current_password")
       resource.update_without_password(params)
     else

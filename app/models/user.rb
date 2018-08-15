@@ -20,24 +20,14 @@ class User < ApplicationRecord
   validates_confirmation_of :password, if: :password_required?
   validates :password, length: { in: 6..20 }, if: :password_required?
 
-  # Überprüft vor dem Speichern, ob es mind. einen Admin gibt
-  validate :at_least_one_admin
+  # Checks before saving, whether there is at least one admin
+  validate :at_least_one_admin?
 
-  # Überprüft vor dem Speichern, ob mind. eine Rolle ausgewählt wurde
-  validate :at_least_one_role
-
-  def at_least_one_admin
+  def at_least_one_admin?
     results = ActiveRecord::Base.connection.execute("SELECT user_id FROM users_roles
                                                      WHERE role_id=1 LIMIT 1;")
+    puts "\n\n\n\nresults: #{results.size}\n\n\n\n"
     errors.add(:base, "There must be one admin.") if results.size < 1 && ENV['SEEDS'].blank?
-  end
-
-  def at_least_one_role
-    errors.add(:base, "There must be one role.") if self.roles.blank? && ENV['SEEDS'].blank?
-  end
-
-  def email_changed?
-    false
   end
 
   def password_required?
