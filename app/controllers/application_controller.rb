@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     # Only if no parameter "id" exists or the parameter "id" matches the ID of the current user,
-    # the language may be changed
+    # the language may be changed.
     if params.try(:[], :id) == nil or params.try(:[], :id).to_i == current_user.try("id").to_i
       # Whitelist locales available for the application
       locales = I18n.available_locales.map(&:to_s)
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
       else
         I18n.default_locale
       end
+    else
+      # Because of an internal I18n problem, sometimes the I18n.locale variable is mysteriously
+      # overwritten in the background, so for security I have to set it again to the stored language
+      I18n.locale = params[:locale]
     end
   end
 
