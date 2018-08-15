@@ -51,43 +51,48 @@
             <%= image_tag "KNX-Logo.png", style: "width:120px" %>
           <% end %>
           <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                  data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                  data-target="#navbarToggler" aria-controls="navbarToggler"
                   aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-              <li><h3>Home-Automation</h3></li>
+          <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-0">
+              <li><h3 class="mt-3">Home-Automation</h3></li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <form class="form-inline my-2 my-lg-0 mb-0 mt-0">
+              <ul class="navbar-nav mr-auto mb-0 mt-0">
                 <% if user_signed_in? %>
                   <li class="nav-item">
-                    <%= link_to widgets_path, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span><%= t 'views.home' %>
+                    <%= link_to widgets_path, class: 'nav-link text-md-center' do %>
+                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                      <%= t 'views.home' %>
                     <% end %>
                   </li>
                   <% if current_user.has_role? :admin %>
                     <li class="nav-item">
-                      <%= link_to users_url, class: 'nav-link' do %>
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><%= t 'views.user' %>
+                      <%= link_to users_url, class: 'nav-link text-md-center' do %>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <%= t 'views.user' %>
                       <% end %>
                     </li>
                   <% end %>
                   <li class="nav-item">
-                    <%= link_to edit_user_registration_path, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span><%= t 'views.settings' %>
+                    <%= link_to edit_user_registration_path, class: 'nav-link text-md-center' do %>
+                      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                      <%= t 'views.settings' %>
                     <% end %>
                   </li>
                   <li class="nav-item">
-                    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span><%= t 'views.to_logout' %>
+                    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-md-center' do %>
+                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                      <%= t 'views.to_logout' %>
                     <% end %>
                   </li>
                 <% else %>
                   <li class="nav-item">
                     <%= link_to new_user_session_path, class: 'nav-link' do %>
-                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span><%= t 'views.to_login' %>
+                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                      <%= t 'views.to_login' %>
                     <% end %>
                   </li>
                 <% end %>

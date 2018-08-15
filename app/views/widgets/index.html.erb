@@ -8,38 +8,32 @@
   </div>
 
   <div>
-    <nav class="navbar navbar-light bg-light justify-content-between">
-      <div class="col-md-2">
-        <%= t 'views.sortby' %>:
+    <nav class="navbar navbar-light bg-light justify-content-between text-center">
+      <div class="col-lg-2">
+        <div class="text-lg-left">
+          <%= t 'views.sortby' %>:
+        </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-lg-4">
         <div class="navbar-brand">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <%= link_to sort_by_org_units_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-right-radius mb-0">
-                <input type="radio" name="options" id="option1" autocomplete="off">Org-Unit
-              </label>
+            <%= link_to sort_by_org_units_widgets_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+              <input type="radio" name="options" id="option1" autocomplete="off">Org-Unit
             <% end %>
-            <%= link_to sort_by_locations_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius mb-0 active">
-                <input type="radio" name="options" id="option2" autocomplete="off" checked><%= t 'views.location' %>
-              </label>
+            <%= link_to sort_by_locations_widgets_path, class: "btn btn-outline-secondary mb-0 active", remote: true do %>
+              <input type="radio" name="options" id="option2" autocomplete="off" checked><%= t 'views.location' %>
             <% end %>
-            <%= link_to sort_alphabetically_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius mb-0">
-                <input type="radio" name="options" id="option3" autocomplete="off">A-Z
-              </label>
+            <%= link_to sort_alphabetically_widgets_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+              <input type="radio" name="options" id="option3" autocomplete="off">A-Z
             <% end %>
-            <%= link_to sort_backwards_alphabetically_widgets_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius mb-0">
-                <input type="radio" name="options" id="option4" autocomplete="off">Z-A
-              </label>
+            <%= link_to sort_backwards_alphabetically_widgets_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+              <input type="radio" name="options" id="option4" autocomplete="off">Z-A
             <% end %>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="float-md-right">
+      <div class="col-lg-6">
+        <div class="float-lg-right">
           <%= form_tag widgets_path, class: "form-inline my-2 my-lg-0", method: :get, remote: true do %>
             <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;", value: "#{$widgets_search_params[current_user.username]}" %>
             <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0", style: "width: 28%;margin-left: 2%;" %>

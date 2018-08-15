@@ -13,27 +13,23 @@
   </div>
 
   <div>
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar navbar-light bg-light justify-content-between text-center">
       <div class="col-md-2">
-        <%= t 'views.sortby' %>:
+        <div class="text-lg-left">
+          <%= t 'views.sortby' %>:
+        </div>
       </div>
       <div class="col-md-4">
         <div class="navbar-brand">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <%= link_to sort_by_ids_users_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-right-radius mb-0">
-                <input type="radio" name="options" autocomplete="off"> ID
-              </label>
+            <%= link_to sort_by_ids_users_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+              <input type="radio" name="options" autocomplete="off"> ID
             <% end %>
-            <%= link_to sort_by_usernames_users_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius btn-right-radius active mb-0">
-                <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
-              </label>
+            <%= link_to sort_by_usernames_users_path, class: "btn btn-outline-secondary mb-0 active", remote: true do %>
+              <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
             <% end %>
-            <%= link_to sort_by_roles_users_path, remote: true do %>
-              <label class="btn btn-outline-secondary btn-left-radius mb-0">
-                <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
-              </label>
+            <%= link_to sort_by_roles_users_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+              <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
             <% end %>
           </div>
         </div>

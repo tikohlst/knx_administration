@@ -16,6 +16,59 @@
 @import 'glyphicons'
 @import "flag-icon"
 
+////////////////////////////////////////////////////
+// General
+//
+.btn:hover
+    text-decoration: none
+
+////////////////////////////////////////////////////
+// Navbar: "Header"
+//
+#navbarToggler > form > ul > li.nav-item > a
+    color: black
+    span
+        width: 48px
+        margin: 2px auto 4px auto
+        font-size: 24px
+        @media (max-width: 768px)
+            top: 3px
+        @media (min-width: 768px)
+            display: block
+            top: 0
+
+////////////////////////////////////////////////////
+// Navbar: "Sort by"
+//
+@media (max-width: 400px)
+    .navbar.justify-content-between
+        padding: 0.5rem 0rem
+
+////////////////////////////////////////////////////
+// Navbar: "Widgets"
+//
+@media (max-width: 868px)
+    #nav-tab
+        display: none
+    #nav-tab-responsive
+        display: block
+
+@media (min-width: 868px)
+    #nav-tab
+        display: flex
+    #nav-tab-responsive
+        display: none !important
+
+////////////////////////////////////////////////////
+// Widgets
+//
+.widget
+    margin: 0px 10px 10px 0px !important
+    padding: 0
+    max-width: 18rem
+    min-width: 290px
+    border: 1px solid rgba(0, 0, 0, 0.125) !important
+
 #nav-weather > div > div
     min-width: 20rem
 
@@ -31,105 +84,17 @@
     border-radius: 8px
     color: white
 
-// Height for Buttons
 .h-35
     height: 35px
 
-div.collapse.show
+.collapse.show
     margin-bottom:  10px
 
 .accordion
     width: 100%
 
-@media (max-width: 400px)
-    .navbar.justify-content-between
-        padding: 0.5rem 0rem
-
-@media (max-width: 768px)
-    .navbar.justify-content-between
-        text-align: center
-
-ul
-    &#nav-tab
-        display: none
-    &#nav-tab-responsive
-        display: block
-
-@media (min-width: 868px)
-    ul
-        &#nav-tab
-            display: flex
-        &#nav-tab-responsive
-            display: none !important
-
 .btn-secondary:focus, .btn-secondary.focus, .btn-outline-secondary:focus, .btn-outline-secondary.focus
     box-shadow: none
-
-div#navbarTogglerDemo01
-    ul
-        margin-top: 0 !important
-        li > h3
-            margin-top: 15px
-    form, form > ul
-        margin-bottom: 0 !important
-        margin-top: 0 !important
-        ul > li.nav-item > a
-            text-align: left
-            color: black
-            @media (min-width: 768px)
-                text-align: center
-            span
-                width: 48px
-                margin: 2px auto 4px auto
-                top: 3px
-                line-height: 24px
-                position: relative
-                font-size: 24px
-                @media (min-width: 768px)
-                    display: block
-                    top: 0
-
-.nav-item
-    margin-bottom: -2px !important
-
-div.form-group
-    margin-bottom: 0px
-    padding: 10px 20px
-
-.slider-wrapper-horizontal
-    display: inline-block
-    width: 150px
-    height: 20px
-    padding: 0
-
-.slider-wrapper-vertical
-    display: inline-block
-    width: 20px
-    height: 150px
-    padding: 0
-
-.vertical
-    width: 150px
-    height: 20px
-    margin: 0
-    transform-origin: 75px 75px
-    transform: rotate(-90deg)
-
-label.btn-outline-secondary > input
-    position: absolute
-    clip: rect(0, 0, 0, 0)
-    pointer-events: none
-
-.btn-right-radius
-    border-top-right-radius: 0
-    border-bottom-right-radius: 0
-
-.btn-left-radius
-    border-top-left-radius: 0
-    border-bottom-left-radius: 0
-
-.btn:hover
-    text-decoration: none
 
 .glyphicon-step-backward, .glyphicon-backward, .glyphicon-step-forward, .glyphicon-forward
     top: 0px
@@ -140,26 +105,32 @@ label.btn-outline-secondary > input
 .glyphicon-step-forward, .glyphicon-backward
     margin-left: -5px
 
+.slider-wrapper-horizontal
+    display: inline-block
+    width: 150px
+    height: 20px
+    padding: 0
+
 .toggle-group
     .btn.btn-primary.toggle-on
         color: #fff
         background-color: #428bca
         border-color: #357ebd
+    .btn.btn-default.active.toggle-off, .btn.btn-default.toggle-handle
+        color: #333
+        border-color: #ccc !important
+
     .btn.btn-default.active.toggle-off
-        color: #333
         background-color: #e6e6e6
-        border-color: #ccc !important
+
     .btn.btn-default.toggle-handle
-        color: #333
         background-color: #fff
-        border-color: #ccc !important
 
 .toggle
     border-color: #ccc !important
 
-div.widget
-    margin: 0px 10px 10px 0px !important
-    padding: 0
-    max-width: 18rem
-    min-width: 290px
-    border: 1px solid rgba(0, 0, 0, 0.125) !important
+////////////////////////////////////////////////////
+// Users
+//
+.form-group
+    padding: 20px 20px 0 20px
