@@ -4,8 +4,12 @@
 
 $(document).ready ->
 
-# Edit the user after clicking on line in /users/
-  $('tr[data-link]').on 'click', (event) ->
+  ###############################################################################
+  ### All following functions need on-click-event for working after rendering ###
+  ###############################################################################
+
+  # Edit the user after clicking on line in /users/
+  $(document).on 'click', 'tr[data-link]', ->
     if $('#table_users').length > 0
       window.location.href = "users/" + $(this).attr('data-link') + "/edit"
     return
