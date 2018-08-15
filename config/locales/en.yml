@@ -6,6 +6,7 @@ en:
   errors:
     format: "%{attribute} %{message}"
     messages:
+      admin: There must be one admin
       accepted: must be accepted
       blank: can't be blank
       present: must be blank
