@@ -18,7 +18,7 @@
               <div class="alert alert-danger alert-dismissible fade show mb-2">
                 <a href="#" data-dismiss="alert" class="close">×</a>
                 <strong>
-                  <%= pluralize(@user.errors.count, t('error.single'), t('error.several')) %><%= t('error.fixed') %>
+                  <%= pluralize(@user.errors.count, t('error.single'), t('error.several')) %>
                 </strong>
                 <% @user.errors.full_messages.each do |message| %>
                   <li><%= message %></li>

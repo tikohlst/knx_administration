@@ -1,12 +1,11 @@
 de:
   error:
-    single: "Fehler"
-    several: "Fehler"
-    fixed: " müssen behoben werden"
+    single: "Fehler muss behoben werden"
+    several: "Fehler müssen behoben werden"
   errors:
     format: "%{attribute} %{message}"
     messages:
-      admin: Es muss einen Admin geben
+      admin: Es muss einen Admin geben.
       accepted: muss akzeptiert werden.
       blank: muss ausgefüllt werden.
       present: darf nicht ausgefüllt werden.

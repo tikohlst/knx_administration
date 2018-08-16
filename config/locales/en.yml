@@ -1,12 +1,11 @@
 en:
   error:
-    single: "error"
-    several: "errors"
-    fixed: " must be fixed"
+    single: "error must be fixed"
+    several: "errors must be fixed"
   errors:
     format: "%{attribute} %{message}"
     messages:
-      admin: There must be one admin
+      admin: There must be one admin.
       accepted: must be accepted
       blank: can't be blank
       present: must be blank
