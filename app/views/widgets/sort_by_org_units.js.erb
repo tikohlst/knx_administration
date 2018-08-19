@@ -1,16 +1,30 @@
 /* Save current tab to display the same tab after changing the sort algorithm */
 var currentTab = $('#nav-tabContent > .show.active').attr('id');
+
 /* Positioning the rendered partial */
 $('#widgets_card').html("<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets }) %>");
+
 /* Remove class of current tab in card-header */
 $('#widgets_card > .card-header > ul#nav-tab > li.nav-item > .nav-link.active').removeClass('active');
 $('#widgets_card > .card-header > ul#nav-tab-responsive > li > .nav-link.active').removeClass('active');
 /* Add class active to the same tab as before */
 $('ul#nav-tab > li > #' + currentTab + "-tab").addClass('active');
 $('ul#nav-tab-responsive > li > #' + currentTab + "-tab").addClass('active');
+
 /* Remove class of current tab in card-body */
 $('#nav-tabContent > .tab-pane.fade.show.active').removeClass('show active');
 /* Add class active to the same tab as before */
 $('#' + currentTab).addClass('show active');
+
 /* Activate all toggles */
 $(':checkbox').bootstrapToggle();
+
+/* Open the first entry in every tab */
+var array = $('#widgets_card > .card-body > .tab-content > .tab-pane.fade > .accordion').map(function(){
+    return this.id;
+}).get();
+$.each(array, function(index, value) {
+    $('#' + value + ' > div > .mb-2 > .row > .col > .mb-0 > button > span').first()
+        .removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+    $('#' + value + ' > div > .collapse').first().addClass('show');
+});

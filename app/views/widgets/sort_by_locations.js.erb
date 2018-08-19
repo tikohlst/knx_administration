@@ -30,3 +30,13 @@ $.each(array, function( index, value ) {
 
 /* Activate all toggles */
 $(':checkbox').bootstrapToggle();
+
+/* Open the first entry in every tab */
+var array = $('#widgets_card > .card-body > .tab-content > .tab-pane.fade > .accordion').map(function(){
+    return this.id;
+}).get();
+$.each(array, function(index, value) {
+    $('#' + value + ' > div > .mb-2 > .row > .col > .mb-0 > button > span').first()
+        .removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+    $('#' + value + ' > div > .collapse').first().addClass('show');
+});
