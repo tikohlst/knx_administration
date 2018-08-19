@@ -32,10 +32,18 @@ class Ability
     if user.has_role? :admin
       can :manage, :all
     elsif user.has_role? :editor
-      can :read, [Widget]
       can :update, [Widget]
+      can :read, [Widget, OrgUnit, Access]
+      can :sort_by_org_units, [Widget]
+      can :sort_by_locations, [Widget]
+      can :sort_alphabetically, [Widget]
+      can :sort_backwards_alphabetically, [Widget]
     elsif user.has_role? :observer
-      can :read, [Widget]
+      can :read, [Widget, OrgUnit, Access]
+      can :sort_by_org_units, [Widget]
+      can :sort_by_locations, [Widget]
+      can :sort_alphabetically, [Widget]
+      can :sort_backwards_alphabetically, [Widget]
     else
       can :read, :none
     end

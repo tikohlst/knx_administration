@@ -92,369 +92,242 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
       <div id="accordion-lightings" class="accordion">
-        <div>
-          <div class="mb-2" id="headingOne_lighting">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapseOne_lighting" aria-expanded="true" aria-controls="collapseOne_lighting">
-                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_1' %>
-                  </button>
-                </h5>
-              </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+        <% OrgUnit.all.each do |org_unit| %>
+          <% if widgets.where(org_unit_id: org_unit.id, use: 'lighting').exists? %>
+            <div>
+              <div class="mb-2" id="heading<%= org_unit.id %>_lighting">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_lighting" aria-expanded="true" aria-controls="collapseOne_lighting">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <%= t "views.org_unit_#{org_unit.id}" %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col-sm">
+                    <div class="float-sm-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div id="collapseOne_lighting" class="collapse show" aria-labelledby="headingOne_lighting" data-parent="#accordion-lightings">
-            <div class="d-flex align-content-start flex-wrap">
-              <% @lightings.each do |lighting| %>
-                <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                  <div class="card-body">
-                    <div class="float-left">
-                      <h5 class="mt-2"><%= lighting.desc %></h5>
-                    </div>
-                    <div class="float-right">
-                      <%= check_box(:lighting, :status, data: {toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39", onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="mb-2" id="headingTwo_lighting">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed pl-0" data-toggle="collapse" data-target="#collapseTwo_lighting" aria-expanded="false" aria-controls="collapseTwo_lighting">
-                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_2' %>
-                  </button>
-                </h5>
-              </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="collapseTwo_lighting" class="collapse" aria-labelledby="headingTwo_lighting" data-parent="#accordion-lightings">
-            <div class="d-flex align-content-start flex-wrap">
-              <% widgets.each do |widget| %>
-                <% if widget.use == "lighting" %>
-                  <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="card-body">
-                      <div class="float-left">
-                        <h5 class="mt-2"><%= widget.name %></h5>
+              <div id="collapse<%= org_unit.id %>_lighting" class="collapse" aria-labelledby="heading<%= org_unit.id %>_lighting" data-parent="#accordion-lightings">
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.use == "lighting" && widget.org_unit_id == org_unit.id %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= widget.name %></h5>
+                          </div>
+                          <div class="float-right">
+                            <%= form_for widget, remote: true do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                              id: "widget_active_#{widget.id}", class: "edit_widget" %>
+                            <% end %>
+                          </div>
+                        </div>
                       </div>
-                      <div class="float-right">
-                        <%= form_for widget, remote: true do |f| %>
-                          <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                             name: "authenticity_token" %>
-                          <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                          <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                          id: "widget_active_#{widget.id}", class: "edit_widget" %>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="mb-2" id="headingThree_lighting">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed  pl-0" data-toggle="collapse" data-target="#collapseThree_lighting" aria-expanded="false" aria-controls="collapseThree_lighting">
-                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_3' %>
-                  </button>
-                </h5>
-              </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="collapseThree_lighting" class="collapse" aria-labelledby="headingThree_lighting" data-parent="#accordion-lightings">
-            <div class="card-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
       <div id="accordion-shutters" class="accordion">
-        <div>
-          <div class="mb-2" id="headingOne_shutter">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link  pl-0" data-toggle="collapse" data-target="#collapseOne_shutter" aria-expanded="true" aria-controls="collapseOne_shutter">
-                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_1' %>
-                  </button>
-                </h5>
-              </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="collapseOne_shutter" class="collapse show" aria-labelledby="headingOne_shutter" data-parent="#accordion-shutters">
-            <div class="d-flex align-content-start flex-wrap">
-              <% widgets.each do |widget| %>
-                <% if widget.use == "shutter" %>
-                  <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="card-body">
-                      <div>
-                        <h5 class="mt-2"><%= widget.name %></h5>
-                      </div>
-                      <div>
-                        <div class="float-left">
-                          <div class="btn-group h-35" role="group">
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                          </div>
-                        </div>
-                        <div class="float-right">
-                          <div class="btn-group h-35" role="group">
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <br><br>
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
-                      </div>
+        <% OrgUnit.all.each do |org_unit| %>
+          <% if widgets.where(org_unit_id: org_unit.id, use: 'shutter').exists? %>
+            <div>
+              <div class="mb-2" id="heading<%= org_unit.id %>_shutter">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link  pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_shutter" aria-expanded="true" aria-controls="collapseOne_shutter">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <%= t "views.org_unit_#{org_unit.id}" %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col-sm">
+                    <div class="float-sm-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
                     </div>
                   </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="mb-2" id="headingTwo_shutter">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed pl-0" data-toggle="collapse" data-target="#collapseTwo_shutter" aria-expanded="false" aria-controls="collapseTwo_shutter">
-                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_2' %>
-                  </button>
-                </h5>
-              </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
                 </div>
               </div>
-            </div>
-          </div>
-          <div id="collapseTwo_shutter" class="collapse" aria-labelledby="headingTwo_shutter" data-parent="#accordion-shutters">
-            <div class="d-flex align-content-start flex-wrap">
-              <% widgets.each do |widget| %>
-                <% if widget.use == "shutter" %>
-                  <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="card-body">
-                      <div>
-                        <h5 class="mt-2"><%= widget.name %></h5>
-                      </div>
-                      <div>
-                        <div class="float-left">
-                          <div class="btn-group h-35" role="group">
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
+              <div id="collapse<%= org_unit.id %>_shutter" class="collapse" aria-labelledby="heading<%= org_unit.id %>_shutter" data-parent="#accordion-shutters">
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.use == "shutter" && widget.org_unit_id == org_unit.id %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div>
+                            <h5 class="mt-2"><%= widget.name %></h5>
                           </div>
-                        </div>
-                        <div class="float-right">
-                          <div class="btn-group h-35" role="group">
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
+                          <div>
+                            <div class="float-left">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="float-right">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <br><br>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
                           </div>
                         </div>
                       </div>
-                      <br><br>
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="mb-2" id="headingThree_shutter">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed pl-0" data-toggle="collapse" data-target="#collapseThree_shutter" aria-expanded="false" aria-controls="collapseThree_shutter">
-                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_3' %>
-                  </button>
-                </h5>
-              </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="collapseThree_shutter" class="collapse" aria-labelledby="headingThree_shutter" data-parent="#accordion-shutters">
-            <div class="card-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
       <div id="accordion-blinds" class="accordion">
-        <div>
-          <div class="mb-2" id="headingOne_blind">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapseOne_blind" aria-expanded="true" aria-controls="collapseOne_blind">
-                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_1' %>
-                  </button>
-                </h5>
+        <% OrgUnit.all.each do |org_unit| %>
+          <% if widgets.where(org_unit_id: org_unit.id, use: 'blind').exists? %>
+            <div>
+              <div class="mb-2" id="heading<%= org_unit.id %>_blind">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_blind" aria-expanded="true" aria-controls="collapseOne_blind">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <%= t "views.org_unit_#{org_unit.id}" %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col-sm">
+                    <div class="float-sm-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+              <div id="collapse<%= org_unit.id %>_blind" class="collapse" aria-labelledby="heading<%= org_unit.id %>_blind" data-parent="#accordion-blinds">
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.use == "blind" && widget.org_unit_id == org_unit.id %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div>
+                            <h5 class="mt-2"><%= widget.name %></h5>
+                          </div>
+                          <div>
+                            <div class="float-left">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="float-right">
+                              <div class="btn-group h-35" role="group">
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                                <button type="button" class="btn btn-grey">
+                                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <br><br>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="collapseOne_blind" class="collapse show" aria-labelledby="headingOne_blind" data-parent="#accordion-blinds">
-            <div class="d-flex align-content-start flex-wrap">
-              <% widgets.each do |widget| %>
-                <% if widget.use == "blind" %>
-                  <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="card-body">
-                      <div>
-                        <h5 class="mt-2"><%= widget.name %></h5>
-                      </div>
-                      <div>
-                        <div class="float-left">
-                          <div class="btn-group h-35" role="group">
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                          </div>
-                        </div>
-                        <div class="float-right">
-                          <div class="btn-group h-35" role="group">
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                            <button type="button" class="btn btn-grey">
-                              <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <br><br>
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
       <div id="accordion-dimmers" class="accordion">
-        <div>
-          <div class="mb-2" id="headingOne_dimmer">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapseOne_dimmer" aria-expanded="true" aria-controls="collapseOne_dimmer">
-                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_1' %>
-                  </button>
-                </h5>
+        <% OrgUnit.all.each do |org_unit| %>
+          <% if widgets.where(org_unit_id: org_unit.id, use: 'dimmer').exists? %>
+            <div>
+              <div class="mb-2" id="heading<%= org_unit.id %>_dimmer">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_dimmer" aria-expanded="true" aria-controls="collapseOne_dimmer">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <%= t "views.org_unit_#{org_unit.id}" %>
+                      </button>
+                    </h5>
+                  </div>
+                  <div class="col-sm">
+                    <div class="float-sm-right">
+                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="col-sm">
-                <div class="float-sm-right">
-                  <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.all_off' %></button>
+              <div id="collapse<%= org_unit.id %>_dimmer" class="collapse" aria-labelledby="heading<%= org_unit.id %>_dimmer" data-parent="#accordion-dimmers">
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.use == "dimmer" && widget.org_unit_id == org_unit.id %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div>
+                            <h5 class="mt-2"><%= widget.name %></h5>
+                          </div>
+                          <div class="">
+                            <%= form_for widget, remote: true do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <div class="slider-wrapper-horizontal">
+                                <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="collapseOne_dimmer" class="collapse show" aria-labelledby="headingOne_dimmer" data-parent="#accordion-dimmers">
-            <div class="d-flex align-content-start flex-wrap">
-              <% widgets.each do |widget| %>
-                <% if widget.use == "dimmer" %>
-                  <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="card-body">
-                      <div>
-                        <h5 class="mt-2"><%= widget.name %></h5>
-                      </div>
-                      <div class="">
-                        <%= form_for widget, remote: true do |f| %>
-                          <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                             name: "authenticity_token" %>
-                          <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                          <div class="slider-wrapper-horizontal">
-                            <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
-                          </div>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
@@ -480,42 +353,46 @@
     </div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
       <div id="accordion-windows" class="accordion">
-        <div>
-          <div class="mb-2" id="headingOne_window">
-            <div class="row">
-              <div class="col">
-                <h5 class="mb-0">
-                  <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapseOne_window" aria-expanded="true" aria-controls="collapseOne_window">
-                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                    <%= t 'views.org_unit_1' %>
-                  </button>
-                </h5>
+        <% OrgUnit.all.each do |org_unit| %>
+          <% if widgets.where(org_unit_id: org_unit.id, use: 'dimmer').exists? %>
+            <div>
+              <div class="mb-2" id="heading<%= org_unit.id %>_window">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_window" aria-expanded="true" aria-controls="collapseOne_window">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <%= t "views.org_unit_#{org_unit.id}" %>
+                      </button>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div id="collapse<%= org_unit.id %>_window" class="collapse" aria-labelledby="heading<%= org_unit.id %>_window" data-parent="#accordion-windows">
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.use == "window" && widget.org_unit_id == org_unit.id %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= widget.name %></h5>
+                          </div>
+                          <div class="float-right">
+                            <% if widget.value == 0 %>
+                              <div class="red-note"><%= t 'views.widget.window.open' %></div>
+                            <% else %>
+                              <div class="green-note"><%= t 'views.widget.window.closed' %></div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
-          <div id="collapseOne_window" class="collapse show" aria-labelledby="headingOne_window" data-parent="#accordion-windows">
-            <div class="d-flex align-content-start flex-wrap">
-              <% widgets.each do |widget| %>
-                <% if widget.use == "window" %>
-                  <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="card-body">
-                      <div class="float-left">
-                        <h5 class="mt-2"><%= widget.name %></h5>
-                      </div>
-                      <div class="float-right">
-                        <% if widget.value == 0 %>
-                          <div class="red-note"><%= t 'views.widget.window.open' %></div>
-                        <% else %>
-                          <div class="green-note"><%= t 'views.widget.window.closed' %></div>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">

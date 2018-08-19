@@ -6,56 +6,88 @@ class WidgetsController < ApplicationController
   # GET /widgets
   # GET /widgets.json
   def index
+    access_org_units = []
+    current_user.accesses.each do |access|
+      access_org_units << access.org_unit_id
+    end
     @widgets = if (params[:term] && params[:term] != "") || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%")
+      Widget.where('(id LIKE :p OR name LIKE :p) AND (org_unit_id REGEXP :q)',
+                   p: "%#{$widgets_search_params[current_user.username]}%",
+                   q: "#{access_org_units.join '|'}")
     else
       $widgets_search_params[current_user.username] = nil
-      Widget.all
+      Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
     @lightings = $lightings
   end
 
   def sort_by_org_units
+    access_org_units = []
+    current_user.accesses.each do |access|
+      access_org_units << access.org_unit_id
+    end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%")
+      Widget.where('(id LIKE :p OR name LIKE :p) AND (org_unit_id REGEXP :q)',
+                   p: "%#{$widgets_search_params[current_user.username]}%",
+                   q: "#{access_org_units.join '|'}")
     else
       $widgets_search_params[current_user.username] = nil
-      Widget.all
+      Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
     @lightings = $lightings
   end
 
   def sort_by_locations
+    access_org_units = []
+    current_user.accesses.each do |access|
+      access_org_units << access.org_unit_id
+    end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%")
+      Widget.where('(id LIKE :p OR name LIKE :p) AND (org_unit_id REGEXP :q)',
+                   p: "%#{$widgets_search_params[current_user.username]}%",
+                   q: "#{access_org_units.join '|'}")
     else
       $widgets_search_params[current_user.username] = nil
-      Widget.all
+      Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
     @lightings = $lightings
   end
 
   def sort_alphabetically
+    access_org_units = []
+    current_user.accesses.each do |access|
+      access_org_units << access.org_unit_id
+    end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%").sort_by{|widget| widget.name}
+      Widget.where('(id LIKE :p OR name LIKE :p) AND (org_unit_id REGEXP :q)',
+                   p: "%#{$widgets_search_params[current_user.username]}%",
+                   q: "#{access_org_units.join '|'}").sort_by{|widget| widget.name}
     else
       $widgets_search_params[current_user.username] = nil
-      Widget.all.sort_by{|widget| widget.name}
+      Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
+          .sort_by{|widget| widget.name}
     end
     @lightings = $lightings
   end
 
   def sort_backwards_alphabetically
+    access_org_units = []
+    current_user.accesses.each do |access|
+      access_org_units << access.org_unit_id
+    end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
-      Widget.where('id LIKE :p OR name LIKE :p', p: "%#{$widgets_search_params[current_user.username]}%").sort_by{|widget| widget.name}.reverse!
+      Widget.where('(id LIKE :p OR name LIKE :p) AND (org_unit_id REGEXP :q)',
+                   p: "%#{$widgets_search_params[current_user.username]}%",
+                   q: "#{access_org_units.join '|'}").sort_by{|widget| widget.name}.reverse!
     else
       $widgets_search_params[current_user.username] = nil
-      Widget.all.sort_by{|widget| widget.name}.reverse!
+      Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
+          .sort_by{|widget| widget.name}.reverse!
     end
     @lightings = $lightings
   end

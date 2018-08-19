@@ -78,6 +78,19 @@
                 </div>
               </div>
               <div class="form-group row">
+                <div class="col-sm-4 col-form-label">
+                  Org-Units
+                </div>
+                <div class="col-sm-8">
+                  <% OrgUnit.all.each do |org_unit| %>
+                    <div>
+                      <%= check_box_tag "org_unit_id_#{org_unit.id}", org_unit.id, @user.org_units.include?(org_unit), name: 'user[org_unit_ids][]' %>
+                      <%= label_tag "org_unit_id_#{org_unit.id}", org_unit.name %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <div class="form-group row">
                 <% if not @user.new_record? %>
                   <div class="col">
                     <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>

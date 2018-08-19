@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_09_085908) do
+ActiveRecord::Schema.define(version: 2018_08_19_111825) do
+
+  create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "org_unit_id"
+    t.datetime "appointment_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["org_unit_id"], name: "index_accesses_on_org_unit_id"
+    t.index ["user_id"], name: "index_accesses_on_user_id"
+  end
+
+  create_table "org_units", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -57,6 +73,7 @@ ActiveRecord::Schema.define(version: 2018_08_09_085908) do
     t.string "use"
     t.float "value"
     t.string "location"
+    t.integer "org_unit_id"
   end
 
 end

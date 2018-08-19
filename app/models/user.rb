@@ -5,7 +5,10 @@ class User < ApplicationRecord
   # Relations
   has_and_belongs_to_many :roles, join_table: :users_roles
 
-  accepts_nested_attributes_for :users_roles, :roles, allow_destroy: true
+  has_many :accesses, dependent: :destroy
+  has_many :org_units, through: :accesses
+
+  accepts_nested_attributes_for :users_roles, :roles, :org_units, :accesses,  allow_destroy: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
