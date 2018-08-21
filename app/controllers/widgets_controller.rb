@@ -69,7 +69,7 @@ class WidgetsController < ApplicationController
     else
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
-          .sort_by{|widget| widget.name}
+          .order(:name)
     end
     @lightings = $lightings
   end
@@ -87,7 +87,7 @@ class WidgetsController < ApplicationController
     else
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
-          .sort_by{|widget| widget.name}.reverse!
+          .order(name: :desc)
     end
     @lightings = $lightings
   end

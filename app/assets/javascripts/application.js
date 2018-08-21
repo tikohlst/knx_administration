@@ -16,4 +16,5 @@
 //= require bootstrap-toggle
 //= require rails-ujs
 //= require activestorage
+//= require gauge.min.js
 //= require_tree .

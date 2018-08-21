@@ -350,303 +350,40 @@
     </div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
       <div id="accordion-windows" class="accordion">
-          <% $locations.each_with_index do |(key, location), index| %>
-            <% if widgets.where(location: location, use: 'window').exists? %>
-              <div>
-                <div class="mb-2" id="heading<%= key %>_window">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="mb-0">
-                        <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window">
-                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                          <%= location %>
-                        </button>
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-                <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
-                  <div class="d-flex align-content-start flex-wrap">
-                    <% widgets.each do |widget| %>
-                      <% if widget.location == location and widget.use == "window" %>
-                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                          <div class="card-body">
-                            <div class="float-left">
-                              <h5 class="mt-2"><%= widget.name %></h5>
-                            </div>
-                            <div class="float-right">
-                              <% if widget.value == 0 %>
-                                <div class="red-note"><%= t 'views.widget.window.open' %></div>
-                              <% else %>
-                                <div class="green-note"><%= t 'views.widget.window.closed' %></div>
-                              <% end %>
-                            </div>
-                          </div>
-                        </div>
-                      <% end %>
-                    <% end %>
+        <% $locations.each_with_index do |(key, location), index| %>
+          <% if widgets.where(location: location, use: 'window').exists? %>
+            <div>
+              <div class="mb-2" id="heading<%= key %>_window">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_window" aria-expanded="true" aria-controls="collapse<%= key %>_window">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                        <%= location %>
+                      </button>
+                    </h5>
                   </div>
                 </div>
               </div>
-            <% end %>
-          <% end %>
-      </div>
-    </div>
-    <% if widgets.where(use: 'weather').exists? %>
-    <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
-      <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "weather" %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
-                <div class="">
-                  <%= widget.value %>
-                  <% if widget.name == "Temperatur"%>
-                    <div class="meter">
-                      <span style="width: 83%"></span>
-                    </div>
-                    <style>
-                      .meter {
-                        height: 20px;
-                        background: #555;
-                        -moz-border-radius: 25px;
-                        -webkit-border-radius: 25px;
-                        border-radius: 25px;
-                        padding: 5px;
-                        box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-                      }
-                      .meter > span {
-                        display: block;
-                        height: 100%;
-                        border-top-right-radius: 8px;
-                        border-bottom-right-radius: 8px;
-                        border-top-left-radius: 20px;
-                        border-bottom-left-radius: 20px;
-                        background-color: red;
-                        box-shadow:
-                            inset 0 2px 9px  rgba(255,255,255,0.3),
-                            inset 0 -2px 6px rgba(0,0,0,0.4);
-                        position: relative;
-                        overflow: hidden;
-                      }
-                      @keyframes expandWidth {
-                        0% { width: 0; }
-                        100% { width: auto; }
-                      }
-                    </style>
-                  <% end %>
-                  <% if widget.name == "Temperatur2"%>
-                    <div class="ruler">
-                      <hr>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
+              <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
+                <div class="d-flex align-content-start flex-wrap">
+                  <% widgets.each do |widget| %>
+                    <% if widget.location == location and widget.use == "window" %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= widget.name %></h5>
+                          </div>
+                          <div class="float-right">
+                            <% if widget.value == 0 %>
+                              <div class="red-note"><%= t 'views.widget.window.open' %></div>
+                            <% else %>
+                              <div class="green-note"><%= t 'views.widget.window.closed' %></div>
+                            <% end %>
+                          </div>
+                        </div>
                       </div>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                      </div>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                      </div>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                      </div>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                      </div>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                      </div>
-                      <div class="cm">
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                        <div class="mm"></div>
-                      </div>
-                      <div class="cm"></div>
-                    </div>
-                    <style>
-                      .ruler > hr {
-                        width: 77.5%;
-                        float: left;
-                        background-color: red;
-                        height: 2px;
-                        margin-top: 7px;
-                      }
-                      .ruler {
-                        position: relative;
-                        width: 300px;
-                        margin: 20px auto;
-                        height: 14px;
-                      }
-                      .ruler .cm,
-                      .ruler .mm {
-                        position: absolute;
-                        border-left: 1px solid #555;
-                        height: 14px;
-                        width: 12.5%;
-                      }
-                      .ruler .cm:after {
-                        position: absolute;
-                        bottom: -15px;
-                        left: -3px;
-                        font: 11px/1 sans-serif;
-                      }
-                      .ruler .mm {
-                        height: 5px;
-                        top: 6px;
-                      }
-                      .ruler .mm:nth-of-type(5) {
-                        height: 10px;
-                        top: 3px;
-                      }
-                      .ruler .cm:nth-of-type(1) {
-                        left: 0%;
-                      }
-                      .ruler .cm:nth-of-type(1):after {
-                        content: "-30";
-                      }
-                      .ruler .cm:nth-of-type(2) {
-                        left: 12.5%;
-                      }
-                      .ruler .cm:nth-of-type(2):after {
-                        content: "-20";
-                      }
-                      .ruler .cm:nth-of-type(3) {
-                        left: 25%;
-                      }
-                      .ruler .cm:nth-of-type(3):after {
-                        content: "-10";
-                      }
-                      .ruler .cm:nth-of-type(4) {
-                        left: 37.5%;
-                      }
-                      .ruler .cm:nth-of-type(4):after {
-                        content: "0";
-                      }
-                      .ruler .cm:nth-of-type(5) {
-                        left: 50%;
-                      }
-                      .ruler .cm:nth-of-type(5):after {
-                        content: "10";
-                      }
-                      .ruler .cm:nth-of-type(6) {
-                        left: 62.5%;
-                      }
-                      .ruler .cm:nth-of-type(6):after {
-                        content: "20";
-                      }
-                      .ruler .cm:nth-of-type(7) {
-                        left: 75%;
-                      }
-                      .ruler .cm:nth-of-type(7):after {
-                        content: "30";
-                      }
-                      .ruler .cm:nth-of-type(8) {
-                        left: 87.5%;
-                      }
-                      .ruler .cm:nth-of-type(8):after {
-                        content: "40";
-                      }
-                      .ruler .mm:nth-of-type(1) {
-                        left: 10%;
-                      }
-                      .ruler .mm:nth-of-type(2) {
-                        left: 20%;
-                      }
-                      .ruler .mm:nth-of-type(3) {
-                        left: 30%;
-                      }
-                      .ruler .mm:nth-of-type(4) {
-                        left: 40%;
-                      }
-                      .ruler .mm:nth-of-type(5) {
-                        left: 50%;
-                      }
-                      .ruler .mm:nth-of-type(6) {
-                        left: 60%;
-                      }
-                      .ruler .mm:nth-of-type(7) {
-                        left: 70%;
-                      }
-                      .ruler .mm:nth-of-type(8) {
-                        left: 80%;
-                      }
-                      .ruler .mm:nth-of-type(9) {
-                        left: 90%;
-                      }
-                      .ruler .mm:nth-of-type(10) {
-                        left: 100%;
-                      }
-                    </style>
-                  <% end %>
-                  <% if widget.name == "Temperatur3"%>
-                    <div style="width: 100%;border: 1px solid black;margin-top: 10px;border-radius: 20px;">
-                      <div class="skills html">30°</div>
-                    </div>
-                    <style>
-                      .skills {
-                        text-align: right; /* Right-align text */
-                        padding-right: 20px; /* Add some right padding */
-                        line-height: 20px; /* Set the line-height to center the text inside the skill bar, and to expand the height of the container */
-                        color: white; /* White text color */
-                        border-radius: 20px;
-                      }
-                      .html {width: 90%; background-color: red;}
-                    </style>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
@@ -655,6 +392,178 @@
         <% end %>
       </div>
     </div>
-    <% end %>
+    <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
+      <div class="d-flex align-content-start flex-wrap">
+        <% widgets.each do |widget| %>
+          <% if widget.use == "weather" and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(widget.name) %>
+            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mt-2"><%= widget.name %></h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5 class="mt-2">
+                      <%= widget.value %>
+                      <% case widget.name %>
+                      <% when "Temperatur" %>
+                        °C
+                      <% when "Windgeschw." %>
+                        m/s
+                      <% when "Helligkeit" %>
+                        lx
+                      <% when "Azimut Sonne" %>
+                        °
+                      <% when "Elevation Sonne" %>
+                        °
+                      <% else %>
+                      <% end %>
+                    </h5>
+                  </div>
+                </div>
+                <div class="">
+                  <% case widget.name %>
+                  <% when "Temperatur" %>
+                    <div class="row">
+                      <div class="col">
+                        Min: <%= widgets.where(use: 'weather', name: 'T_min').first.value %> °C
+                        <br>
+                        Max: <%= widgets.where(use: 'weather', name: 'T_max').first.value %> °C
+                      </div>
+                      <div class="col text-right">
+                        <button type="button" class="btn btn-danger btn-sm mt-2">Zurücksetzen</button>
+                      </div>
+                    </div>
+                    <canvas id="canvas-temperature"
+                            data-type="linear-gauge"
+                            data-width="270"
+                            data-height="100"
+                            data-min-value="-20"
+                            data-max-value="40"
+                            data-major-ticks="[-20,-10,0,10,20,30,40]"
+                            data-minor-ticks="5"
+                            data-stroke-ticks="true"
+                            data-ticks-width="20"
+                            data-ticks-width-minor="10"
+                            data-highlights='[
+                              {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                              {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                              {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                              {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                              {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                              {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                              {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                              {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                              {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                              {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                              {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                              {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                            data-highlights-width="20"
+                            data-color-major-ticks="#000"
+                            data-color-minor-ticks="#000"
+                            data-color-title="#000"
+                            data-color-units="#000"
+                            data-color-numbers="#000"
+                            data-color-plate="transparent"
+                            data-border-shadow-width="0"
+                            data-borders="false"
+                            data-border-radius="6"
+                            data-needle-type="arrow"
+                            data-needle-width="12"
+                            data-needle-start="50"
+                            data-needle-end="140"
+                            data-animation-duration="1500"
+                            data-animation-rule="linear"
+                            data-color-needle="#000"
+                            data-color-bar-progress="#C0C0C0"
+                            data-color-bar="#919191"
+                            data-bar-stroke="0"
+                            data-bar-width="0"
+                            data-bar-begin-circle="false"
+                            data-value="<%= widget.value %>"
+                            data-tick-side="left"
+                            data-number-side="right"
+                            data-needle-side="left"
+                            data-font-units-size="30"
+                            data-font-title-size="30"
+                            data-font-numbers-size="32"
+                            data-numbers-margin="-30"
+                    ></canvas>
+                  <% when "Windgeschw." %>
+                    <div class="row">
+                      <div class="col">
+                        Max: <%= widgets.where(use: 'weather', name: 'v_max').first.value %> m/s
+                        <% if widgets.where(use: 'weather', name: 'Sturm! (v > 20m/s)').first.value == 1 %>
+                          <div style="width:62px;height:32px;" class="red-note">Sturm!</div>
+                        <% else %>
+                          <div style="width:100px;height:32px;" class="green-note">Kein Sturm</div>
+                        <% end %>
+                      </div>
+                      <div class="col text-right">
+                        <button type="button" class="btn btn-danger btn-sm">Zurücksetzen</button>
+                      </div>
+                    </div>
+                    <canvas id="canvas-wind-speed"
+                            data-type="linear-gauge"
+                            data-width="270"
+                            data-height="100"
+                            data-min-value="0"
+                            data-max-value="35"
+                            data-major-ticks="[0,5,10,15,20,25,30,35]"
+                            data-minor-ticks="5"
+                            data-stroke-ticks="true"
+                            data-ticks-width="20"
+                            data-ticks-width-minor="10"
+                            data-highlights='[
+                              {"from": 0, "to": 5, "color": "rgba(0, 255, 0, 0.3)"},
+                              {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                              {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                              {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                              {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                              {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                              {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"}]'
+                            data-highlights-width="20"
+                            data-color-major-ticks="#000"
+                            data-color-minor-ticks="#000"
+                            data-color-title="#000"
+                            data-color-units="#000"
+                            data-color-numbers="#000"
+                            data-color-plate="transparent"
+                            data-border-shadow-width="0"
+                            data-borders="false"
+                            data-border-radius="6"
+                            data-needle-type="arrow"
+                            data-needle-width="12"
+                            data-needle-start="50"
+                            data-needle-end="140"
+                            data-animation-duration="1500"
+                            data-animation-rule="linear"
+                            data-color-needle="#000"
+                            data-color-bar-progress="#C0C0C0"
+                            data-color-bar="#919191"
+                            data-bar-stroke="0"
+                            data-bar-width="0"
+                            data-bar-begin-circle="false"
+                            data-value="<%= widget.value %>"
+                            data-tick-side="left"
+                            data-number-side="right"
+                            data-needle-side="left"
+                            data-font-units-size="30"
+                            data-font-title-size="30"
+                            data-font-numbers-size="32"
+                            data-numbers-margin="-30"
+                    ></canvas>
+                  <% when "Helligkeit" %>
+                  <% when "Azimut Sonne" %>
+                  <% when "Elevation Sonne" %>
+                  <% else %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

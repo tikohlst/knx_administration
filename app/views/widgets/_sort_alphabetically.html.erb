@@ -248,7 +248,6 @@
         <% end %>
       </div>
     </div>
-    <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">Monitoring-Control</div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
       <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
@@ -274,12 +273,66 @@
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
       <div class="d-flex align-content-start flex-wrap">
         <% widgets.each do |widget| %>
-          <% if widget.use == "weather" %>
+          <% if widget.use == "weather" and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(widget.name) %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mt-2"><%= widget.name %></h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5 class="mt-2">
+                      <%= widget.value %>
+                      <% case widget.name %>
+                      <% when "Temperatur" %>
+                        °C
+                      <% when "Windgeschw." %>
+                        m/s
+                      <% when "Helligkeit" %>
+                        lx
+                      <% when "Azimut Sonne" %>
+                        °
+                      <% when "Elevation Sonne" %>
+                        °
+                      <% else %>
+                      <% end %>
+                    </h5>
+                  </div>
+                </div>
                 <div class="">
-                  <%= widget.value %>
+                  <% case widget.name %>
+                  <% when "Temperatur" %>
+                    <div class="row">
+                      <div class="col">
+                        Min: <%= widgets.where(use: 'weather', name: 'T_min').first.value %> °C
+                        <br>
+                        Max: <%= widgets.where(use: 'weather', name: 'T_max').first.value %> °C
+                      </div>
+                      <div class="col text-right">
+                        <button type="button" class="btn btn-danger btn-sm mt-2">Zurücksetzen</button>
+                      </div>
+                    </div>
+                    <canvas id="canvas-temperature"></canvas>
+                  <% when "Windgeschw." %>
+                    <div class="row">
+                      <div class="col">
+                        Max: <%= widgets.where(use: 'weather', name: 'v_max').first.value %> m/s
+                        <% if widgets.where(use: 'weather', name: 'Sturm! (v > 20m/s)').first.value == 1 %>
+                          <div style="width:62px;height:32px;" class="red-note">Sturm!</div>
+                        <% else %>
+                          <div style="width:100px;height:32px;" class="green-note">Kein Sturm</div>
+                        <% end %>
+                      </div>
+                      <div class="col text-right">
+                        <button type="button" class="btn btn-danger btn-sm">Zurücksetzen</button>
+                      </div>
+                    </div>
+                    <canvas id="canvas-wind-speed"></canvas>
+                  <% when "Helligkeit" %>
+                  <% when "Azimut Sonne" %>
+                  <% when "Elevation Sonne" %>
+                  <% else %>
+                  <% end %>
                 </div>
               </div>
             </div>
