@@ -92,8 +92,7 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
       <div id="accordion-lightings" class="accordion">
-        <% $locations.each_with_index do |(key, location), index| %>
-          <% if widgets.where(location: location, use: 'lighting').exists? %>
+        <% $locations.each do |(key, location)| %>
             <div>
               <div class="mb-2" id="heading<%= key %>_lighting">
                 <div class="row">
@@ -134,10 +133,34 @@
                       </div>
                     <% end %>
                   <% end %>
+                  <% buttons.each do |button| %>
+                    <% if button.desc == location %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= button.desc %>|<%= button.status %></h5>
+                          </div>
+                          <div class="float-right">
+                            <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true, html: { id: "edit_widget_#{button.id}", class: "edit_widget" }, method: :patch do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <% if button.status == 0 %>
+                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                                id: "widget_active_#{button.id}", class: "edit_widget" %>
+                              <% else %>
+                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                                id: "widget_active_#{button.id}", class: "edit_widget", checked: "checked" %>
+                              <% end %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
-          <% end %>
         <% end %>
       </div>
     </div>

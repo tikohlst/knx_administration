@@ -8,54 +8,7 @@
 
 # ruby encoding: utf-8
 connection = ActiveRecord::Base.connection()
-connection.execute("TRUNCATE TABLE org_units;")
-connection.execute("TRUNCATE TABLE roles;")
-connection.execute("TRUNCATE TABLE users;")
-connection.execute("TRUNCATE TABLE users_roles;")
-connection.execute("TRUNCATE TABLE accesses;")
 connection.execute("TRUNCATE TABLE widgets;")
-
-# OrgUnit name:string
-orgUnits_list = %w[ Wohneinheit\ oben Wohneinheit\ unten Zentralfunktionen ]
-
-orgUnits_list.each do |name|
-  OrgUnit.create!( name: name )
-end
-
-# Role name:string
-roles_list = %w[ admin editor observer ]
-
-roles_list.each do |name|
-  Role.create!( name: name )
-end
-
-# User username:string password:string password_confirmation:string role:int language:string
-users_list = [
-    [ "admin", "123456", "123456", 1, "de" ],
-    [ "tikoh", "123456", "123456", 2, "de" ],
-    [ "user1", "123456", "123456", 3, "en" ],
-    [ "user2", "123456", "123456", 2, "de" ],
-]
-
-users_list.each do |username, password, password_confirmation, role_id, language|
-  user = User.create!( username: username, password: password, password_confirmation: password_confirmation, language: language )
-  connection.execute("INSERT INTO users_roles (user_id, role_id) VALUES (#{user.id} , #{role_id});")
-end
-
-# Access user_id:int org_unit_id:int
-accesses_list = [
-    [ 1, 1 ],
-    [ 1, 2 ],
-    [ 1, 3 ],
-    [ 2, 2 ],
-    [ 2, 3 ],
-    [ 3, 2 ],
-    [ 4, 3 ]
-]
-
-accesses_list.each do |user_id, org_unit_id|
-  Access.create!( user_id: user_id, org_unit_id: org_unit_id )
-end
 
 # Widget name:string active:boolean use:string value:float location:string org_unit_id:int
 widgets_list = [

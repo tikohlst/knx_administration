@@ -19,7 +19,9 @@ class WidgetsController < ApplicationController
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
-    @lightings = $lightings
+    @widgets2 = $widgets
+    @buttons = Widget::Button.all
+    # puts "\n\n\n@buttons: #{@buttons}\n\n\n"
   end
 
   def sort_by_org_units
@@ -36,7 +38,6 @@ class WidgetsController < ApplicationController
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
-    @lightings = $lightings
   end
 
   def sort_by_locations
@@ -53,7 +54,9 @@ class WidgetsController < ApplicationController
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
-    @lightings = $lightings
+    @widgets2 = $widgets
+    @buttons = Widget::Button.all
+    puts "\n\n\n@buttons: #{@buttons}\n\n\n"
   end
 
   def sort_alphabetically
@@ -71,7 +74,6 @@ class WidgetsController < ApplicationController
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
           .order(:name)
     end
-    @lightings = $lightings
   end
 
   def sort_backwards_alphabetically
@@ -126,30 +128,28 @@ class WidgetsController < ApplicationController
   # PATCH/PUT /widgets/1
   # PATCH/PUT /widgets/1.json
   def update
-    if widget_params.keys[0] == "value"
-      if (@widget.use == "lighting")
-        if widget_params.values[0] == "1"
-          @errors = @widget.update_attribute(:value, 1)
-        else
-          @errors = @widget.update_attribute(:value, 0)
-        end
-      else
-        @errors = @widget.update_attribute(:value, widget_params.values[0])
-      end
-    else
-      @errors = @widget.update(widget_params)
-    end
+    # Get widget with id and send the toggle param
+    @widget = Widget::Button.find(params[:id])
+    @widget.send_param
+    ActionCable.server.broadcast 'widgets', {type: "button", id: @widget.id, status: @widget.status}
 
     respond_to do |format|
-      if @errors
-        format.json { head :no_content }
-
-        ActionCable.server.broadcast 'widgets', @widget
-      else
-        format.html { render :edit }
-        format.json { render json: @widget.errors, status: :unprocessable_entity }
-      end
+      format.json { head :no_content }
     end
+
+    # if widget_params.keys[0] == "value"
+    #   if (@widget.use == "lighting")
+    #     if widget_params.values[0] == "1"
+    #       @errors = @widget.update_attribute(:value, 1)
+    #     else
+    #       @errors = @widget.update_attribute(:value, 0)
+    #     end
+    #   else
+    #     @errors = @widget.update_attribute(:value, widget_params.values[0])
+    #   end
+    # else
+    #   @errors = @widget.update(widget_params)
+    # end
   end
 
   # DELETE /widgets/1

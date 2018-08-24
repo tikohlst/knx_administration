@@ -1,11 +1,9 @@
 ###################################################################################
 # Initialize KNXnetIP connection                                                  #
 ###################################################################################
-require 'knx4r'
 require 'rexml/document'
 include KNX
 
-$lightings = []
 $boards = []
 $widgets = []
 
@@ -93,14 +91,11 @@ devs.sort do |a,b|
   rc = @prj.org_units[a.ouref] <=> @prj.org_units[b.ouref]
   rc==0 ? a.desc <=> b.desc : rc
 end.each do |dev|
-  ouref = dev.ouref
   # print "\n\nDev: ", dev, " ouref: ", ouref, "\n"
   # print "desc: ", dev.desc, " listening_to: ", dev.listening_to, "\n"
-  # print "id: ", dev.id, " parent: ", dev.try(:parent), "\n"
-  # print "type: ", dev.try(:type), " label: ", dev.try(:label), "\n"
+  # print "parent: ", dev.try(:parent), "\n"
+  # print "type: ", dev.try(:type), " dpt: ", dev.try(:dpt), "\n"
   # print "status: ", dev.try(:status), " desc: ", dev.try(:desc), "\n"
-  # print "use: ", dev.try(:use), " dpt: ", dev.try(:dpt), "\n"
-  #print "power:", dev.status.power, " settable:", dev.settable, "\n\n\n"
 
   case dev
   when KNX::KNX_Driver, KNX::KNX_DimmerDriver
@@ -126,7 +121,6 @@ end.each do |dev|
     case matching_ga.use
     when 'Lighting'
       puts "KNX::KNX_Sensor : Lighting"
-      #$lightings.push(dev)
     when 'Weather'
       puts "KNX::KNX_Sensor : Weather"
     when 'Monitoring_Control'
@@ -146,14 +140,10 @@ end.each do |dev|
     end
 
   when KNX::KNX_Switch
-    puts "KNX::KNX_Switch : ", dev, dev.class
-    $lightings.push(dev)
-    dev.on?
-    puts "\n\n\n\n#{dev.status}\nstatus.class:", dev.status.class, "\n\n\n"
-    wid = Widget.new(id: 100, name: "Green light", use: "lighting",
-                     value: dev.status == :on ? 1 : 0, location: "DG AZi")
-    $widgets.push(wid)
-    dev.attach( wid )
+    # Update to the actual status of the switch
+    dev.update_from_bus
+    @button = Widget::Button.new(dev)
+    dev.attach( @button )
   else
     #raise "Class not yet supported: #{dev.class}"
     puts "Class not yet supported: #{dev.class}"
