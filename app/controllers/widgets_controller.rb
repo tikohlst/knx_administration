@@ -8,7 +8,7 @@ class WidgetsController < ApplicationController
   def index
     access_org_units = []
     current_user.accesses.each do |access|
-      access_org_units << access.org_unit_id
+      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     @widgets = if (params[:term] && params[:term] != "") || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
@@ -19,15 +19,13 @@ class WidgetsController < ApplicationController
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
-    @widgets2 = $widgets
-    @buttons = Widget::Button.all
-    # puts "\n\n\n@buttons: #{@buttons}\n\n\n"
+    @buttons = Widget::Button.find_by_org_units(access_org_units)
   end
 
   def sort_by_org_units
     access_org_units = []
     current_user.accesses.each do |access|
-      access_org_units << access.org_unit_id
+      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
@@ -38,12 +36,13 @@ class WidgetsController < ApplicationController
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
+    @buttons = Widget::Button.find_by_org_units(access_org_units)
   end
 
   def sort_by_locations
     access_org_units = []
     current_user.accesses.each do |access|
-      access_org_units << access.org_unit_id
+      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
@@ -54,15 +53,13 @@ class WidgetsController < ApplicationController
       $widgets_search_params[current_user.username] = nil
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
     end
-    @widgets2 = $widgets
-    @buttons = Widget::Button.all
-    puts "\n\n\n@buttons: #{@buttons}\n\n\n"
+    @buttons = Widget::Button.find_by_org_units(access_org_units)
   end
 
   def sort_alphabetically
     access_org_units = []
     current_user.accesses.each do |access|
-      access_org_units << access.org_unit_id
+      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
@@ -74,12 +71,13 @@ class WidgetsController < ApplicationController
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
           .order(:name)
     end
+    @buttons = Widget::Button.find_by_org_units(access_org_units)
   end
 
   def sort_backwards_alphabetically
     access_org_units = []
     current_user.accesses.each do |access|
-      access_org_units << access.org_unit_id
+      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     @widgets = if params[:term] || $widgets_search_params[current_user.username]
       $widgets_search_params[current_user.username] = params[:term] if params[:term]
@@ -91,7 +89,7 @@ class WidgetsController < ApplicationController
       Widget.where('org_unit_id REGEXP :q', q: "#{access_org_units.join '|'}")
           .order(name: :desc)
     end
-    @lightings = $lightings
+    @buttons = Widget::Button.find_by_org_units(access_org_units)
   end
 
   # GET /widgets/1
@@ -129,7 +127,7 @@ class WidgetsController < ApplicationController
   # PATCH/PUT /widgets/1.json
   def update
     # Get widget with id and send the toggle param
-    @widget = Widget::Button.find(params[:id])
+    @widget = Widget::Button.find_by_id(params[:id])
     @widget.send_param
     ActionCable.server.broadcast 'widgets', {type: "button", id: @widget.id, status: @widget.status}
 

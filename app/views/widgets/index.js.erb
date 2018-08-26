@@ -5,17 +5,17 @@ var currentTab = $('#nav-tabContent > .show.active').attr('id');
 var currentSort = $('a label.active').text().replace(/\s/g,'');
 switch(currentSort) {
     case "Org-Unit":
-        render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets }) %>";
+        render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets, buttons: @buttons }) %>";
         break;
     case "Ort":
     case "Location":
-        render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets }) %>";
+        render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets, buttons: @buttons }) %>";
         break;
     case "A-Z":
-        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>";
+        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets, buttons: @buttons }) %>";
         break;
     case "Z-A":
-        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets }) %>";
+        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets, buttons: @buttons }) %>";
 }
 /* Positioning the rendered partial */
 $('#widgets_card').html(render);

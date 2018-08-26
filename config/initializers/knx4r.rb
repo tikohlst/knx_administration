@@ -4,9 +4,6 @@
 require 'rexml/document'
 include KNX
 
-$boards = []
-$widgets = []
-
 @gw = KNXnetIP::Gateway.new( clientHostIP: "10.200.73.20" || ENV['HOST_IP'])
 emi_server = CEMI_Server.new
 logger = KNX::KNX_Logger.new(desc: 'L_Data logger')
@@ -66,7 +63,7 @@ if ENV['SEEDS']
 
   # OrgUnit name:string
   @prj.org_units.each do |key, value|
-    OrgUnit.create!( name: value )
+    OrgUnit.create!( name: value, key: key )
   end
 
   # Access user_id:int org_unit_id:int
@@ -74,6 +71,7 @@ if ENV['SEEDS']
       [ 1, 1 ],
       [ 1, 2 ],
       [ 1, 3 ],
+      [ 1, 4 ],
       [ 2, 2 ],
       [ 2, 3 ],
       [ 3, 2 ],
@@ -91,7 +89,7 @@ devs.sort do |a,b|
   rc = @prj.org_units[a.ouref] <=> @prj.org_units[b.ouref]
   rc==0 ? a.desc <=> b.desc : rc
 end.each do |dev|
-  # print "\n\nDev: ", dev, " ouref: ", ouref, "\n"
+  # print "\n\nDev: ", dev, " ouref: ", dev.ouref, "\n"
   # print "desc: ", dev.desc, " listening_to: ", dev.listening_to, "\n"
   # print "parent: ", dev.try(:parent), "\n"
   # print "type: ", dev.try(:type), " dpt: ", dev.try(:dpt), "\n"
@@ -101,12 +99,11 @@ end.each do |dev|
   when KNX::KNX_Driver, KNX::KNX_DimmerDriver
     case pdev = dev.parent
     when KNX::KNX_Blind
-      puts "\n\nBlind\n\n"
-      wid = Widget.new(id: 2, name: "Green light", use: "blind", value: dev.status,
-                       location: "DG AZi")
-      $widgets.push(wid)
-    when KNX::KNX_Dimmer then puts "\n\nDimmer\n\n"
-    else raise "Unknown parent: #{pdev.class}"
+      #puts "\n\nBlind\n\n"
+    when KNX::KNX_Dimmer
+      #puts "\n\nDimmer\n\n"
+    else
+      raise "Unknown parent: #{pdev.class}"
     end
 
   when KNX::KNX_Stepper, KNX::Slider
@@ -120,11 +117,11 @@ end.each do |dev|
 
     case matching_ga.use
     when 'Lighting'
-      puts "KNX::KNX_Sensor : Lighting"
+      #puts "KNX::KNX_Sensor : Lighting"
     when 'Weather'
-      puts "KNX::KNX_Sensor : Weather"
+      #puts "KNX::KNX_Sensor : Weather"
     when 'Monitoring_Control'
-      puts "KNX::KNX_Sensor : Monitoring_Control"
+      #puts "KNX::KNX_Sensor : Monitoring_Control"
     else next
     end
 

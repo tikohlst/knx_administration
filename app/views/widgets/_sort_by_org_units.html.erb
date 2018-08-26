@@ -1,6 +1,6 @@
 <div class="card-header">
   <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
-    <% if widgets.where(use: 'lighting').exists? %>
+    <% if buttons.any? %>
       <li class="nav-item">
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -44,7 +44,7 @@
     <% end %>
   </ul>
   <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
-    <% if widgets.where(use: 'lighting').exists? %>
+    <% if buttons.any? %>
       <li>
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -93,7 +93,7 @@
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
       <div id="accordion-lightings" class="accordion">
         <% OrgUnit.all.each do |org_unit| %>
-          <% if widgets.where(org_unit_id: org_unit.id, use: 'lighting').exists? %>
+          <% if buttons.any?{|button| button.org_unit == org_unit.key} %>
             <div>
               <div class="mb-2" id="heading<%= org_unit.id %>_lighting">
                 <div class="row">
@@ -101,7 +101,7 @@
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_lighting" aria-expanded="true" aria-controls="collapseOne_lighting">
                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <%= t "views.org_unit_#{org_unit.id}" %>
+                        <%= org_unit.name %>
                       </button>
                     </h5>
                   </div>
@@ -129,6 +129,31 @@
                               <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                               <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
                                               id: "widget_active_#{widget.id}", class: "edit_widget" %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                  <% buttons.each do |button| %>
+                    <% if button.org_unit == org_unit.key %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= button.desc %></h5>
+                          </div>
+                          <div class="float-right">
+                            <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true, html: { id: "edit_widget_#{button.id}", class: "edit_widget" }, method: :patch do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <% if button.status == 0 %>
+                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                                id: "widget_active_#{button.id}", class: "edit_widget" %>
+                              <% else %>
+                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                                id: "widget_active_#{button.id}", class: "edit_widget", checked: "checked" %>
+                              <% end %>
                             <% end %>
                           </div>
                         </div>

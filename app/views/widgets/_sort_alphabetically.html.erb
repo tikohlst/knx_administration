@@ -1,6 +1,6 @@
 <div class="card-header">
   <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
-    <% if widgets.any?{|widget| widget.use == 'lighting'} %>
+    <% if buttons.any? %>
       <li class="nav-item">
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -44,7 +44,7 @@
     <% end %>
   </ul>
   <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
-    <% if widgets.any?{|widget| widget.use == 'lighting'} %>
+    <% if buttons.any? %>
       <li>
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -92,37 +92,28 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% @lightings.each do |lighting| %>
+        <% buttons.each do |button| %>
           <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="card-body">
               <div class="float-left">
-                <h5 class="mt-2"><%= lighting.desc %></h5>
+                <h5 class="mt-2"><%= button.desc %></h5>
               </div>
               <div class="float-right">
-                <%= check_box(:lighting, :status, data: {toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39", onstyle: 'success'}, checked: (lighting.on? ? true : false), class: 'submit_lightings') %>
+                <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true, html: { id: "edit_widget_#{button.id}", class: "edit_widget" }, method: :patch do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                  <% if button.status == 0 %>
+                    <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                    id: "widget_active_#{button.id}", class: "edit_widget" %>
+                  <% else %>
+                    <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                    id: "widget_active_#{button.id}", class: "edit_widget", checked: "checked" %>
+                  <% end %>
+                <% end %>
               </div>
             </div>
           </div>
-        <% end %>
-        <% @widgets.each do |widget| %>
-          <% if widget.use == "lighting" %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <div class="float-left">
-                  <h5 class="mt-2"><%= widget.name %></h5>
-                </div>
-                <div class="float-right">
-                  <%= form_for widget, remote: true do |f| %>
-                    <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                       name: "authenticity_token" %>
-                    <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                    <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                    id: "widget_active_#{widget.id}", class: "edit_widget" %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
         <% end %>
       </div>
     </div>
