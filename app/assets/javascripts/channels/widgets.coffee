@@ -7,21 +7,15 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
 
   received: (data) ->
     # Called when there's incoming data on the websocket for this channel
-    if data.type == "button"
-      if (data.status == 1)
-        $('#widget_active_' + data.id).bootstrapToggle('on')
-      else
-        $('#widget_active_' + data.id).bootstrapToggle('off')
-
-#    switch data.use
-#      when "lighting"
-#        if (data.value == 1)
-#          $('#widget_active_' + data.id).bootstrapToggle('on')
-#        else
-#          $('#widget_active_' + data.id).bootstrapToggle('off')
-#      when "shutter", "blind", "dimmer"
-#        $('#widget_active_' + data.id).val(data.value.toFixed(2))
-#      when "window"
-#        console.log()
-#      when "weather"
-#        console.log()
+    switch data.type
+      when "button"
+        if (data.status == 1)
+          $('#widget_active_' + data.id).bootstrapToggle('on')
+        else
+          $('#widget_active_' + data.id).bootstrapToggle('off')
+      when "progressBar"
+        $('#progressbar-' + data.id).css("width", data.status["position"] + "%")
+      when "slider"
+        console.log()
+      when "textField"
+        console.log()

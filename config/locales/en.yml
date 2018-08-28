@@ -45,8 +45,7 @@ en:
     widgets: "Widgets"
     widget:
       lightings: "Lightings"
-      shutters: "Shutters"
-      blinds: "Blinds"
+      blinds: "Shutters and blinds"
       dimmer: "Dimmer"
       mc: "Monitoring-Control"
       windows: "Windows"

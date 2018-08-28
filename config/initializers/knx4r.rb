@@ -15,6 +15,8 @@ emi_server.attach_logger( logger )
                        "Thesis (Werntges + Martin)/Daten von Werntges/sample_demoboard.xml" )
 #@prj = KNXproject.load( "/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
 #                        "Thesis (Werntges + Martin)/Daten von Werntges/heim_c22.xml" )
+#@prj = KNXproject.load( "/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
+#                        "Thesis (Werntges + Martin)/Daten von Werntges/demoboard_theben.xml" )
 @prj.emi_server = emi_server
 # Update devices and add devices to emi_server
 @prj.attach_devices
@@ -99,48 +101,36 @@ end.each do |dev|
   when KNX::KNX_Driver, KNX::KNX_DimmerDriver
     case pdev = dev.parent
     when KNX::KNX_Blind
-      #puts "\n\nBlind\n\n"
+      pdev.driver.update_from_bus
+      @progress_bar = Widget::ProgressBar.new(pdev)
+      pdev.slider.attach( @progress_bar )
     when KNX::KNX_Dimmer
-      #puts "\n\nDimmer\n\n"
+      pdev.driver.update_from_bus
+      @slider = Widget::Slider.new(pdev)
+      pdev.slider.attach( @slider )
     else
       raise "Unknown parent: #{pdev.class}"
     end
-
   when KNX::KNX_Stepper, KNX::Slider
     # Ignore, handled by cases above
-
-  when KNX::KNX_Sensor
-    matching_ga = @prj.group_addresses.values.find do |ga|
-      ga.value==dev.listening_to.first.value
-    end
-    fail "Group address missing: #{dev.listening_to.first}" unless matching_ga
-
-    case matching_ga.use
-    when 'Lighting'
-      #puts "KNX::KNX_Sensor : Lighting"
-    when 'Weather'
-      #puts "KNX::KNX_Sensor : Weather"
-    when 'Monitoring_Control'
-      #puts "KNX::KNX_Sensor : Monitoring_Control"
-    else next
-    end
-
-    case dev
-    when KNX::KNX_Binary
-
-    when KNX::KNX_Value, KNX::KNX_Date, KNX::KNX_Time
-
-    when KNX::KNX_Toggle
-      # Ignore
-    else
-      raise "Sensor class not yet supported: #{dev.class}"
-    end
-
+  when KNX::KNX_Toggle
+    # Ignore
+  when KNX_Value
+    # Ignore
+  when KNX::KNX_Binary
+    # Ignore
+  when KNX::KNX_Setter
+    # Ignore
   when KNX::KNX_Switch
-    # Update to the actual status of the switch
-    dev.update_from_bus
-    @button = Widget::Button.new(dev)
-    dev.attach( @button )
+    # Don't show the switch for the dimmers
+    unless dev.parent.is_a? KNX::KNX_Dimmer
+      # Update to the actual status of the switch
+      dev.update_from_bus
+      @button = Widget::Button.new(dev)
+      dev.attach( @button )
+    end
+  when KNX::KNX_Interface
+    # Not used for GUI yet
   else
     #raise "Class not yet supported: #{dev.class}"
     puts "Class not yet supported: #{dev.class}"

@@ -1,99 +1,87 @@
 <div class="card-header">
   <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
-    <% if buttons.any? %>
+    <% if widgets[:buttons].any? %>
       <li class="nav-item">
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
       </li>
     <% end %>
-    <% if widgets.where(use: 'shutter').exists? %>
-      <li class="nav-item">
-        <a class="nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters"
-           role="tab" aria-controls="nav-profile" aria-selected="false"><%= t 'views.widget.shutters' %></a>
-      </li>
-    <% end %>
-    <% if widgets.where(use: 'blind').exists? %>
+    <% if widgets[:progress_bars].any? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
       </li>
     <% end %>
-    <% if widgets.where(use: 'dimmer').exists? %>
+    <% if widgets[:sliders].any? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
       </li>
     <% end %>
-    <% if widgets.where(use: 'mc').exists? %>
+    <%# if widgets.where(use: 'mc').exists? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
       </li>
-    <% end %>
-    <% if widgets.where(use: 'window').exists? %>
+    <%# end %>
+    <%# if widgets.where(use: 'window').exists? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
       </li>
-    <% end %>
-    <% if widgets.where(use: 'weather').exists? %>
+    <%# end %>
+    <%# if widgets.where(use: 'weather').exists? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
       </li>
-    <% end %>
+    <%# end %>
   </ul>
   <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
-    <% if buttons.any? %>
+    <% if widgets[:buttons].any? %>
       <li>
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
       </li>
     <% end %>
-    <% if widgets.where(use: 'shutter').exists? %>
-      <li>
-        <a class="nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters"
-           role="tab" aria-controls="nav-profile" aria-selected="false"><%= t 'views.widget.shutters' %></a>
-      </li>
-    <% end %>
-    <% if widgets.where(use: 'blind').exists? %>
+    <% if widgets[:progress_bars].any? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
       </li>
     <% end %>
-    <% if widgets.where(use: 'dimmer').exists? %>
+    <%# if widgets.where(use: 'dimmer').exists? %>
       <li>
         <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
       </li>
-    <% end %>
-    <% if widgets.where(use: 'mc').exists? %>
+    <%# end %>
+    <%# if widgets.where(use: 'mc').exists? %>
       <li>
         <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
       </li>
-    <% end %>
-    <% if widgets.where(use: 'window').exists? %>
+    <%# end %>
+    <%# if widgets.where(use: 'window').exists? %>
       <li>
         <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
       </li>
-    <% end %>
-    <% if widgets.where(use: 'weather').exists? %>
+    <%# end %>
+    <%# if widgets.where(use: 'weather').exists? %>
       <li>
         <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
       </li>
-    <% end %>
+    <%# end %>
   </ul>
 </div>
 <div class="card-body">
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
       <div id="accordion-lightings" class="accordion">
-        <% $locations.each do |(key, location)| %>
-          <% if buttons.any?{|button| button.location == key} %>
+        <% $locations.each do |key, location| %>
+          <% if widgets[:buttons].any?{|button| button.location == key} %>
             <div>
               <div class="mb-2" id="heading<%= key %>_lighting">
                 <div class="row">
@@ -114,27 +102,7 @@
               </div>
               <div id="collapse<%= key %>_lighting" class="collapse" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
                 <div class="d-flex align-content-start flex-wrap">
-                  <% widgets.each do |widget| %>
-                    <% if widget.location == location and widget.use == "lighting" %>
-                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                        <div class="card-body">
-                          <div class="float-left">
-                            <h5 class="mt-2"><%= widget.name %></h5>
-                          </div>
-                          <div class="float-right">
-                            <%= form_for widget, remote: true do |f| %>
-                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                                 name: "authenticity_token" %>
-                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                              <%= f.check_box :value, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                              id: "widget_active_#{widget.id}", class: "edit_widget" %>
-                            <% end %>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-                  <% end %>
-                  <% buttons.each do |button| %>
+                  <% widgets[:buttons].each do |button| %>
                     <% if button.location == key %>
                       <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                         <div class="card-body">
@@ -166,87 +134,17 @@
         <% end %>
       </div>
     </div>
-    <div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
-      <div id="accordion-shutters" class="accordion">
-        <% $locations.each_with_index do |(key, location), index| %>
-          <% if widgets.where(location: location, use: 'shutter').exists? %>
-            <div>
-              <div class="mb-2" id="heading<%= key %>_shutter">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_shutter" aria-expanded="true" aria-controls="collapse<%= key %>_shutter">
-                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <%= location %>
-                      </button>
-                    </h5>
-                  </div>
-                  <div class="col-sm">
-                    <div class="float-sm-right">
-                      <button type="button" class="btn btn-outline-primary btn-sm"><%= t 'views.close_all' %></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="collapse<%= key %>_shutter" class="collapse" aria-labelledby="heading<%= key %>_shutter" data-parent="#accordion-shutters">
-                <div class="d-flex align-content-start flex-wrap">
-                  <% widgets.each do |widget| %>
-                    <% if widget.location == location and widget.use == "shutter" %>
-                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                        <div class="card-body">
-                          <h5 class="mt-2"><%= widget.name %></h5>
-                          <div>
-                            <div class="float-left">
-                              <div class="btn-group h-35" role="group">
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                              </div>
-                            </div>
-                            <div class="float-right">
-                              <div class="btn-group h-35" role="group">
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <br><br>
-                          <div class="progress">
-                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
     <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
       <div id="accordion-blinds" class="accordion">
-        <% $locations.each_with_index do |(key, location), index| %>
-          <% if widgets.where(location: location, use: 'blind').exists? %>
+        <% $locations.each do |key, location| %>
+          <% if widgets[:progress_bars].any?{|progress_bar| progress_bar.location == key} %>
             <div>
               <div class="mb-2" id="heading<%= key %>_blind">
                 <div class="row">
                   <div class="col">
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_blind" aria-expanded="true" aria-controls="collapse<%= key %>_blind">
-                        <% if index == 0 %>
-                          <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-                        <% else %>
-                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <% end %>
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                         <%= location %>
                       </button>
                     </h5>
@@ -260,36 +158,41 @@
               </div>
               <div id="collapse<%= key %>_blind" class="collapse" aria-labelledby="heading<%= key %>_blind" data-parent="#accordion-blinds">
                 <div class="d-flex align-content-start flex-wrap">
-                  <% widgets.each do |widget| %>
-                    <% if widget.location == location and widget.use == "blind" %>
+                  <% widgets[:progress_bars].each do |progress_bar| %>
+                    <% if progress_bar.location == key %>
                       <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                         <div class="card-body">
-                          <h5 class="mt-2"><%= widget.name %></h5>
-                          <div>
-                            <div class="float-left">
-                              <div class="btn-group h-35" role="group">
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
+                          <h5 class="mt-2"><%= progress_bar.desc %></h5>
+                          <%= form_for :widget, url: "/de/widgets/#{progress_bar.id}", remote: true, html: { id: "edit_widget_#{progress_bar.id}", class: "edit_widget" }, method: :patch do |f| %>
+                            <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                               name: "authenticity_token" %>
+                            <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                            <div>
+                              <div class="float-left">
+                                <div class="btn-group h-35" role="group">
+                                  <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_backward" do %>
+                                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                                  <% end %>
+                                  <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "backward" do %>
+                                    <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                                  <% end %>
+                                </div>
+                              </div>
+                              <div class="float-right">
+                                <div class="btn-group h-35" role="group">
+                                  <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "forward" do %>
+                                    <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                                  <% end %>
+                                  <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_forward" do %>
+                                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                                  <% end %>
+                                </div>
                               </div>
                             </div>
-                            <div class="float-right">
-                              <div class="btn-group h-35" role="group">
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                                <button type="button" class="btn btn-grey">
-                                  <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
+                          <% end %>
                           <br><br>
                           <div class="progress">
-                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= progress_bar.status[:position] %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress_bar.status[:position] %>%" id="progressbar-<%= progress_bar.id %>"></div>
                           </div>
                         </div>
                       </div>
@@ -304,8 +207,8 @@
     </div>
     <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
       <div id="accordion-dimmers" class="accordion">
-        <% $locations.each_with_index do |(key, location), index| %>
-          <% if widgets.where(location: location, use: 'dimmer').exists? %>
+        <% $locations.each do |key, location| %>
+          <% if widgets[:sliders].any?{|slider| slider.location == key} %>
             <div>
               <div class="mb-2" id="heading<%= key %>_dimmer">
                 <div class="row">
@@ -326,18 +229,22 @@
               </div>
               <div id="collapse<%= key %>_dimmer" class="collapse" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
                 <div class="d-flex align-content-start flex-wrap">
-                  <% widgets.each do |widget| %>
-                    <% if widget.location == location and widget.use == "dimmer" %>
+                  <% widgets[:sliders].each do |slider| %>
+                    <% if slider.location == key %>
                       <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                         <div class="card-body">
-                          <h5 class="mt-2"><%= widget.name %></h5>
+                          <h5 class="mt-2"><%= slider.desc %></h5>
                           <div class="">
-                            <%= form_for widget, remote: true do |f| %>
+                            <%= form_for :widget, url: "/de/widgets/#{slider.id}", remote: true,
+                                         html: { id: "edit_widget_#{slider.id}",
+                                         class: "edit_widget" }, method: :patch do |f| %>
                               <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                                  name: "authenticity_token" %>
                               <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                               <div class="slider-wrapper-horizontal">
-                                <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
+                                <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                                  class: "custom-range", type: "range", min: 0,
+                                                  max: 100, step: 1, value: slider.status %>
                               </div>
                             <% end %>
                           </div>
@@ -354,29 +261,12 @@
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "mc" %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
-                <div class="">
-                  <%= form_for widget, remote: true do |f| %>
-                    <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                       name: "authenticity_token" %>
-                    <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                    <%= widget.value %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
       <div id="accordion-windows" class="accordion">
         <% $locations.each_with_index do |(key, location), index| %>
-          <% if widgets.where(location: location, use: 'window').exists? %>
+          <%# if widgets.where(location: location, use: 'window').exists? %>
             <div>
               <div class="mb-2" id="heading<%= key %>_window">
                 <div class="row">
@@ -392,257 +282,15 @@
               </div>
               <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
                 <div class="d-flex align-content-start flex-wrap">
-                  <% widgets.each do |widget| %>
-                    <% if widget.location == location and widget.use == "window" %>
-                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                        <div class="card-body">
-                          <div class="float-left">
-                            <h5 class="mt-2"><%= widget.name %></h5>
-                          </div>
-                          <div class="float-right">
-                            <% if widget.value == 0 %>
-                              <div class="red-note"><%= t 'views.widget.window.open' %></div>
-                            <% else %>
-                              <div class="green-note"><%= t 'views.widget.window.closed' %></div>
-                            <% end %>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-                  <% end %>
                 </div>
               </div>
             </div>
-          <% end %>
+          <%# end %>
         <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "weather" and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(widget.name) %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <h5 class="mt-2"><%= widget.name %></h5>
-                  </div>
-                  <div class="col text-right">
-                    <h5 class="mt-2">
-                      <%= widget.value %>
-                      <% case widget.name %>
-                      <% when "Temperatur" %>
-                        °C
-                      <% when "Windgeschw." %>
-                        m/s
-                      <% when "Helligkeit" %>
-                        lx
-                      <% when "Azimut Sonne" %>
-                        °
-                      <% when "Elevation Sonne" %>
-                        °
-                      <% else %>
-                      <% end %>
-                    </h5>
-                  </div>
-                </div>
-                <% case widget.name %>
-                <% when "Temperatur" %>
-                  <div class="row">
-                    <div class="col">
-                      Min: <%= widgets.where(use: 'weather', name: 'T_min').first.value %> °C
-                      <br>
-                      Max: <%= widgets.where(use: 'weather', name: 'T_max').first.value %> °C
-                    </div>
-                    <div class="col text-right">
-                      <button type="button" class="btn btn-danger btn-sm mt-2">Zurücksetzen</button>
-                    </div>
-                  </div>
-                  <canvas id="canvas-temperature"
-                          data-type="linear-gauge"
-                          data-width="270"
-                          data-height="100"
-                          data-min-value="-20"
-                          data-max-value="40"
-                          data-major-ticks="[-20,-10,0,10,20,30,40]"
-                          data-minor-ticks="5"
-                          data-stroke-ticks="true"
-                          data-ticks-width="20"
-                          data-ticks-width-minor="10"
-                          data-highlights='[
-                            {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                            {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                            {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                            {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                            {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                            {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                            {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                            {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                            {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                            {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                            {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                            {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
-                          data-highlights-width="20"
-                          data-color-major-ticks="#000"
-                          data-color-minor-ticks="#000"
-                          data-color-title="#000"
-                          data-color-units="#000"
-                          data-color-numbers="#000"
-                          data-color-plate="transparent"
-                          data-border-shadow-width="0"
-                          data-borders="false"
-                          data-border-radius="6"
-                          data-needle-type="arrow"
-                          data-needle-width="12"
-                          data-needle-start="50"
-                          data-needle-end="140"
-                          data-animation-duration="1500"
-                          data-animation-rule="linear"
-                          data-color-needle="#000"
-                          data-color-bar-progress="#C0C0C0"
-                          data-color-bar="#919191"
-                          data-bar-stroke="0"
-                          data-bar-width="0"
-                          data-bar-begin-circle="false"
-                          data-value="<%= widget.value %>"
-                          data-tick-side="left"
-                          data-number-side="right"
-                          data-needle-side="left"
-                          data-font-units-size="30"
-                          data-font-title-size="30"
-                          data-font-numbers-size="32"
-                          data-numbers-margin="-30"
-                  ></canvas>
-                <% when "Windgeschw." %>
-                  <div class="row">
-                    <div class="col">
-                      Max: <%= widgets.where(use: 'weather', name: 'v_max').first.value %> m/s
-                      <div class="float-left">
-                        <% if widgets.where(use: 'weather', name: 'Sturm! (v > 20m/s)').first.value == 1 %>
-                          <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
-                        <% else %>
-                          <div style="width:91px;height:32px;" class="green-note mt-1">Kein Sturm</div>
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="col text-right">
-                      <button type="button" class="btn btn-danger btn-sm">Zurücksetzen</button>
-                    </div>
-                  </div>
-                  <canvas id="canvas-wind-speed"
-                          data-type="linear-gauge"
-                          data-width="270"
-                          data-height="100"
-                          data-min-value="0"
-                          data-max-value="35"
-                          data-major-ticks="[0,5,10,15,20,25,30,35]"
-                          data-minor-ticks="5"
-                          data-stroke-ticks="true"
-                          data-ticks-width="20"
-                          data-ticks-width-minor="10"
-                          data-highlights='[
-                            {"from": 0, "to": 5, "color": "rgba(0, 255, 0, 0.3)"},
-                            {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                            {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                            {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                            {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                            {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                            {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"}]'
-                          data-highlights-width="20"
-                          data-color-major-ticks="#000"
-                          data-color-minor-ticks="#000"
-                          data-color-title="#000"
-                          data-color-units="#000"
-                          data-color-numbers="#000"
-                          data-color-plate="transparent"
-                          data-border-shadow-width="0"
-                          data-borders="false"
-                          data-border-radius="6"
-                          data-needle-type="arrow"
-                          data-needle-width="12"
-                          data-needle-start="50"
-                          data-needle-end="140"
-                          data-animation-duration="1500"
-                          data-animation-rule="linear"
-                          data-color-needle="#000"
-                          data-color-bar-progress="#C0C0C0"
-                          data-color-bar="#919191"
-                          data-bar-stroke="0"
-                          data-bar-width="0"
-                          data-bar-begin-circle="false"
-                          data-value="<%= widget.value %>"
-                          data-tick-side="left"
-                          data-number-side="right"
-                          data-needle-side="left"
-                          data-font-units-size="30"
-                          data-font-title-size="30"
-                          data-font-numbers-size="32"
-                          data-numbers-margin="-30"
-                  ></canvas>
-                <% when "Helligkeit" %>
-                  <div class="row">
-                    <div class="col">
-                    </div>
-                  </div>
-                  <canvas id="canvas-brightness"
-                          data-type="linear-gauge"
-                          data-width="260"
-                          data-height="100"
-                          data-min-value="0"
-                          data-max-value="20000"
-                          data-major-ticks="[0,5000,10000,15000,20000]"
-                          data-minor-ticks="5"
-                          data-stroke-ticks="true"
-                          data-ticks-width="20"
-                          data-ticks-width-minor="10"
-                          data-highlights='[
-                            {"from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)"},
-                            {"from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)"},
-                            {"from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)"},
-                            {"from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)"},
-                            {"from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)"},
-                            {"from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)"},
-                            {"from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)"},
-                            {"from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)"}]'
-                          data-highlights-width="20"
-                          data-color-major-ticks="#000"
-                          data-color-minor-ticks="#000"
-                          data-color-title="#000"
-                          data-color-units="#000"
-                          data-color-numbers="#000"
-                          data-color-plate="transparent"
-                          data-border-shadow-width="0"
-                          data-borders="false"
-                          data-border-radius="6"
-                          data-needle-type="arrow"
-                          data-needle-width="12"
-                          data-needle-start="50"
-                          data-needle-end="140"
-                          data-animation-duration="1500"
-                          data-animation-rule="linear"
-                          data-color-needle="#000"
-                          data-color-bar-progress="#C0C0C0"
-                          data-color-bar="#919191"
-                          data-bar-stroke="0"
-                          data-bar-width="0"
-                          data-bar-begin-circle="false"
-                          data-value="<%= widget.value %>"
-                          data-tick-side="left"
-                          data-number-side="right"
-                          data-needle-side="left"
-                          data-font-units-size="30"
-                          data-font-title-size="30"
-                          data-font-numbers-size="28"
-                          data-numbers-margin="-30"
-                  ></canvas>
-                <% when "Azimut Sonne" %>
-                <% when "Elevation Sonne" %>
-                <% else %>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
       </div>
     </div>
   </div>

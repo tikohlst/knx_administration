@@ -45,8 +45,7 @@ de:
     widgets: "Widgets"
     widget:
       lightings: "Lampen"
-      shutters: "Fensterläden"
-      blinds: "Jalousien"
+      blinds: "Fensterläden und Jalousien"
       dimmer: "Dimmer"
       mc: "Monitoring-Control"
       windows: "Fenster"
