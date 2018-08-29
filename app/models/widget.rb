@@ -25,15 +25,20 @@ class Widget
     self.find_by_id(id)
   end
 
+  # Find all widgets by the org units
+  def self.find_by_org_units(org_units)
+    buttons = []
+    org_units.each do |org_unit|
+      # Select all widgets with the allowed org units
+      buttons << self.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
+    end
+    buttons.flatten
+  end
+
   # Buttons for lightings
   class Button < Widget
     attr_accessor :status
     attr_reader :device
-
-    # Get all Widget::Button objects
-    def self.all
-      ObjectSpace.each_object(self).to_a
-    end
 
     # Initialize a new widget with a device
     def initialize(device)
@@ -42,9 +47,9 @@ class Widget
       @device = device
     end
 
-    # Gets called when a telegram should be send to the knx-bus
-    def send_param
-      self.device.send(:toggle)
+    # Get all Widget::Button objects
+    def self.all
+      ObjectSpace.each_object(self).to_a
     end
 
     # Gets called when a telegram was send from the knx-bus
@@ -57,14 +62,9 @@ class Widget
       ActionCable.server.broadcast 'widgets', {type: "button", id: self.id, status: @widget.status}
     end
 
-    # Find all widgets by the org units
-    def self.find_by_org_units(org_units)
-      buttons = []
-      org_units.each do |org_unit|
-        # Select all widgets with the allowed org units
-        buttons << Widget::Button.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
-      end
-      buttons.flatten
+    # Gets called when a telegram should be send to the knx-bus
+    def send_param
+      self.device.send(:toggle)
     end
   end
 
@@ -73,16 +73,27 @@ class Widget
     attr_accessor :status
     attr_reader :device
 
-    # Get all Widget::ProgressBar objects
-    def self.all
-      ObjectSpace.each_object(self).to_a
-    end
-
     # Initialize a new widget with a device
     def initialize(device)
       super
       @status = {position: 0, slider_status: :stopped}
       @device = device
+    end
+
+    # Get all Widget::ProgressBar objects
+    def self.all
+      ObjectSpace.each_object(self).to_a
+    end
+
+    # Gets called when a telegram was send from the knx-bus
+    def knx_update(status)
+      puts "\n\n\n\nProgressBar knx_update: #{status}, #{status.class}, #{status.to_s}, #{status.to_s.class}\n\n\n\n"
+      # Find widget for actual devise
+      @widget = self.class.find_by_id(self.id)
+      # Update widget status
+      @widget.status = {position: (status.position * 100).to_i, slider_status: status.slider_status}
+      # Send the update to all running sessions
+      ActionCable.server.broadcast 'widgets', {type: "progressBar", id: self.id, status: @widget.status}
     end
 
     # Gets called when a telegram should be send to the knx-bus
@@ -100,38 +111,12 @@ class Widget
         puts "Error: No valid direction"
       end
     end
-
-    # Gets called when a telegram was send from the knx-bus
-    def knx_update(status)
-      puts "\n\n\n\nProgressBar knx_update: #{status}, #{status.class}, #{status.to_s}, #{status.to_s.class}\n\n\n\n"
-      # Find widget for actual devise
-      @widget = self.class.find_by_id(self.id)
-      # Update widget status
-      @widget.status = {position: (status.position * 100).to_i, slider_status: status.slider_status}
-      # Send the update to all running sessions
-      ActionCable.server.broadcast 'widgets', {type: "progressBar", id: self.id, status: @widget.status}
-    end
-
-    # Find all widgets by the org units
-    def self.find_by_org_units(org_units)
-      buttons = []
-      org_units.each do |org_unit|
-        # Select all widgets with the allowed org units
-        buttons << Widget::ProgressBar.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
-      end
-      buttons.flatten
-    end
   end
 
   # Sliders for dimmers
   class Slider < Widget
     attr_accessor :status
     attr_reader :device
-
-    # Get all Widget::Slider objects
-    def self.all
-      ObjectSpace.each_object(self).to_a
-    end
 
     # Initialize a new widget with a device
     def initialize(device)
@@ -140,9 +125,9 @@ class Widget
       @device = device
     end
 
-    # Gets called when a telegram should be send to the knx-bus
-    def send_param(brightness)
-      self.device.send(:set_to, brightness)
+    # Get all Widget::Slider objects
+    def self.all
+      ObjectSpace.each_object(self).to_a
     end
 
     # Gets called when a telegram was send from the knx-bus
@@ -155,29 +140,24 @@ class Widget
       ActionCable.server.broadcast 'widgets', {type: "slider", id: self.id, status: @widget.status}
     end
 
-    # Find all widgets by the org units
-    def self.find_by_org_units(org_units)
-      buttons = []
-      org_units.each do |org_unit|
-        # Select all widgets with the allowed org units
-        buttons << Widget::Slider.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
-      end
-      buttons.flatten
+    # Gets called when a telegram should be send to the knx-bus
+    def send_param(brightness)
+      self.device.send(:set_to, brightness)
     end
   end
 
   class TextField < Widget
     attr_accessor :status
 
-    # Get all Widget::TextField objects
-    def self.all
-      ObjectSpace.each_object(self).to_a
-    end
-
     # Initialize a new widget with a device
     def initialize(device)
       super
       @status = 0
+    end
+
+    # Get all Widget::TextField objects
+    def self.all
+      ObjectSpace.each_object(self).to_a
     end
 
     # Gets called when a telegram was send from the knx-bus
@@ -188,16 +168,6 @@ class Widget
       @widget.status = status["status"]
       # Send the update to all running sessions
       ActionCable.server.broadcast 'widgets', {type: "textField", id: self.id, status: @widget.status}
-    end
-
-    # Find all widgets by the org units
-    def self.find_by_org_units(org_units)
-      buttons = []
-      org_units.each do |org_unit|
-        # Select all widgets with the allowed org units
-        buttons << Widget::TextField.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
-      end
-      buttons.flatten
     end
   end
 end
