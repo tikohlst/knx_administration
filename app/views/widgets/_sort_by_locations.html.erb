@@ -18,24 +18,24 @@
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
       </li>
     <% end %>
-    <%# if widgets.where(use: 'mc').exists? %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li class="nav-item">
         <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
       </li>
-    <%# end %>
-    <%# if widgets.where(use: 'window').exists? %>
+    <% end %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li class="nav-item">
         <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
       </li>
-    <%# end %>
-    <%# if widgets.where(use: 'weather').exists? %>
+    <% end %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Weather'} %>
       <li class="nav-item">
         <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
       </li>
-    <%# end %>
+    <% end %>
   </ul>
   <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
     <% if widgets[:buttons].any? %>
@@ -50,30 +50,30 @@
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
       </li>
     <% end %>
-    <%# if widgets.where(use: 'dimmer').exists? %>
+    <% if widgets[:sliders].any? %>
       <li>
         <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
       </li>
-    <%# end %>
-    <%# if widgets.where(use: 'mc').exists? %>
+    <% end %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li>
         <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
       </li>
-    <%# end %>
-    <%# if widgets.where(use: 'window').exists? %>
+    <% end %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li>
         <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
       </li>
-    <%# end %>
-    <%# if widgets.where(use: 'weather').exists? %>
+    <% end %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Weather'} %>
       <li>
         <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
       </li>
-    <%# end %>
+    <% end %>
   </ul>
 </div>
 <div class="card-body">
@@ -261,12 +261,24 @@
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
       <div class="d-flex align-content-start flex-wrap">
+        <% widgets[:text_fields].each do |text_field| %>
+          <% if text_field.use == "Monitoring_Control" %>
+            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+              <div class="card-body">
+                <h5 class="mt-2"><%= text_field.desc %></h5>
+                <div class="">
+                  <%= text_field.status %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
       <div id="accordion-windows" class="accordion">
-        <% $locations.each_with_index do |(key, location), index| %>
-          <%# if widgets.where(location: location, use: 'window').exists? %>
+        <% $locations.each do |key, location| %>
+          <% if widgets[:text_fields].any?{|text_field| text_field.location == key and text_field.use == 'Monitoring_Control' } %>
             <div>
               <div class="mb-2" id="heading<%= key %>_window">
                 <div class="row">
@@ -280,17 +292,259 @@
                   </div>
                 </div>
               </div>
-              <div id="collapse<%= key %>_window" class="collapse <% if index == 0 %>show<% end %>" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
+              <div id="collapse<%= key %>_window" class="collapse" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
                 <div class="d-flex align-content-start flex-wrap">
+                  <% widgets[:text_fields].each do |text_field| %>
+                    <% if text_field.location == key and text_field.use == "Monitoring_Control" %>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <div class="float-left">
+                            <h5 class="mt-2"><%= text_field.desc %></h5>
+                          </div>
+                          <div class="float-right">
+                            <% if text_field.status == 0 %>
+                              <div class="red-note"><%= t 'views.widget.window.open' %></div>
+                            <% else %>
+                              <div class="green-note"><%= t 'views.widget.window.closed' %></div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
-          <%# end %>
+          <% end %>
         <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
       <div class="d-flex align-content-start flex-wrap">
+        <% widgets[:text_fields].each do |text_field| %>
+          <% if text_field.use == 'Weather' and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(text_field.desc) %>
+            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="mt-2"><%= text_field.desc %></h5>
+                  </div>
+                  <div class="col text-right">
+                    <h5 class="mt-2">
+                      <%= text_field.status %>
+                      <% case text_field.desc %>
+                      <% when "Temperatur" %>
+                        °C
+                      <% when "Windgeschw." %>
+                        m/s
+                      <% when "Helligkeit" %>
+                        lx
+                      <% when "Azimut Sonne" %>
+                        °
+                      <% when "Elevation Sonne" %>
+                        °
+                      <% else %>
+                      <% end %>
+                    </h5>
+                  </div>
+                </div>
+                <% case text_field.desc %>
+                <% when "Temperatur" %>
+                  <div class="row">
+                    <div class="col">
+                      Min: <%= widgets[:text_fields].select { |widget| widget.desc == "T_min" }.first.status %> °C
+                      <br>
+                      Max: <%= widgets[:text_fields].select { |widget| widget.desc == "T_max" }.first.status %> °C
+                    </div>
+                    <div class="col text-right">
+                      <button type="button" class="btn btn-danger btn-sm mt-2"><%= t 'views.reset' %></button>
+                    </div>
+                  </div>
+                  <canvas id="canvas-temperature"
+                    data-type="linear-gauge"
+                    data-width="270"
+                    data-height="100"
+                    data-min-value="-20"
+                    data-max-value="40"
+                    data-major-ticks="[-20,-10,0,10,20,30,40]"
+                    data-minor-ticks="5"
+                    data-stroke-ticks="true"
+                    data-ticks-width="20"
+                    data-ticks-width-minor="10"
+                    data-highlights='[
+                      {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                      {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                      {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                      {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                      {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                      {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                      {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                      {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                      {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                      {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                      {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                      {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                    data-highlights-width="20"
+                    data-color-major-ticks="#000"
+                    data-color-minor-ticks="#000"
+                    data-color-title="#000"
+                    data-color-units="#000"
+                    data-color-numbers="#000"
+                    data-color-plate="transparent"
+                    data-border-shadow-width="0"
+                    data-borders="false"
+                    data-border-radius="6"
+                    data-needle-type="arrow"
+                    data-needle-width="12"
+                    data-needle-start="50"
+                    data-needle-end="140"
+                    data-animation-duration="1500"
+                    data-animation-rule="linear"
+                    data-color-needle="#000"
+                    data-color-bar-progress="#C0C0C0"
+                    data-color-bar="#919191"
+                    data-bar-stroke="0"
+                    data-bar-width="0"
+                    data-bar-begin-circle="false"
+                    data-value="<%= text_field.status %>"
+                    data-tick-side="left"
+                    data-number-side="right"
+                    data-needle-side="left"
+                    data-font-units-size="30"
+                    data-font-title-size="30"
+                    data-font-numbers-size="32"
+                    data-numbers-margin="-30"
+                  ></canvas>
+                <% when "Windgeschwindigkeit" %>
+                  <div class="row">
+                    <div class="col">
+                      Max: <%= widgets[:text_fields].select{|widget| widget.desc == "v_max"}.first.status %> m/s
+                      <div class="float-left">
+                        <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
+                          <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
+                        <% else %>
+                          <div style="width:91px;height:32px;" class="green-note mt-1">Kein Sturm</div>
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col text-right">
+                      <button type="button" class="btn btn-danger btn-sm"><%= t 'views.reset' %></button>
+                    </div>
+                  </div>
+                  <canvas id="canvas-wind-speed"
+                    data-type="linear-gauge"
+                    data-width="270"
+                    data-height="100"
+                    data-min-value="0"
+                    data-max-value="35"
+                    data-major-ticks="[0,5,10,15,20,25,30,35]"
+                    data-minor-ticks="5"
+                    data-stroke-ticks="true"
+                    data-ticks-width="20"
+                    data-ticks-width-minor="10"
+                    data-highlights='[
+                      {"from": 0, "to": 5, "color": "rgba(0, 255, 0, 0.3)"},
+                      {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                      {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                      {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                      {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                      {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                      {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"}]'
+                    data-highlights-width="20"
+                    data-color-major-ticks="#000"
+                    data-color-minor-ticks="#000"
+                    data-color-title="#000"
+                    data-color-units="#000"
+                    data-color-numbers="#000"
+                    data-color-plate="transparent"
+                    data-border-shadow-width="0"
+                    data-borders="false"
+                    data-border-radius="6"
+                    data-needle-type="arrow"
+                    data-needle-width="12"
+                    data-needle-start="50"
+                    data-needle-end="140"
+                    data-animation-duration="1500"
+                    data-animation-rule="linear"
+                    data-color-needle="#000"
+                    data-color-bar-progress="#C0C0C0"
+                    data-color-bar="#919191"
+                    data-bar-stroke="0"
+                    data-bar-width="0"
+                    data-bar-begin-circle="false"
+                    data-value="<%= text_field.status %>"
+                    data-tick-side="left"
+                    data-number-side="right"
+                    data-needle-side="left"
+                    data-font-units-size="30"
+                    data-font-title-size="30"
+                    data-font-numbers-size="32"
+                    data-numbers-margin="-30"
+                  ></canvas>
+                <% when "Helligkeit" %>
+                  <div class="row">
+                    <div class="col">
+                    </div>
+                  </div>
+                  <canvas id="canvas-brightness"
+                    data-type="linear-gauge"
+                    data-width="260"
+                    data-height="100"
+                    data-min-value="0"
+                    data-max-value="20000"
+                    data-major-ticks="[0,5000,10000,15000,20000]"
+                    data-minor-ticks="5"
+                    data-stroke-ticks="true"
+                    data-ticks-width="20"
+                    data-ticks-width-minor="10"
+                    data-highlights='[
+                      {"from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)"},
+                      {"from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)"},
+                      {"from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)"},
+                      {"from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)"},
+                      {"from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)"},
+                      {"from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)"},
+                      {"from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)"},
+                      {"from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)"}]'
+                    data-highlights-width="20"
+                    data-color-major-ticks="#000"
+                    data-color-minor-ticks="#000"
+                    data-color-title="#000"
+                    data-color-units="#000"
+                    data-color-numbers="#000"
+                    data-color-plate="transparent"
+                    data-border-shadow-width="0"
+                    data-borders="false"
+                    data-border-radius="6"
+                    data-needle-type="arrow"
+                    data-needle-width="12"
+                    data-needle-start="50"
+                    data-needle-end="140"
+                    data-animation-duration="1500"
+                    data-animation-rule="linear"
+                    data-color-needle="#000"
+                    data-color-bar-progress="#C0C0C0"
+                    data-color-bar="#919191"
+                    data-bar-stroke="0"
+                    data-bar-width="0"
+                    data-bar-begin-circle="false"
+                    data-value="<%= text_field.status %>"
+                    data-tick-side="left"
+                    data-number-side="right"
+                    data-needle-side="left"
+                    data-font-units-size="30"
+                    data-font-title-size="30"
+                    data-font-numbers-size="28"
+                    data-numbers-margin="-30"
+                  ></canvas>
+                <% when "Azimut Sonne" %>
+                <% when "Elevation Sonne" %>
+                <% else %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>

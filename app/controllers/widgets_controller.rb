@@ -21,8 +21,9 @@ class WidgetsController < ApplicationController
     @buttons = Widget::Button.find_by_org_units(access_org_units)
     @progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
     @sliders = Widget::Slider.find_by_org_units(access_org_units)
-    @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders}
-    #@widgets = {sliders: @sliders}
+    @text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders,
+                text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
   end
 
   def sort_by_org_units
