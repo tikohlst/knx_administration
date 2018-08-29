@@ -1,5 +1,5 @@
 var render;
-var currentSort = $('a label.active').text().replace(/\s/g,'');
+var currentSort = $('.navbar-brand > .btn-group.btn-group-toggle > .btn.btn-outline-secondary.mb-0.active').text().replace(/\s/g,'');
 switch(currentSort) {
     case "ID":
         render = "<%= escape_javascript(render partial: 'sort_by_ids', locals: {users: @users }) %>";
