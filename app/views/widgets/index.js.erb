@@ -12,10 +12,10 @@ switch(currentSort) {
         render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets}) %>";
         break;
     case "A-Z":
-        //render = "<%#= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
+        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
         break;
     case "Z-A":
-        //render = "<%#= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
+        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
 }
 /* Positioning the rendered partial */
 $('#widgets_card').html(render);

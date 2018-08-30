@@ -1,42 +1,36 @@
 <div class="card-header">
   <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
-    <% if buttons.any? %>
+    <% if widgets[:buttons].any? %>
       <li class="nav-item">
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'shutter'} %>
-      <li class="nav-item">
-        <a class="nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters"
-           role="tab" aria-controls="nav-profile" aria-selected="false"><%= t 'views.widget.shutters' %></a>
-      </li>
-    <% end %>
-    <% if widgets.any?{|widget| widget.use == 'blind'} %>
+    <% if widgets[:progress_bars].any? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'dimmer'} %>
+    <% if widgets[:sliders].any? %>
       <li class="nav-item">
         <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'mc'} %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li class="nav-item">
         <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'window'} %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li class="nav-item">
         <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'weather'} %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Weather'} %>
       <li class="nav-item">
         <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
@@ -44,43 +38,37 @@
     <% end %>
   </ul>
   <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
-    <% if buttons.any? %>
+    <% if widgets[:buttons].any? %>
       <li>
         <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
            role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'shutter'} %>
-      <li>
-        <a class="nav-link" id="nav-shutters-tab" data-toggle="tab" href="#nav-shutters"
-           role="tab" aria-controls="nav-profile" aria-selected="false"><%= t 'views.widget.shutters' %></a>
-      </li>
-    <% end %>
-    <% if widgets.any?{|widget| widget.use == 'blind'} %>
+    <% if widgets[:progress_bars].any? %>
       <li>
         <a class="nav-link" id="nav-blinds-tab" data-toggle="tab" href="#nav-blinds"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'dimmer'} %>
+    <% if widgets[:sliders].any? %>
       <li>
         <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'mc'} %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li>
         <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'window'} %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
       <li>
         <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
       </li>
     <% end %>
-    <% if widgets.any?{|widget| widget.use == 'weather'} %>
+    <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Weather'} %>
       <li>
         <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
            role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
@@ -92,63 +80,26 @@
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% buttons.each do |button| %>
-          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-            <div class="card-body">
-              <div class="float-left">
-                <h5 class="mt-2"><%= button.desc %></h5>
-              </div>
-              <div class="float-right">
-                <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true, html: { id: "edit_widget_#{button.id}", class: "edit_widget" }, method: :patch do |f| %>
-                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                     name: "authenticity_token" %>
-                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                  <% if button.status == 0 %>
-                    <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                    id: "widget_active_#{button.id}", class: "edit_widget" %>
-                  <% else %>
-                    <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                    id: "widget_active_#{button.id}", class: "edit_widget", checked: "checked" %>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="nav-shutters" role="tabpanel" aria-labelledby="nav-shutters-tab">
-      <div class="d-flex align-content-start flex-wrap">
-        <% @widgets.each do |widget| %>
-          <% if widget.use == "shutter" %>
+        <% widgets[:buttons].each do |button| %>
+          <% if button.use == "Lighting" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
-                <div>
-                  <div class="float-left">
-                    <div class="btn-group h-35" role="group">
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="float-right">
-                    <div class="btn-group h-35" role="group">
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                    </div>
-                  </div>
+                <div class="float-left">
+                  <h5 class="mt-2"><%= button.desc %></h5>
                 </div>
-                <br><br>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                <div class="float-right">
+                  <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true, html: { id: "edit_widget_#{button.id}", class: "edit_widget" }, method: :patch do |f| %>
+                    <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                       name: "authenticity_token" %>
+                    <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                    <% if button.status == 0 %>
+                      <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                      id: "widget_active_#{button.id}", class: "edit_widget" %>
+                    <% else %>
+                      <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                      id: "widget_active_#{button.id}", class: "edit_widget", checked: "checked" %>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -158,80 +109,79 @@
     </div>
     <div class="tab-pane fade" id="nav-blinds" role="tabpanel" aria-labelledby="nav-blinds-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% @widgets.each do |widget| %>
-          <% if widget.use == "blind" %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
-                <div>
-                  <div class="float-left">
-                    <div class="btn-group h-35" role="group">
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="float-right">
-                    <div class="btn-group h-35" role="group">
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                      <button type="button" class="btn btn-grey">
-                        <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= widget.id %>"></span>
-                      </button>
-                    </div>
+        <% widgets[:progress_bars].each do |progress_bar| %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+            <div class="card-body">
+              <div>
+                <h5 class="mt-2"><%= progress_bar.desc %></h5>
+              </div>
+              <div>
+                <div class="float-left">
+                  <div class="btn-group h-35" role="group">
+                    <button type="button" class="btn btn-grey">
+                      <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                    </button>
+                    <button type="button" class="btn btn-grey">
+                      <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                    </button>
                   </div>
                 </div>
-                <br><br>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= widget.value %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= widget.value.to_i %>%" id="progressbar-<%= widget.id %>"></div>
+                <div class="float-right">
+                  <div class="btn-group h-35" role="group">
+                    <button type="button" class="btn btn-grey">
+                      <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                    </button>
+                    <button type="button" class="btn btn-grey">
+                      <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                    </button>
+                  </div>
                 </div>
               </div>
+              <br><br>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="<%= progress_bar.status[:position] %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress_bar.status[:position] %>%" id="progressbar-<%= progress_bar.id %>"></div>
+              </div>
             </div>
-          <% end %>
+          </div>
         <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "dimmer" %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
-                <div class="">
-                  <%= form_for widget, remote: true do |f| %>
-                    <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                       name: "authenticity_token" %>
-                    <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                    <div class="slider-wrapper-horizontal">
-                      <%= f.range_field :value, id: "widget_active_#{widget.id}", class: "custom-range", type: "range", min: 0, max: 100, step: 1, value: widget.value %>
-                    </div>
-                  <% end %>
-                </div>
+        <% widgets[:sliders].each do |slider| %>
+          <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+            <div class="card-body">
+              <div>
+                <h5 class="mt-2"><%= slider.desc %></h5>
+              </div>
+              <div class="">
+                <%= form_for :widget, url: "/de/widgets/#{slider.id}", remote: true,
+                             html: { id: "edit_widget_#{slider.id}",
+                                     class: "edit_widget" }, method: :patch do |f| %>
+                  <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                     name: "authenticity_token" %>
+                  <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                  <div class="slider-wrapper-horizontal">
+                    <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                      class: "custom-range", type: "range", min: 0,
+                                      max: 100, step: 1, value: slider.status %>
+                  </div>
+                <% end %>
               </div>
             </div>
-          <% end %>
+          </div>
         <% end %>
       </div>
     </div>
     <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "mc" %>
+        <% widgets[:text_fields].each do |text_field| %>
+          <% if text_field.use == "Monitoring_Control" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
-                <h5 class="mt-2"><%= widget.name %></h5>
+                <h5 class="mt-2"><%= text_field.desc %></h5>
                 <div class="">
-                  <%= form_for widget, remote: true do |f| %>
-                    <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                       name: "authenticity_token" %>
-                    <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                    <%= widget.value %>
-                  <% end %>
+                  <%= text_field.status %>
                 </div>
               </div>
             </div>
@@ -241,15 +191,15 @@
     </div>
     <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "window" %>
+        <% widgets[:text_fields].each do |text_field| %>
+          <% if text_field.use == "Monitoring_Control" %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
                 <div class="float-left">
-                  <h5 class="mt-2"><%= widget.name %></h5>
+                  <h5 class="mt-2"><%= text_field.desc %></h5>
                 </div>
                 <div class="float-right">
-                  <% if widget.value == 0 %>
+                  <% if text_field.status == 0 %>
                     <div class="red-note"><%= t 'views.widget.window.open' %></div>
                   <% else %>
                     <div class="green-note"><%= t 'views.widget.window.closed' %></div>
@@ -263,18 +213,18 @@
     </div>
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
       <div class="d-flex align-content-start flex-wrap">
-        <% widgets.each do |widget| %>
-          <% if widget.use == "weather" and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(widget.name) %>
+        <% widgets[:text_fields].each do |text_field| %>
+          <% if text_field.use == 'Weather' and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(text_field.desc) %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="mt-2"><%= widget.name %></h5>
+                    <h5 class="mt-2"><%= text_field.desc %></h5>
                   </div>
                   <div class="col text-right">
                     <h5 class="mt-2">
-                      <%= widget.value %>
-                      <% case widget.name %>
+                      <%= text_field.status %>
+                      <% case text_field.desc %>
                       <% when "Temperatur" %>
                         °C
                       <% when "Windgeschw." %>
@@ -290,31 +240,31 @@
                     </h5>
                   </div>
                 </div>
-                <% case widget.name %>
+                <% case text_field.desc %>
                 <% when "Temperatur" %>
                   <div class="row">
                     <div class="col">
-                      Min: <%= widgets.where(use: 'weather', name: 'T_min').first.value %> °C
+                      Min: <%= widgets[:text_fields].select { |widget| widget.desc == "T_min" }.first.status %> °C
                       <br>
-                      Max: <%= widgets.where(use: 'weather', name: 'T_max').first.value %> °C
+                      Max: <%= widgets[:text_fields].select { |widget| widget.desc == "T_max" }.first.status %> °C
                     </div>
                     <div class="col text-right">
-                      <button type="button" class="btn btn-danger btn-sm mt-2">Zurücksetzen</button>
+                      <button type="button" class="btn btn-danger btn-sm mt-2"><%= t 'views.reset' %></button>
                     </div>
                   </div>
                   <canvas id="canvas-temperature"></canvas>
-                <% when "Windgeschw." %>
+                <% when "Windgeschwindigkeit" %>
                   <div class="row">
                     <div class="col">
-                      Max: <%= widgets.where(use: 'weather', name: 'v_max').first.value %> m/s
-                      <% if widgets.where(use: 'weather', name: 'Sturm! (v > 20m/s)').first.value == 1 %>
+                      Max: <%= widgets[:text_fields].select{|widget| widget.desc == "v_max"}.first.status %> m/s
+                      <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
                         <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
                       <% else %>
-                        <div style="width:91px;height:32px;" class="green-note mt-1">Kein Sturm</div>
+                        <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
                       <% end %>
                     </div>
                     <div class="col text-right">
-                      <button type="button" class="btn btn-danger btn-sm">Zurücksetzen</button>
+                      <button type="button" class="btn btn-danger btn-sm"><%= t 'views.reset' %></button>
                     </div>
                   </div>
                   <canvas id="canvas-wind-speed"></canvas>
