@@ -31,7 +31,7 @@ $.each(array, function(index, value) {
     $('#' + value + ' > div > .collapse').first().addClass('show');
 });
 
-<% if @widgets.where(use: 'weather').exists? %>
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather'} %>
   $( '#canvas-temperature' ).replaceWith( '<canvas id="canvas-temperature"></canvas>' );
   $( '#canvas-wind-speed' ).replaceWith( '<canvas id="canvas-wind-speed"></canvas>' );
 
@@ -82,7 +82,7 @@ $.each(array, function(index, value) {
       barStroke: 0,
       barWidth: 0,
       barBeginCircle: false,
-      value: <%= @widgets.where(use: 'weather', name: 'Temperatur').first.try(:value) %>,
+      value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Temperatur"}.first.status %>,
       tickSide: "left",
       numberSide: "right",
       needleSide: "left",
@@ -134,7 +134,7 @@ $.each(array, function(index, value) {
       barStroke: 0,
       barWidth: 0,
       barBeginCircle: false,
-      value: <%= @widgets.where(use: 'weather', name: 'Windgeschw.').first.try(:value) %>,
+      value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Windgeschwindigkeit"}.first.status %>,
       tickSide: "left",
       numberSide: "right",
       needleSide: "left",
@@ -187,7 +187,7 @@ $.each(array, function(index, value) {
       barStroke: 0,
       barWidth: 0,
       barBeginCircle: false,
-      value: <%= @widgets.where(use: 'weather', name: 'Helligkeit').first.try(:value) %>,
+      value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Helligkeit"}.first.status %>,
       tickSide: "left",
       numberSide: "right",
       needleSide: "left",

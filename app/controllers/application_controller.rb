@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     # Set the user language after the sign in
-    if resource.is_a?(User) && resource.language != I18n.locale
+    if resource.is_a?(User) and resource.language != I18n.locale
       I18n.locale = resource.language
     end
 

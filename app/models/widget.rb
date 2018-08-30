@@ -27,12 +27,12 @@ class Widget
 
   # Find all widgets by the org units
   def self.find_by_org_units(org_units)
-    buttons = []
+    widgets = []
     org_units.each do |org_unit|
       # Select all widgets with the allowed org units
-      buttons << self.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
+      widgets << self.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }
     end
-    buttons.flatten
+    widgets.flatten
   end
 
   # Buttons for lightings
@@ -165,7 +165,7 @@ class Widget
       # Find widget for actual devise
       @widget = self.class.find_by_id(self.id)
       # Update widget status
-      @widget.status = status["status"]
+      @widget.status = status
       # Send the update to all running sessions
       ActionCable.server.broadcast 'widgets', {type: "textField", id: self.id, status: @widget.status}
     end

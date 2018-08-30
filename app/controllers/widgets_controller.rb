@@ -25,11 +25,12 @@ class WidgetsController < ApplicationController
       @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars, sliders: @selected_sliders,
-       text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
+      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars,
+                  sliders: @selected_sliders,
+                  text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
     else
       @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders,
-       text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
+                  text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
     end
   end
 
@@ -54,7 +55,8 @@ class WidgetsController < ApplicationController
       @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars, sliders: @selected_sliders,
+      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars,
+                  sliders: @selected_sliders,
                   text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
     else
       @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders,

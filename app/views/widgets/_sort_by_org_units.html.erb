@@ -146,7 +146,7 @@
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_blind" aria-expanded="true" aria-controls="collapseOne_blind">
                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <%= t "views.org_unit_#{org_unit.id}" %>
+                        <%= org_unit.name %>
                       </button>
                     </h5>
                   </div>
@@ -160,7 +160,7 @@
               <div id="collapse<%= org_unit.id %>_blind" class="collapse" aria-labelledby="heading<%= org_unit.id %>_blind" data-parent="#accordion-blinds">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets[:progress_bars].each do |progress_bar| %>
-                    <% if progress_bar.use == "Shutters_Blinds" && progress_bar.org_unit == org_unit.key %>
+                    <% if progress_bar.org_unit == org_unit.key %>
                       <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                         <div class="card-body">
                           <div>
@@ -214,7 +214,7 @@
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_dimmer" aria-expanded="true" aria-controls="collapseOne_dimmer">
                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <%= t "views.org_unit_#{org_unit.id}" %>
+                        <%= org_unit.name %>
                       </button>
                     </h5>
                   </div>
@@ -286,7 +286,7 @@
                     <h5 class="mb-0">
                       <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= org_unit.id %>_window" aria-expanded="true" aria-controls="collapseOne_window">
                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                        <%= t "views.org_unit_#{org_unit.id}" %>
+                        <%= org_unit.name %>
                       </button>
                     </h5>
                   </div>
@@ -295,7 +295,7 @@
               <div id="collapse<%= org_unit.id %>_window" class="collapse" aria-labelledby="heading<%= org_unit.id %>_window" data-parent="#accordion-windows">
                 <div class="d-flex align-content-start flex-wrap">
                   <% widgets[:text_fields].each do |text_field| %>
-                    <% if text_field.location == key and text_field.use == "Monitoring_Control" %>
+                    <% if text_field.use == "Monitoring_Control" %>
                       <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                         <div class="card-body">
                           <div class="float-left">
@@ -322,7 +322,7 @@
     <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
       <div class="d-flex align-content-start flex-wrap">
         <% widgets[:text_fields].each do |text_field| %>
-          <%# if text_field.use == 'Weather' and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(text_field.desc) %>
+          <% if text_field.use == 'Weather' and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(text_field.desc) %>
             <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
               <div class="card-body">
                 <div class="row">
@@ -368,7 +368,7 @@
                       <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
                         <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
                       <% else %>
-                        <div style="width:91px;height:32px;" class="green-note mt-1">Kein Sturm</div>
+                        <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
                       <% end %>
                     </div>
                     <div class="col text-right">
@@ -389,7 +389,7 @@
               </div>
             </div>
           <% end %>
-        <%# end %>
+        <% end %>
       </div>
     </div>
   </div>

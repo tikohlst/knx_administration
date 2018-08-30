@@ -2,20 +2,20 @@ var render;
 /* Save current tab to display the same tab after entering the search */
 var currentTab = $('#nav-tabContent > .show.active').attr('id');
 /* Save current sort to display the same sort after entering the search */
-var currentSort = $('a label.active').text().replace(/\s/g,'');
+var currentSort = $('.navbar-brand > .btn-group.btn-group-toggle > .btn.btn-outline-secondary.mb-0.active').text().replace(/\s/g,'');
 switch(currentSort) {
     case "Org-Unit":
-        render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets, buttons: @buttons }) %>";
+        render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets}) %>";
         break;
     case "Ort":
     case "Location":
-        render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets, buttons: @buttons }) %>";
+        render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets}) %>";
         break;
     case "A-Z":
-        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets, buttons: @buttons }) %>";
+        //render = "<%#= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
         break;
     case "Z-A":
-        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets, buttons: @buttons }) %>";
+        //render = "<%#= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
 }
 /* Positioning the rendered partial */
 $('#widgets_card').html(render);
