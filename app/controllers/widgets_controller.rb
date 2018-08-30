@@ -11,26 +11,26 @@ class WidgetsController < ApplicationController
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     # Get all widgets by the org units were the user has access to
-    @buttons = Widget::Button.find_by_org_units(access_org_units)
-    @progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    @sliders = Widget::Slider.find_by_org_units(access_org_units)
-    @text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    buttons = Widget::Button.find_by_org_units(access_org_units)
+    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
+    sliders = Widget::Slider.find_by_org_units(access_org_units)
+    text_fields = Widget::TextField.find_by_org_units(access_org_units)
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
     if (params[:term] && params[:term] != "") ||
        ($widgets_search_params[current_user.username] &&
        $widgets_search_params[current_user.username] != "")
-      @selected_buttons = @buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars,
-                  sliders: @selected_sliders,
-                  text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
+      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      @widgets = {buttons: selected_buttons, progress_bars: selected_progress_bars,
+                  sliders: selected_sliders,
+                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
     else
-      @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders,
-                  text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
+      @widgets = {buttons: buttons, progress_bars: progress_bars, sliders: sliders,
+                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
     end
   end
 
@@ -41,26 +41,26 @@ class WidgetsController < ApplicationController
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     # Get all widgets by the org units were the user has access to
-    @buttons = Widget::Button.find_by_org_units(access_org_units)
-    @progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    @sliders = Widget::Slider.find_by_org_units(access_org_units)
-    @text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    buttons = Widget::Button.find_by_org_units(access_org_units)
+    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
+    sliders = Widget::Slider.find_by_org_units(access_org_units)
+    text_fields = Widget::TextField.find_by_org_units(access_org_units)
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
     if (params[:term] && params[:term] != "") ||
         ($widgets_search_params[current_user.username] &&
             $widgets_search_params[current_user.username] != "")
-      @selected_buttons = @buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars,
-                  sliders: @selected_sliders,
-                  text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
+      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      @widgets = {buttons: selected_buttons, progress_bars: selected_progress_bars,
+                  sliders: selected_sliders,
+                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
     else
-      @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders,
-                  text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
+      @widgets = {buttons: buttons, progress_bars: progress_bars, sliders: sliders,
+                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
     end
   end
 
@@ -71,25 +71,25 @@ class WidgetsController < ApplicationController
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     # Get all widgets by the org units were the user has access to
-    @buttons = Widget::Button.find_by_org_units(access_org_units)
-    @progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    @sliders = Widget::Slider.find_by_org_units(access_org_units)
-    @text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    buttons = Widget::Button.find_by_org_units(access_org_units)
+    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
+    sliders = Widget::Slider.find_by_org_units(access_org_units)
+    text_fields = Widget::TextField.find_by_org_units(access_org_units)
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
     if (params[:term] && params[:term] != "") ||
         ($widgets_search_params[current_user.username] &&
             $widgets_search_params[current_user.username] != "")
-      @selected_buttons = @buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons, progress_bars: @selected_progress_bars, sliders: @selected_sliders,
-                  text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
+      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      @widgets = {buttons: selected_buttons, progress_bars: selected_progress_bars, sliders: selected_sliders,
+                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
     else
-      @widgets = {buttons: @buttons, progress_bars: @progress_bars, sliders: @sliders,
-                  text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
+      @widgets = {buttons: buttons, progress_bars: progress_bars, sliders: sliders,
+                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
     end
   end
 
@@ -100,29 +100,29 @@ class WidgetsController < ApplicationController
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     # Get all widgets by the org units were the user has access to
-    @buttons = Widget::Button.find_by_org_units(access_org_units)
-    @progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    @sliders = Widget::Slider.find_by_org_units(access_org_units)
-    @text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    buttons = Widget::Button.find_by_org_units(access_org_units)
+    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
+    sliders = Widget::Slider.find_by_org_units(access_org_units)
+    text_fields = Widget::TextField.find_by_org_units(access_org_units)
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
     if (params[:term] && params[:term] != "") ||
         ($widgets_search_params[current_user.username] &&
             $widgets_search_params[current_user.username] != "")
-      @selected_buttons = @buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons.sort_by{|button| button.desc},
-                  progress_bars: @selected_progress_bars.sort_by{|progress_bar| progress_bar.desc},
-                  sliders: @selected_sliders.sort_by{|slider| slider.desc},
-                  text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}}
+      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      @widgets = {buttons: selected_buttons.sort_by{|button| button.desc},
+                  progress_bars: selected_progress_bars.sort_by{|progress_bar| progress_bar.desc},
+                  sliders: selected_sliders.sort_by{|slider| slider.desc},
+                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
     else
-      @widgets = {buttons: @buttons.sort_by{|button| button.desc},
-                  progress_bars: @progress_bars.sort_by{|progress_bar| progress_bar.desc},
-                  sliders: @sliders.sort_by{|slider| slider.desc},
-                  text_fields: @text_fields.sort_by{|text_field| text_field.desc}}
+      @widgets = {buttons: buttons.sort_by{|button| button.desc},
+                  progress_bars: progress_bars.sort_by{|progress_bar| progress_bar.desc},
+                  sliders: sliders.sort_by{|slider| slider.desc},
+                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
     end
   end
 
@@ -133,29 +133,29 @@ class WidgetsController < ApplicationController
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     # Get all widgets by the org units were the user has access to
-    @buttons = Widget::Button.find_by_org_units(access_org_units)
-    @progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    @sliders = Widget::Slider.find_by_org_units(access_org_units)
-    @text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    buttons = Widget::Button.find_by_org_units(access_org_units)
+    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
+    sliders = Widget::Slider.find_by_org_units(access_org_units)
+    text_fields = Widget::TextField.find_by_org_units(access_org_units)
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
     if (params[:term] && params[:term] != "") ||
         ($widgets_search_params[current_user.username] &&
             $widgets_search_params[current_user.username] != "")
-      @selected_buttons = @buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_progress_bars = @progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_sliders = @sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @selected_text_fields = @text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: @selected_buttons.sort_by{|button| button.desc}.reverse!,
-                  progress_bars: @selected_progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
-                  sliders: @selected_sliders.sort_by{|slider| slider.desc}.reverse!,
-                  text_fields: @selected_text_fields.sort_by{|text_field| text_field.desc}.reverse!}
+      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      @widgets = {buttons: selected_buttons.sort_by{|button| button.desc}.reverse!,
+                  progress_bars: selected_progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
+                  sliders: selected_sliders.sort_by{|slider| slider.desc}.reverse!,
+                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}.reverse!}
     else
-      @widgets = {buttons: @buttons.sort_by{|button| button.desc}.reverse!,
-                  progress_bars: @progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
-                  sliders: @sliders.sort_by{|slider| slider.desc}.reverse!,
-                  text_fields: @text_fields.sort_by{|text_field| text_field.desc}.reverse!}
+      @widgets = {buttons: buttons.sort_by{|button| button.desc}.reverse!,
+                  progress_bars: progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
+                  sliders: sliders.sort_by{|slider| slider.desc}.reverse!,
+                  text_fields: text_fields.sort_by{|text_field| text_field.desc}.reverse!}
     end
   end
 
