@@ -43,24 +43,18 @@ if ENV['SEEDS']
   connection.execute("TRUNCATE TABLE org_units;")
   connection.execute("TRUNCATE TABLE accesses;")
 
-  # Role name:string
-  roles_list = %w[ admin editor observer ]
-
-  roles_list.each do |name|
-    Role.create!( name: name )
-  end
-
   # User username:string password:string password_confirmation:string role:int language:string
   users_list = [
-      [ "admin", "123456", "123456", 1, "de" ],
-      [ "tikoh", "123456", "123456", 2, "de" ],
-      [ "user1", "123456", "123456", 3, "en" ],
-      [ "user2", "123456", "123456", 2, "de" ],
+      [ "admin", "123456", "123456", :admin, "de" ],
+      [ "tikoh", "123456", "123456", :editor, "de" ],
+      [ "user1", "123456", "123456", :observer, "en" ],
+      [ "user2", "123456", "123456", :editor, "de" ],
   ]
 
-  users_list.each do |username, password, password_confirmation, role_id, language|
+  users_list.each do |username, password, password_confirmation, role, language|
     user = User.create!( username: username, password: password, password_confirmation: password_confirmation, language: language )
-    connection.execute("INSERT INTO users_roles (user_id, role_id) VALUES (#{user.id} , #{role_id});")
+    # Add role for rolify
+    user.add_role role
   end
 
   # OrgUnit name:string
@@ -73,7 +67,6 @@ if ENV['SEEDS']
       [ 1, 1 ],
       [ 1, 2 ],
       [ 1, 3 ],
-      [ 1, 4 ],
       [ 2, 2 ],
       [ 2, 3 ],
       [ 3, 2 ],
