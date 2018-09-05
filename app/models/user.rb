@@ -29,7 +29,7 @@ class User < ApplicationRecord
   private
 
   def at_least_one_admin?
-    unless (User.with_role :admin).exists?
+    if not (User.with_role :admin).exists? and ENV['SEEDS'].blank?
       errors.add(:base, I18n.t('errors.messages.admin'))
     end
   end
