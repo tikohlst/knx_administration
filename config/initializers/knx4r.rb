@@ -63,14 +63,15 @@ if ENV['SEEDS']
   end
 
   # Access user_id:int org_unit_id:int
+  number_of_org_units = OrgUnit.count
   accesses_list = [
-      [ 1, 1 ],
-      [ 1, 2 ],
-      [ 1, 3 ],
-      [ 2, 2 ],
-      [ 2, 3 ],
-      [ 3, 2 ],
-      [ 4, 3 ]
+      [ 1, rand(1..number_of_org_units) ],
+      [ 1, rand(1..number_of_org_units) ],
+      [ 1, rand(1..number_of_org_units) ],
+      [ 2, rand(1..number_of_org_units) ],
+      [ 2, rand(1..number_of_org_units) ],
+      [ 3, rand(1..number_of_org_units) ],
+      [ 4, rand(1..number_of_org_units) ]
   ]
   accesses_list.each do |user_id, org_unit_id|
     Access.create!( user_id: user_id, org_unit_id: org_unit_id )
