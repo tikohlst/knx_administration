@@ -12,7 +12,7 @@ emi_server.attach_logger( logger )
 @gw.connect( @gw.find || {} )
 
 #@prj = KNXproject.load("/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
-#                       "Thesis (Werntges + Martin)/Daten von Werntges/sample_demoboard.xml" )
+#                       "Thesis (Werntges + Martin)/Daten von Werntges/sample_demoboard2.xml" )
 @prj = KNXproject.load( "/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
                         "Thesis (Werntges + Martin)/Daten von Werntges/heim_c22.xml" )
 #@prj = KNXproject.load( "/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
@@ -102,45 +102,32 @@ end.each do |dev|
   when KNX_Driver, KNX_DimmerDriver
     case pdev = dev.parent
     when KNX_Blind
-      pdev.driver.update_from_bus
+      #pdev.driver.update_from_bus
       @progress_bar = Widget::ProgressBar.new(pdev)
       pdev.slider.attach( @progress_bar )
     when KNX_Dimmer
-      pdev.driver.update_from_bus
+      #pdev.driver.update_from_bus
       @slider = Widget::Slider.new(pdev)
       pdev.slider.attach( @slider )
     else
       raise "Unknown parent: #{pdev.class}"
     end
-  when KNX_Stepper, Slider
-    # Ignore, handled by cases above
-  when KNX_Toggle
-    # Ignore
   when KNX_Value
     # Update to the actual status of the KNX_Value
-    dev.update_from_bus
+    #dev.update_from_bus
     @text_field = Widget::TextField.new(dev)
     dev.attach( @text_field )
-  when KNX_Rocker
-    # Ignore
-  when KNX_Date
-    # Ignore
-  when KNX_Time
-    # Ignore
-  when KNX_Binary
-    # Ignore
-  when KNX_Setter
-    # Ignore
   when KNX_Switch
     # Don't show the switch for the dimmers
     unless dev.parent.is_a? KNX_Dimmer
       # Update to the actual status of the KNX_Switch
-      dev.update_from_bus
+      #dev.update_from_bus
       @button = Widget::Button.new(dev)
       dev.attach( @button )
     end
-  when KNX_Interface
-    # Not used for GUI yet
+  when KNX_Toggle, KNX_Rocker, KNX_Date, KNX_Time, KNX_Binary, KNX_Setter, KNX_Interface,
+      KNX_Stepper, Slider
+    # Ignore
   else
     puts "Class not yet supported: #{dev.class}"
   end
