@@ -1,24 +1,71 @@
-# README
+# KNX-Administration
+This web application belongs to the bachelor thesis "Web-Frontend für KNX-basierte Home Automation-Installationen mit ereignisgesteuerter Aktualisierung über WebSockets" by Tim Kohlstadt. The application can be used to manage all connected KNX devices belonging to a KNX bus.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## System dependencies
+* Ruby Version: 2.5.1
 
-Things you may want to cover:
+* Rails Version: 5.2.1
 
-* Ruby version
+## Configuration
+XML
 
-* System dependencies
+### Install Ruby
+```
+\curl -sSL https://get.rvm.io | bash -s stable --ruby
+rvm install ruby-2.5.1
+rvm --default use ruby-2.5.1
+gem update --system
+```
 
-* Configuration
+### Install Rails
+```
+gem install rails
+```
 
-* Database creation
+### Install Bundles
+```
+cd /path/to/knx_administration
+gem install bundler
+bundle update
+bundle install
+```
 
-* Database initialization
+## Setup your database in the project
+```
+sudo nano /path/to/knx_administration/config/database.yml
+```
 
-* How to run the test suite
+Please change the username, the password and the path to your socket in the default settings at the top of the file.
+(Line 16, 17, 18)
 
-* Services (job queues, cache servers, search engines, etc.)
+## Database creation
+```
+rails db:create
+```
 
-* Deployment instructions
+## Database initialization
+```
+rails db:migrate
+```
 
-* ...
+## How to run the application
+SEEDS=0/1: Define if seeds should be used or not<br/>
+HOST_IP=own_ip_address: Set own ip address
+```
+SEEDS=1 HOST_IP=10.200.73.1 rails s
+```
+
+## How to run the test suite
+```
+rails test
+```
+
+## Login
+URL:				<http://localhost:3000/de/my/users/sign_in>
+
+Example user:		'admin'
+
+Example password:	'123456'
+
+## Author
+Tim Kohlstadt, tim.kohlstadt@student.hs-rm.de
