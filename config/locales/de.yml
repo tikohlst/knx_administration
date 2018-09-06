@@ -25,6 +25,7 @@ de:
       not_an_integer: muss ganzzahlig sein.
       odd: muss ungerade sein.
       required: muss ausgefüllt werden.
+      search: Kein Widget gefunden!
       taken: ist bereits vergeben.
       too_long:
         one: ist zu lang (mehr als 1 Zeichen).
