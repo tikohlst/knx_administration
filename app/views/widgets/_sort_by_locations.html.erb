@@ -166,21 +166,21 @@
                               <div>
                                 <div class="float-left">
                                   <div class="btn-group h-35" role="group">
-                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_backward" do %>
-                                      <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
-                                    <% end %>
                                     <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "backward" do %>
                                       <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                                    <% end %>
+                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_backward" do %>
+                                      <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
                                     <% end %>
                                   </div>
                                 </div>
                                 <div class="float-right">
                                   <div class="btn-group h-35" role="group">
-                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "forward" do %>
-                                      <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
-                                    <% end %>
                                     <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_forward" do %>
                                       <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
+                                    <% end %>
+                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "forward" do %>
+                                      <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
                                     <% end %>
                                   </div>
                                 </div>

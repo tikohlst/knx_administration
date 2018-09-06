@@ -100,13 +100,13 @@ class Widget
     def send_param(direction)
       case direction
       when "step_backward"
-        self.device.send(:up)
-      when "backward"
         self.device.send(:decrease)
+      when "backward"
+        self.device.send(:up)
       when "forward"
-        self.device.send(:increase)
-      when "step_forward"
         self.device.send(:down)
+      when "step_forward"
+        self.device.send(:increase)
       else
         puts "Error: No valid direction"
       end
