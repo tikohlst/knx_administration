@@ -49,7 +49,7 @@ en:
       blinds: "Shutters and blinds"
       dimmer: "Dimmer"
       mc: "Monitoring-Control"
-      windows: "Windows"
+      windows: "Windows and doors"
       window:
         open: "Open"
         closed: "Closed"

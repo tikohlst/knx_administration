@@ -1,7 +1,7 @@
 class Widget
   include KNX
 
-  attr_reader :id, :desc, :org_unit, :location, :use
+  attr_reader :id, :desc, :org_unit, :location, :use, :dpt
 
   def initialize(device)
     @id = self.class.all_widgets.count
@@ -9,6 +9,7 @@ class Widget
     @org_unit = device.ouref
     @location = device.parent.locref
     @use = device.listening_to.first.try(:use)
+    @dpt = device.try(:dpt)
   end
 
   # Get all widget objects

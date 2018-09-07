@@ -49,7 +49,7 @@ de:
       blinds: "Fensterläden und Jalousien"
       dimmer: "Dimmer"
       mc: "Monitoring-Control"
-      windows: "Fenster"
+      windows: "Fenster und Türen"
       window:
         open: "Offen"
         closed: "Geschlossen"

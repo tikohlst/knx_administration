@@ -106,7 +106,7 @@ end.each do |dev|
     else
       raise "Unknown parent: #{pdev.class}"
     end
-  when KNX_Value
+  when KNX_Value, KNX_Binary
     # Update to the actual status of the KNX_Value
     #dev.update_from_bus
     @text_field = Widget::TextField.new(dev)
@@ -119,7 +119,7 @@ end.each do |dev|
       @button = Widget::Button.new(dev)
       dev.attach( @button )
     end
-  when KNX_Toggle, KNX_Rocker, KNX_Date, KNX_Time, KNX_Binary, KNX_Setter, KNX_Interface,
+  when KNX_Toggle, KNX_Rocker, KNX_Date, KNX_Time, KNX_Setter, KNX_Interface,
       KNX_Stepper, Slider
     # Ignore
   else

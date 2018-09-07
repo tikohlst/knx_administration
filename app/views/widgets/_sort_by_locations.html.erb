@@ -253,7 +253,7 @@
       <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == "Monitoring_Control" %>
+            <% if text_field.use == "Monitoring_Control" and text_field.dpt != '1.009' and text_field.dpt != '1.017'%>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <h5 class="mt-2"><%= text_field.desc %></h5>
@@ -269,7 +269,7 @@
       <div class="tab-pane fade" id="nav-windows" role="tabpanel" aria-labelledby="nav-windows-tab">
         <div id="accordion-windows" class="accordion">
           <% $locations.each do |key, location| %>
-            <% if widgets[:text_fields].any?{|text_field| text_field.location == key and text_field.use == 'Monitoring_Control' } %>
+            <% if widgets[:text_fields].any?{|text_field| text_field.location == key and text_field.use == 'Monitoring_Control' and text_field.dpt == '1.009' } %>
               <div>
                 <div class="mb-2" id="heading<%= key %>_window">
                   <div class="row">
@@ -286,17 +286,32 @@
                 <div id="collapse<%= key %>_window" class="collapse" aria-labelledby="heading<%= key %>_window" data-parent="#accordion-windows">
                   <div class="d-flex align-content-start flex-wrap">
                     <% widgets[:text_fields].each do |text_field| %>
-                      <% if text_field.location == key and text_field.use == "Monitoring_Control" %>
+                      <% if text_field.location == key and text_field.use == 'Monitoring_Control' and text_field.dpt == '1.009' %>
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
-                            <div class="float-left">
-                              <h5 class="mt-2"><%= text_field.desc %></h5>
-                            </div>
-                            <div class="float-right">
+                            <div class="row">
                               <% if text_field.status == 0 %>
-                                <div class="red-note"><%= t 'views.widget.window.open' %></div>
+                                <div class="col-8">
+                                  <div class="float-left">
+                                    <h5 class="mt-2"><%= text_field.desc %></h5>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="float-right">
+                                    <div class="red-note"><%= t 'views.widget.window.open' %></div>
+                                  </div>
+                                </div>
                               <% else %>
-                                <div class="green-note"><%= t 'views.widget.window.closed' %></div>
+                                <div class="col-6">
+                                  <div class="float-left">
+                                    <h5 class="mt-2"><%= text_field.desc %></h5>
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <div class="float-right">
+                                    <div class="green-note"><%= t 'views.widget.window.closed' %></div>
+                                  </div>
+                                </div>
                               <% end %>
                             </div>
                           </div>
