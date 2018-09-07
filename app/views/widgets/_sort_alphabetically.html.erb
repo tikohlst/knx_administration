@@ -222,16 +222,16 @@
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col">
+                    <div class="col-8">
                       <h5 class="mt-2"><%= text_field.desc %></h5>
                     </div>
-                    <div class="col text-right">
+                    <div class="col-4 text-right">
                       <h5 class="mt-2">
                         <%= text_field.status %>
                         <% case text_field.desc %>
                         <% when "Temperatur" %>
                           °C
-                        <% when "Windgeschw." %>
+                        <% when "Windgeschwindigkeit" %>
                           m/s
                         <% when "Helligkeit" %>
                           lx
@@ -275,11 +275,21 @@
                   <% when "Helligkeit" %>
                     <div class="row">
                       <div class="col">
+                        <canvas id="canvas-brightness"></canvas>
                       </div>
                     </div>
-                    <canvas id="canvas-brightness"></canvas>
                   <% when "Azimut Sonne" %>
+                    <div class="row">
+                      <div class="col">
+                        <canvas id="canvas-azimut"></canvas>
+                      </div>
+                    </div>
                   <% when "Elevation Sonne" %>
+                    <div class="row">
+                      <div class="col">
+                        <canvas id="canvas-elevation"></canvas>
+                      </div>
+                    </div>
                   <% else %>
                   <% end %>
                 </div>

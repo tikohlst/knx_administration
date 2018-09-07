@@ -128,9 +128,33 @@
 
 #canvas-temperature, #canvas-wind-speed, #canvas-brightness
     margin: 15px 0 -35px -12px
+    position: absolute
 
-.widget > .card-body:last-child > div.row
-    height: 50px
+#canvas-temperature, #canvas-wind-speed
+    bottom: 40px
+
+#canvas-brightness
+    bottom: -5px
+
+#canvas-elevation
+    margin-left: 30px
+
+#canvas-azimut
+    margin: 0 auto
+    display: block
+
+#nav-weather > div > .widget > .card-body
+    position: relative
+    height: 290px
+    .row
+        white-space: nowrap
+    .row:first-child
+        height: 55px
+
+    .row:last-child
+        height: 170px
+        .col
+            position: relative
 
 ////////////////////////////////////////////////////
 // Users
