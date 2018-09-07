@@ -326,7 +326,9 @@
       <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == 'Weather' and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(text_field.desc) %>
+            <% if text_field.use == 'Weather' and
+                %w[ T_min T_max v_max ].exclude?(text_field.desc) and
+                %w[ 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="row">
@@ -336,24 +338,22 @@
                     <div class="col-4 text-right">
                       <h5 class="mt-2">
                         <%= text_field.status %>
-                        <% case text_field.desc %>
-                        <% when "Temperatur" %>
+                        <% case text_field.dpt %>
+                        <% when "9.001" %>
                           °C
-                        <% when "Windgeschwindigkeit" %>
+                        <% when "9.005" %>
                           m/s
-                        <% when "Helligkeit" %>
+                        <% when "9.004" %>
                           lx
-                        <% when "Azimut Sonne" %>
-                          °
-                        <% when "Elevation Sonne" %>
+                        <% when "9.029" %>
                           °
                         <% else %>
                         <% end %>
                       </h5>
                     </div>
                   </div>
-                  <% case text_field.desc %>
-                  <% when "Temperatur" %>
+                  <% case text_field.dpt %>
+                  <% when "9.001" %>
                     <div class="row">
                       <div class="col">
                         Min: <%= widgets[:text_fields].select { |widget| widget.desc == "T_min" }.first.status %> °C
@@ -365,7 +365,7 @@
                       </div>
                     </div>
                     <canvas id="canvas-temperature"></canvas>
-                  <% when "Windgeschwindigkeit" %>
+                  <% when "9.005" %>
                     <div class="row">
                       <div class="col">
                         Max: <%= widgets[:text_fields].select{|widget| widget.desc == "v_max"}.first.status %> m/s
@@ -380,24 +380,26 @@
                       </div>
                     </div>
                     <canvas id="canvas-wind-speed"></canvas>
-                  <% when "Helligkeit" %>
+                  <% when "9.004" %>
                     <div class="row">
                       <div class="col">
                         <canvas id="canvas-brightness"></canvas>
                       </div>
                     </div>
-                  <% when "Azimut Sonne" %>
-                    <div class="row">
-                      <div class="col">
-                        <canvas id="canvas-azimut"></canvas>
+                  <% when "9.029" %>
+                    <% if text_field.desc == "Azimut Sonne" %>
+                      <div class="row">
+                        <div class="col">
+                          <canvas id="canvas-azimut"></canvas>
+                        </div>
                       </div>
-                    </div>
-                  <% when "Elevation Sonne" %>
-                    <div class="row">
-                      <div class="col">
-                        <canvas id="canvas-elevation"></canvas>
+                    <% else %>
+                      <div class="row">
+                        <div class="col">
+                          <canvas id="canvas-elevation"></canvas>
+                        </div>
                       </div>
-                    </div>
+                    <% end %>
                   <% else %>
                   <% end %>
                 </div>

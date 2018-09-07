@@ -328,7 +328,9 @@
       <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == 'Weather' and %w[T_min T_max v_max Anforderung\ v_max Anforderung\ T_min,\ T_max Sturm!\ (v\ >\ 20m/s) ].exclude?(text_field.desc) %>
+            <% if text_field.use == 'Weather' and
+                %w[ T_min T_max v_max ].exclude?(text_field.desc) and
+                %w[ 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="row">
@@ -338,24 +340,22 @@
                     <div class="col-4 text-right">
                       <h5 class="mt-2">
                         <%= text_field.status %>
-                        <% case text_field.desc %>
-                        <% when "Temperatur" %>
+                        <% case text_field.dpt %>
+                        <% when "9.001" %>
                           °C
-                        <% when "Windgeschwindigkeit" %>
+                        <% when "9.005" %>
                           m/s
-                        <% when "Helligkeit" %>
+                        <% when "9.004" %>
                           lx
-                        <% when "Azimut Sonne" %>
-                          °
-                        <% when "Elevation Sonne" %>
+                        <% when "9.029" %>
                           °
                         <% else %>
                         <% end %>
                       </h5>
                     </div>
                   </div>
-                  <% case text_field.desc %>
-                  <% when "Temperatur" %>
+                  <% case text_field.dpt %>
+                  <% when "9.001" %>
                     <div class="row">
                       <div class="col">
                         Min: <%= widgets[:text_fields].select { |widget| widget.desc == "T_min" }.first.status %> °C
@@ -421,7 +421,7 @@
                       data-font-numbers-size="32"
                       data-numbers-margin="-30"
                     ></canvas>
-                  <% when "Windgeschwindigkeit" %>
+                  <% when "9.005" %>
                     <div class="row">
                       <div class="col">
                         Max: <%= widgets[:text_fields].select{|widget| widget.desc == "v_max"}.first.status %> m/s
@@ -487,7 +487,7 @@
                       data-font-numbers-size="32"
                       data-numbers-margin="-30"
                     ></canvas>
-                  <% when "Helligkeit" %>
+                  <% when "9.004" %>
                     <div class="row">
                       <div class="col">
                         <canvas id="canvas-brightness"
@@ -543,88 +543,90 @@
                         ></canvas>
                       </div>
                     </div>
-                  <% when "Azimut Sonne" %>
-                    <div class="row">
-                      <div class="col">
-                        <canvas id="canvas-azimut"
-                          data-type="radial-gauge"
-                          data-width="200"
-                          data-height="170"
-                          data-min-value="0"
-                          data-max-value="360"
-                          data-major-ticks="S,SW,W,NW,N,NE,E,SE,S"
-                          data-minor-ticks="9"
-                          data-ticks-angle="360"
-                          data-start-angle="180"
-                          data-stroke-ticks="false"
-                          data-highlights="false"
-                          data-color-plate="#222"
-                          data-color-major-ticks="#f5f5f5"
-                          data-color-minor-ticks="#ddd"
-                          data-color-numbers="#ccc"
-                          data-color-needle="rgba(240, 128, 128, 1)"
-                          data-color-needle-end="rgba(255, 160, 122, .9)"
-                          data-value-box="false"
-                          data-value-text-shadow="false"
-                          data-value="<%= text_field.status %>"
-                          data-color-circle-inner="#fff"
-                          data-color-needle-circle-outer="#ccc"
-                          data-needle-circle-size="15"
-                          data-needle-circle-outer="false"
-                          data-animation-rule="linear"
-                          data-needle-type="line"
-                          data-needle-start="70"
-                          data-needle-end="99"
-                          data-needle-width="4"
-                          data-borders="true"
-                          data-border-inner-width="0"
-                          data-border-middle-width="0"
-                          data-border-outer-width="10"
-                          data-color-border-outer="#ccc"
-                          data-color-border-outer-end="#ccc"
-                          data-color-needle-shadow-down="#222"
-                          data-border-shadow-width="0"
-                          data-animation-duration="1500"
-                          data-font-numbers-size="28"
-                        ></canvas>
+                  <% when "9.029" %>
+                    <% if text_field.desc == "Azimut Sonne" %>
+                      <div class="row">
+                        <div class="col">
+                          <canvas id="canvas-azimut"
+                            data-type="radial-gauge"
+                            data-width="200"
+                            data-height="170"
+                            data-min-value="0"
+                            data-max-value="360"
+                            data-major-ticks="S,SW,W,NW,N,NE,E,SE,S"
+                            data-minor-ticks="9"
+                            data-ticks-angle="360"
+                            data-start-angle="180"
+                            data-stroke-ticks="false"
+                            data-highlights="false"
+                            data-color-plate="#222"
+                            data-color-major-ticks="#f5f5f5"
+                            data-color-minor-ticks="#ddd"
+                            data-color-numbers="#ccc"
+                            data-color-needle="rgba(240, 128, 128, 1)"
+                            data-color-needle-end="rgba(255, 160, 122, .9)"
+                            data-value-box="false"
+                            data-value-text-shadow="false"
+                            data-value="<%= text_field.status %>"
+                            data-color-circle-inner="#fff"
+                            data-color-needle-circle-outer="#ccc"
+                            data-needle-circle-size="15"
+                            data-needle-circle-outer="false"
+                            data-animation-rule="linear"
+                            data-needle-type="line"
+                            data-needle-start="70"
+                            data-needle-end="99"
+                            data-needle-width="4"
+                            data-borders="true"
+                            data-border-inner-width="0"
+                            data-border-middle-width="0"
+                            data-border-outer-width="10"
+                            data-color-border-outer="#ccc"
+                            data-color-border-outer-end="#ccc"
+                            data-color-needle-shadow-down="#222"
+                            data-border-shadow-width="0"
+                            data-animation-duration="1500"
+                            data-font-numbers-size="28"
+                          ></canvas>
+                        </div>
                       </div>
-                    </div>
-                  <% when "Elevation Sonne" %>
-                    <div class="row">
-                      <div class="col">
-                        <canvas id="canvas-elevation"
-                          data-type="radial-gauge"
-                          data-width="300"
-                          data-height="300"
-                          data-min-value="0"
-                          data-max-value="90"
-                          data-value="<%= text_field.status %>"
-                          data-start-angle="90"
-                          data-ticks-angle="90"
-                          data-value-box="false"
-                          data-major-ticks="0,15,30,45,60,75,90"
-                          data-minor-ticks="2"
-                          data-stroke-ticks="true"
-                          data-highlights='[
-                            {"from": 0, "to": 90, "color": "rgba(255,255,0,1)"}
-                          ]'
-                          data-color-plate="transparent"
-                          data-color-needle="#000"
-                          data-color-needle-end="rgba(0, 0, 0, 1)"
-                          data-border-shadow-width="0"
-                          data-borders="false"
-                          data-needle-type="line"
-                          data-needle-width="2"
-                          data-needle-start="0"
-                          data-needle-end="90"
-                          data-needle-circle-size="8"
-                          data-needle-circle-outer="true"
-                          data-needle-circle-inner="true"
-                          data-animation-duration="1500"
-                          data-animation-rule="linear"
-                        ></canvas>
+                    <% else %>
+                      <div class="row">
+                        <div class="col">
+                          <canvas id="canvas-elevation"
+                            data-type="radial-gauge"
+                            data-width="300"
+                            data-height="300"
+                            data-min-value="0"
+                            data-max-value="90"
+                            data-value="<%= text_field.status %>"
+                            data-start-angle="90"
+                            data-ticks-angle="90"
+                            data-value-box="false"
+                            data-major-ticks="0,15,30,45,60,75,90"
+                            data-minor-ticks="2"
+                            data-stroke-ticks="true"
+                            data-highlights='[
+                              {"from": 0, "to": 90, "color": "rgba(255,255,0,1)"}
+                            ]'
+                            data-color-plate="transparent"
+                            data-color-needle="#000"
+                            data-color-needle-end="rgba(0, 0, 0, 1)"
+                            data-border-shadow-width="0"
+                            data-borders="false"
+                            data-needle-type="line"
+                            data-needle-width="2"
+                            data-needle-start="0"
+                            data-needle-end="90"
+                            data-needle-circle-size="8"
+                            data-needle-circle-outer="true"
+                            data-needle-circle-inner="true"
+                            data-animation-duration="1500"
+                            data-animation-rule="linear"
+                          ></canvas>
+                        </div>
                       </div>
-                    </div>
+                    <% end %>
                   <% else %>
                   <% end %>
                 </div>
