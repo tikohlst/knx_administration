@@ -7,7 +7,12 @@ This web application belongs to the bachelor thesis "Web-Frontend für KNX-basi
 * Rails Version: 5.2.1
 
 ## Configuration
-XML
+* Set actors, sensors and devices in a XML-file
+
+* Write the path of the XML-file in line 14 of:
+```
+/config/initializers/knx4r.rb
+```
 
 ### Install Ruby
 ```
@@ -50,14 +55,9 @@ rails db:migrate
 
 ## How to run the application
 SEEDS=0/1: Define if seeds should be used or not<br/>
-HOST_IP=own_ip_address: Set own ip address
+HOST_IP=own_ip_address: Set up own ip address
 ```
 SEEDS=1 HOST_IP=10.200.73.1 rails s
-```
-
-## How to run the test suite
-```
-rails test
 ```
 
 ## Login
@@ -66,6 +66,11 @@ URL:				<http://localhost:3000/de/my/users/sign_in>
 Example user:		'admin'
 
 Example password:	'123456'
+
+## How to run the test suite
+```
+rails spec
+```
 
 ## Author
 Tim Kohlstadt, tim.kohlstadt@student.hs-rm.de
