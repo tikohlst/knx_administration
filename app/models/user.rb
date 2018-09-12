@@ -19,6 +19,10 @@ class User < ApplicationRecord
   validates_confirmation_of :password, if: :password_required?
   validates :password, length: { in: 6..20 }, if: :password_required?
 
+  validates :language, presence: true
+  validates :role_ids, presence: true
+  validates :org_unit_ids, presence: true
+
   # Validate if there is at least one admin
   validate :at_least_one_admin?
 
@@ -30,7 +34,7 @@ class User < ApplicationRecord
 
   def at_least_one_admin?
     if not (User.with_role :admin).exists? and ENV['SEEDS'].blank?
-      errors.add(:base, I18n.t('errors.messages.admin'))
+      errors.add(:min_one_admin, I18n.t('errors.messages.admin'))
     end
   end
 end

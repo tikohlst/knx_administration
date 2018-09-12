@@ -54,9 +54,9 @@
                 </label>
                 <div class="col-sm-8">
                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary <% if @user.language == "en" %>active<% end %>">
+                    <label class="btn btn-secondary <% if @user.new_record? || @user.language == "en" %>active<% end %>">
                       <%= flag_icon(:gb, id: 'gb-flag') %>
-                      <%= f.radio_button :language, "en" %>
+                      <%= f.radio_button :language, "en", checked: if @user.new_record? then 'checked' end %>
                     </label>
                     <label class="btn btn-secondary <% if @user.language == "de" %>active<% end %>">
                       <%= flag_icon(:de, id: 'de-flag') %>

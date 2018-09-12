@@ -11,12 +11,7 @@ emi_server.attach_logger( logger )
 @gw.attach( emi_server )
 @gw.connect( @gw.find || {} )
 
-#@prj = KNXproject.load("/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
-#                       "Thesis (Werntges + Martin)/Daten von Werntges/sample_demoboard2.xml" )
-@prj = KNXproject.load( "/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
-                        "Thesis (Werntges + Martin)/Daten von Werntges/heim_c22.xml" )
-#@prj = KNXproject.load( "/Users/Tim/Documents/Studium (Bachelor)/8.Semester/"\
-#                        "Thesis (Werntges + Martin)/Daten von Werntges/demoboard_theben.xml" )
+@prj = KNXproject.load("/path/to/config.xml")
 @prj.emi_server = emi_server
 # Update devices and add devices to emi_server
 @prj.attach_devices
