@@ -110,13 +110,8 @@
                                 <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                                    name: "authenticity_token" %>
                                 <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                                <% if button.status == 0 %>
-                                  <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                                  id: "widget_active_#{button.id}", class: "edit_widget" %>
-                                <% else %>
-                                  <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                                  id: "widget_active_#{button.id}", class: "edit_widget", checked: "checked" %>
-                                <% end %>
+                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
+                                                id: "widget_active_#{button.id}", class: "edit_widget", checked: if button.status == 1 then "checked" end %>
                               <% end %>
                             </div>
                           </div>
