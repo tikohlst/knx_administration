@@ -200,29 +200,22 @@
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="row">
-                    <% if text_field.status == 0 %>
-                      <div class="col-8">
-                        <div class="float-left">
-                          <h5 class="mt-2"><%= text_field.desc %></h5>
-                        </div>
+                    <div class="col-6">
+                      <div class="float-left">
+                        <h5 class="mt-2"><%= text_field.desc %></h5>
                       </div>
-                      <div class="col-4">
-                        <div class="float-right">
+                    </div>
+                    <div class="col-6">
+                      <div class="float-right" id="widget_active_<%= text_field.id %>">
+                        <% if text_field.status == 0 %>
                           <div class="red-note"><%= t 'views.widget.window.open' %></div>
-                        </div>
-                      </div>
-                    <% else %>
-                      <div class="col-6">
-                        <div class="float-left">
-                          <h5 class="mt-2"><%= text_field.desc %></h5>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="float-right">
+                          <div class="green-note d-none"><%= t 'views.widget.window.closed' %></div>
+                        <% else %>
+                          <div class="red-note d-none"><%= t 'views.widget.window.open' %></div>
                           <div class="green-note"><%= t 'views.widget.window.closed' %></div>
-                        </div>
+                        <% end %>
                       </div>
-                    <% end %>
+                    </div>
                   </div>
                 </div>
               </div>

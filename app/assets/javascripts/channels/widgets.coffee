@@ -16,6 +16,16 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
       when "progressBar"
         $('#progressbar-' + data.id).css("width", data.status["position"] + "%")
       when "slider"
-        console.log()
+        $('#widget_active_' + data.id).val(data.status)
       when "textField"
-        console.log()
+        if (data.dpt == '1.009')
+          # Change open and closed status for windows and doors
+          if (data.status == 1)
+            $('#widget_active_' + data.id + '> .red-note').addClass('d-none')
+            $('#widget_active_' + data.id + '> .green-note').removeClass('d-none')
+          else
+            $('#widget_active_' + data.id + '> .green-note').addClass('d-none')
+            $('#widget_active_' + data.id + '> .red-note').removeClass('d-none')
+        else
+          # Change textField
+          $('#widget_active_' + data.id).text(data.status)
