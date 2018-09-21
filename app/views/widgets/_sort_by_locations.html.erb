@@ -111,7 +111,8 @@
                                                    name: "authenticity_token" %>
                                 <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                                 <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                                id: "widget_active_#{button.id}", class: "edit_widget", checked: if button.status == 1 then "checked" end %>
+                                                id: "widget_active_#{button.id}", class: "edit_widget", checked: if button.status == 1 then "checked" end,
+                                                disabled: (current_user.has_role? :observer) %>
                               <% end %>
                             </div>
                           </div>
@@ -156,20 +157,24 @@
                               <div>
                                 <div class="float-left">
                                   <div class="btn-group h-35" role="group">
-                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "backward" do %>
+                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar",
+                                                 disabled: (current_user.has_role? :observer), value: "backward" do %>
                                       <span class="glyphicon glyphicon-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
                                     <% end %>
-                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_backward" do %>
+                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar",
+                                                 disabled: (current_user.has_role? :observer), value: "step_backward" do %>
                                       <span class="glyphicon glyphicon-step-backward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
                                     <% end %>
                                   </div>
                                 </div>
                                 <div class="float-right">
                                   <div class="btn-group h-35" role="group">
-                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "step_forward" do %>
+                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar",
+                                                 disabled: (current_user.has_role? :observer), value: "step_forward" do %>
                                       <span class="glyphicon glyphicon-step-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
                                     <% end %>
-                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar", value: "forward" do %>
+                                    <%= f.button class: "btn btn-grey", type: "submit", name: "progress_bar",
+                                                 disabled: (current_user.has_role? :observer), value: "forward" do %>
                                       <span class="glyphicon glyphicon-forward" aria-hidden="true" id="<%= progress_bar.id %>"></span>
                                     <% end %>
                                   </div>
@@ -224,8 +229,9 @@
                                 <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
                                 <div class="slider-wrapper-horizontal">
                                   <%= f.range_field :status, id: "widget_active_#{slider.id}",
-                                                    class: "custom-range", type: "range", min: 0,
-                                                    max: 100, step: 1, value: slider.status %>
+                                                    class: "custom-range", type: "range",
+                                                    disabled: (current_user.has_role? :observer),
+                                                    min: 0, max: 100, step: 1, value: slider.status %>
                                 </div>
                               <% end %>
                             </div>

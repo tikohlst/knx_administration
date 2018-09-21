@@ -28,7 +28,9 @@ $(document).ready ->
 
   # Submit the form of the clicked widget
   $(document).on 'click', '.edit_widget', ->
-    Rails.fire(document.querySelector('#' + $(this).attr('id')), 'submit')
+    # Only submit if the user isn't just a observer
+    if $(document.body).data('observer') != true
+      Rails.fire(document.querySelector('#' + $(this).attr('id')), 'submit')
     return
 
   # Make sure the triangles turn

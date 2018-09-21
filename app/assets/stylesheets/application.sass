@@ -126,6 +126,13 @@
 .toggle
     border-color: #ccc !important
 
+.btn.disabled, .btn[disabled], input[disabled]
+    pointer-events: none
+    cursor: not-allowed
+    -webkit-box-shadow: none
+    box-shadow: none
+    opacity: .65
+
 #canvas-temperature, #canvas-wind-speed, #canvas-brightness
     margin: 15px 0 -35px -12px
     position: absolute

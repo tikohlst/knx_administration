@@ -10,9 +10,21 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
     switch data.type
       when "button"
         if (data.status == 1)
-          $('#widget_active_' + data.id).bootstrapToggle('on')
+          if $(document.body).data('observer') != true
+            $('#widget_active_' + data.id).bootstrapToggle('on')
+          else
+            # The button must be enabled in order to be able to switch it on/off
+            $('#widget_active_' + data.id).bootstrapToggle('enable')
+            $('#widget_active_' + data.id).bootstrapToggle('on')
+            $('#widget_active_' + data.id).bootstrapToggle('disable')
         else
-          $('#widget_active_' + data.id).bootstrapToggle('off')
+          if $(document.body).data('observer') != true
+            $('#widget_active_' + data.id).bootstrapToggle('off')
+          else
+            # The button must be enabled in order to be able to switch it on/off
+            $('#widget_active_' + data.id).bootstrapToggle('enable')
+            $('#widget_active_' + data.id).bootstrapToggle('off')
+            $('#widget_active_' + data.id).bootstrapToggle('disable')
       when "progressBar"
         $('#progressbar-' + data.id).css("width", data.status["position"] + "%")
       when "slider"
