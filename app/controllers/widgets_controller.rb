@@ -18,9 +18,7 @@ class WidgetsController < ApplicationController
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
-    if (params[:term] && params[:term] != "") ||
-       ($widgets_search_params[current_user.username] &&
-       $widgets_search_params[current_user.username] != "")
+    if params[:term].present? or $widgets_search_params[current_user.username].present?
       selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
@@ -48,9 +46,7 @@ class WidgetsController < ApplicationController
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
-    if (params[:term] && params[:term] != "") ||
-        ($widgets_search_params[current_user.username] &&
-            $widgets_search_params[current_user.username] != "")
+    if params[:term].present? or $widgets_search_params[current_user.username].present?
       selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
@@ -78,9 +74,7 @@ class WidgetsController < ApplicationController
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
-    if (params[:term] && params[:term] != "") ||
-        ($widgets_search_params[current_user.username] &&
-            $widgets_search_params[current_user.username] != "")
+    if params[:term].present? or $widgets_search_params[current_user.username].present?
       selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
@@ -107,9 +101,7 @@ class WidgetsController < ApplicationController
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
-    if (params[:term] && params[:term] != "") ||
-        ($widgets_search_params[current_user.username] &&
-            $widgets_search_params[current_user.username] != "")
+    if params[:term].present? or $widgets_search_params[current_user.username].present?
       selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
@@ -140,9 +132,7 @@ class WidgetsController < ApplicationController
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
-    if (params[:term] && params[:term] != "") ||
-        ($widgets_search_params[current_user.username] &&
-            $widgets_search_params[current_user.username] != "")
+    if params[:term].present? or $widgets_search_params[current_user.username].present?
       selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
       selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
