@@ -179,20 +179,6 @@ class WidgetsController < ApplicationController
     respond_to do |format|
       format.json { head :no_content }
     end
-
-    # if widget_params.keys[0] == "value"
-    #   if (@widget.use == "lighting")
-    #     if widget_params.values[0] == "1"
-    #       @errors = @widget.update_attribute(:value, 1)
-    #     else
-    #       @errors = @widget.update_attribute(:value, 0)
-    #     end
-    #   else
-    #     @errors = @widget.update_attribute(:value, widget_params.values[0])
-    #   end
-    # else
-    #   @errors = @widget.update(widget_params)
-    # end
   end
 
   private
