@@ -25,7 +25,7 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt == '1.009' } %>
         <li class="nav-item">
           <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
@@ -63,7 +63,7 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt == '1.009'} %>
         <li>
           <a class="nav-link" id="nav-windows-tab" data-toggle="tab" href="#nav-windows"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.windows' %></a>
