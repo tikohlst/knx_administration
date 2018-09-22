@@ -4,28 +4,18 @@
 require 'rexml/document'
 include KNX
 
-@gw = KNXnetIP::Gateway.new( clientHostIP: "10.200.73.20" || ENV['HOST_IP'])
+@gw = KNXnetIP::Gateway.new( clientHostIP: ENV['HOST_IP'] )
 emi_server = CEMI_Server.new
 logger = KNX_Logger.new(desc: 'L_Data logger')
 emi_server.attach_logger( logger )
 @gw.attach( emi_server )
 @gw.connect( @gw.find || {} )
-
-@prj = KNXproject.load("/path/to/config.xml")
+@prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
 @prj.emi_server = emi_server
 # Update devices and add devices to emi_server
 @prj.attach_devices
 devs = @prj.devices
 $locations = @prj.locations
-
-# Print
-# puts "devices: ", @prj.devices
-# puts "locations: ", @prj.locations
-# puts "org_units: ", @prj.org_units
-# puts "group_addresses: ", @prj.group_addresses
-# puts "actuators: ", @prj.actuators
-# puts "sensors: ", @prj.sensors
-# puts "interfaces: ", @prj.interfaces
 
 ###################################################################################
 # Create Roles, Users, OrgUnits and Accesses in the database                      #
@@ -59,15 +49,12 @@ if ENV['SEEDS']
 
   # Access user_id:int org_unit_id:int
   number_of_org_units = OrgUnit.count
-  accesses_list = [
-      [ 1, rand(1..number_of_org_units) ],
-      [ 1, rand(1..number_of_org_units) ],
-      [ 1, rand(1..number_of_org_units) ],
-      [ 2, rand(1..number_of_org_units) ],
-      [ 2, rand(1..number_of_org_units) ],
-      [ 3, rand(1..number_of_org_units) ],
-      [ 4, rand(1..number_of_org_units) ]
-  ]
+  accesses_list = []
+  (1..4).each do |user_id|
+    (1..number_of_org_units).each do |org_unit_id|
+      accesses_list << [user_id, org_unit_id]
+    end
+  end
   accesses_list.each do |user_id, org_unit_id|
     Access.create!( user_id: user_id, org_unit_id: org_unit_id )
   end
@@ -80,22 +67,15 @@ devs.sort do |a,b|
   rc = @prj.org_units[a.ouref] <=> @prj.org_units[b.ouref]
   rc==0 ? a.desc <=> b.desc : rc
 end.each do |dev|
-  # print "\n\nDev: ", dev, " ouref: ", dev.ouref, "\n"
-  # print "desc: ", dev.desc, " listening_to: ", dev.listening_to, "\n"
-  # print "parent: ", dev.try(:parent), "\n"
-  # print "type: ", dev.try(:type), " dpt: ", dev.try(:dpt), "\n"
-  # print "status: ", dev.try(:status), " desc: ", dev.try(:desc), "\n"
-  # print "use: ", dev.listening_to.first.try(:use), "\n"
-
   case dev
   when KNX_Driver, KNX_DimmerDriver
     case pdev = dev.parent
     when KNX_Blind
-      #pdev.driver.update_from_bus
+      pdev.driver.update_from_bus
       @progress_bar = Widget::ProgressBar.new(pdev)
       pdev.slider.attach( @progress_bar )
     when KNX_Dimmer
-      #pdev.driver.update_from_bus
+      pdev.driver.update_from_bus
       @slider = Widget::Slider.new(pdev)
       pdev.slider.attach( @slider )
     else
@@ -103,14 +83,14 @@ end.each do |dev|
     end
   when KNX_Value, KNX_Binary
     # Update to the actual status of the KNX_Value
-    #dev.update_from_bus
+    dev.update_from_bus
     @text_field = Widget::TextField.new(dev)
     dev.attach( @text_field )
   when KNX_Switch
     # Don't show the switch for the dimmers
     unless dev.parent.is_a? KNX_Dimmer
       # Update to the actual status of the KNX_Switch
-      #dev.update_from_bus
+      dev.update_from_bus
       @button = Widget::Button.new(dev)
       dev.attach( @button )
     end

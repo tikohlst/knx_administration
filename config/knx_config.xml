@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<KNXproject xmlns='http://www.werntges-online.de/ns/2007/KNXproject'>
+  <group_addresses>
+    <ga id='ga_0_0_1' ouref='ou001' use='Shutters_Blinds' dpt='1.008'>
+      <desc>Jalousie fahren</desc>
+    </ga>
+    <ga id='ga_0_0_2' ouref='ou001' use='Shutters_Blinds' dpt='1.007'>
+      <desc>Jalousie Schritt/Stop</desc>
+    </ga>
+    <ga id='ga_0_0_3' ouref='ou001' use='Lighting' dpt='1.001'>
+      <desc>Demoboard ga</desc>
+    </ga>
+  </group_addresses>
+
+  <actuators>
+    <actuator_group ouref='ou001' type="binary" lref='l001'>
+      <device_info pa="1.1.1">
+        <manufacturer>Busch-Jaeger Elektro</manufacturer>
+        <product>6119/20 2f Universalschnittstelle, UP</product>
+        <order_no>6119/20</order_no>
+      </device_info>
+      <switch listen_to="ga_0_0_3" label="A"> <!-- desc>LED gruen</desc --></switch>
+    </actuator_group>
+
+    <actuator_group ouref="ou001" type="shutter_controller" lref="l001">
+      <device_info pa="1.1.2">
+        <manufacturer>BJE</manufacturer>
+        <product>XXX</product>
+        <order_no>124</order_no>
+      </device_info>
+      <blind label="A">
+        <desc>Board</desc>
+        <driver listen_to='ga_0_0_1'>
+          <desc_postfix>fahren</desc_postfix>
+          <timer t='20' action="stop" triggered_by="up down"/>
+        </driver>
+        <stepper listen_to='ga_0_0_2'>
+          <desc_postfix>Schritt/Stop</desc_postfix>
+          <timer t='0.2' action="stop" triggered_by="increase decrease"/>
+        </stepper>
+        <slider t_inv='0.5' min="0" max="1" value="0"/>
+      </blind>
+    </actuator_group>
+  </actuators>
+
+  <sensors>
+    <sensor_group ouref='ou001' loc_detail="Druecker" lref='l001'>
+      <device_info pa='1.1.3'>
+        <manufacturer>BJE</manufacturer>
+        <product>XXX</product>
+        <order_no>123</order_no>
+      </device_info>
+      <toggle on_click='ga_0_0_3' label='A'/>
+    </sensor_group>
+  </sensors>
+
+  <interfaces>
+    <interface ouref="ou001" type="KNXnetIP" lref="l001">
+      <device_info pa="15.15.20">
+        <manufacturer>Siemens</manufacturer>
+        <product>IP Interface N148/21, REG</product>
+        <order_no>N148/21</order_no>
+      </device_info>
+      <knxnetip_gw ip="10.200.73.32" subnet="255.255.255.0" c_port="3671">
+        <desc>KNXnet/IP GW</desc>
+      </knxnetip_gw>
+    </interface>
+  </interfaces>
+
+  <locations>
+    <location id='l001'>Demoboard location</location>
+    <location id='lDG_AZi'>DG AZi</location>
+    <location id='lDG_Bad'>DG Bad</location>
+    <location id='lDG_SchZi'>DG SchZi</location>
+    <location id='lDG_Tr'>DG Treppenhaus</location>
+    <location id='lDG_V'>DG Verteiler</location>
+    <location id='lOG_KZN'>OG KiZi Nord</location>
+    <location id='lOG_KZS'>OG KiZi Süd</location>
+    <location id='lOG_V'>OG Schaltkasten</location>
+    <location id='lEG_Kü'>EG Küche</location>
+    <location id='lEG_V'>EG Verteiler</location>
+    <location id='lEG_Vf'>EG Vorflur</location>
+    <location id='lEG_WZi'>EG Wohnzimmer</location>
+    <location id='lKE_V'>KE Verteiler</location>
+    <location id='lKE_Z'>KE Zählerschrank</location>
+    <location id='Keller'>Keller</location>
+  </locations>
+  <org_units>
+    <org_unit id='ou001'>Demoboard ou</org_unit>
+    <org_unit id='ouWEo'>Wohneinheit oben</org_unit>
+    <org_unit id='ouWEu'>Wohneinheit unten</org_unit>
+    <org_unit id='ouZF'>Zentralfunktionen</org_unit>
+  </org_units>
+</KNXproject>
