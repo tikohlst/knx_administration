@@ -11,141 +11,69 @@ class WidgetsController < ApplicationController
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
     # Get all widgets by the org units were the user has access to
-    buttons = Widget::Button.find_by_org_units(access_org_units)
+    buttons       = Widget::Button.find_by_org_units(access_org_units)
     progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    sliders = Widget::Slider.find_by_org_units(access_org_units)
-    text_fields = Widget::TextField.find_by_org_units(access_org_units)
+    sliders       = Widget::Slider.find_by_org_units(access_org_units)
+    text_fields   = Widget::TextField.find_by_org_units(access_org_units)
 
     $widgets_search_params[current_user.username] = params[:term] if params[:term]
 
     if params[:term].present? or $widgets_search_params[current_user.username].present?
-      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: selected_buttons, progress_bars: selected_progress_bars,
-                  sliders: selected_sliders,
-                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
+      selected_buttons        = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_progress_bars  = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_sliders        = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      selected_text_fields    = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+      case params[:sort_by]
+      when 'alphabetically'
+        @widgets = {buttons:        selected_buttons.sort_by{|button| button.desc},
+                    progress_bars:  selected_progress_bars.sort_by{|progress_bar| progress_bar.desc},
+                    sliders:        selected_sliders.sort_by{|slider| slider.desc},
+                    text_fields:    selected_text_fields.sort_by{|text_field| text_field.desc}}
+      when 'backwards_alphabetically'
+        @widgets = {buttons:        selected_buttons.sort_by{|button| button.desc}.reverse!,
+                    progress_bars:  selected_progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
+                    sliders:        selected_sliders.sort_by{|slider| slider.desc}.reverse!,
+                    text_fields:    selected_text_fields.sort_by{|text_field| text_field.desc}.reverse!}
+      else
+        @widgets = {buttons:        selected_buttons,
+                    progress_bars:  selected_progress_bars,
+                    sliders:        selected_sliders,
+                    text_fields:    selected_text_fields.sort_by{|text_field| text_field.desc}}
+      end
     else
-      @widgets = {buttons: buttons, progress_bars: progress_bars, sliders: sliders,
-                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
+      case params[:sort_by]
+      when 'alphabetically'
+        @widgets = {buttons:        buttons.sort_by{|button| button.desc},
+                    progress_bars:  progress_bars.sort_by{|progress_bar| progress_bar.desc},
+                    sliders:        sliders.sort_by{|slider| slider.desc},
+                    text_fields:    text_fields.sort_by{|text_field| text_field.desc}}
+      when 'backwards_alphabetically'
+        @widgets = {buttons:        buttons.sort_by{|button| button.desc}.reverse!,
+                    progress_bars:  progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
+                    sliders:        sliders.sort_by{|slider| slider.desc}.reverse!,
+                    text_fields:    text_fields.sort_by{|text_field| text_field.desc}.reverse!}
+      else
+        @widgets = {buttons:        buttons,
+                    progress_bars:  progress_bars,
+                    sliders:        sliders,
+                    text_fields:    text_fields.sort_by{|text_field| text_field.desc}}
+      end
     end
-  end
 
-  def sort_by_org_units
-    # Save the org units where the user has access to
-    access_org_units = []
-    current_user.accesses.each do |access|
-      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
-    end
-    # Get all widgets by the org units were the user has access to
-    buttons = Widget::Button.find_by_org_units(access_org_units)
-    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    sliders = Widget::Slider.find_by_org_units(access_org_units)
-    text_fields = Widget::TextField.find_by_org_units(access_org_units)
-
-    $widgets_search_params[current_user.username] = params[:term] if params[:term]
-
-    if params[:term].present? or $widgets_search_params[current_user.username].present?
-      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: selected_buttons, progress_bars: selected_progress_bars,
-                  sliders: selected_sliders,
-                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
-    else
-      @widgets = {buttons: buttons, progress_bars: progress_bars, sliders: sliders,
-                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
-    end
-  end
-
-  def sort_by_locations
-    # Save the org units where the user has access to
-    access_org_units = []
-    current_user.accesses.each do |access|
-      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
-    end
-    # Get all widgets by the org units were the user has access to
-    buttons = Widget::Button.find_by_org_units(access_org_units)
-    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    sliders = Widget::Slider.find_by_org_units(access_org_units)
-    text_fields = Widget::TextField.find_by_org_units(access_org_units)
-
-    $widgets_search_params[current_user.username] = params[:term] if params[:term]
-
-    if params[:term].present? or $widgets_search_params[current_user.username].present?
-      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: selected_buttons, progress_bars: selected_progress_bars, sliders: selected_sliders,
-                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
-    else
-      @widgets = {buttons: buttons, progress_bars: progress_bars, sliders: sliders,
-                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
-    end
-  end
-
-  def sort_alphabetically
-    # Save the org units where the user has access to
-    access_org_units = []
-    current_user.accesses.each do |access|
-      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
-    end
-    # Get all widgets by the org units were the user has access to
-    buttons = Widget::Button.find_by_org_units(access_org_units)
-    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    sliders = Widget::Slider.find_by_org_units(access_org_units)
-    text_fields = Widget::TextField.find_by_org_units(access_org_units)
-
-    $widgets_search_params[current_user.username] = params[:term] if params[:term]
-
-    if params[:term].present? or $widgets_search_params[current_user.username].present?
-      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: selected_buttons.sort_by{|button| button.desc},
-                  progress_bars: selected_progress_bars.sort_by{|progress_bar| progress_bar.desc},
-                  sliders: selected_sliders.sort_by{|slider| slider.desc},
-                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}}
-    else
-      @widgets = {buttons: buttons.sort_by{|button| button.desc},
-                  progress_bars: progress_bars.sort_by{|progress_bar| progress_bar.desc},
-                  sliders: sliders.sort_by{|slider| slider.desc},
-                  text_fields: text_fields.sort_by{|text_field| text_field.desc}}
-    end
-  end
-
-  def sort_backwards_alphabetically
-    # Save the org units where the user has access to
-    access_org_units = []
-    current_user.accesses.each do |access|
-      access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
-    end
-    # Get all widgets by the org units were the user has access to
-    buttons = Widget::Button.find_by_org_units(access_org_units)
-    progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
-    sliders = Widget::Slider.find_by_org_units(access_org_units)
-    text_fields = Widget::TextField.find_by_org_units(access_org_units)
-
-    $widgets_search_params[current_user.username] = params[:term] if params[:term]
-
-    if params[:term].present? or $widgets_search_params[current_user.username].present?
-      selected_buttons = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_progress_bars = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_sliders = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_text_fields = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      @widgets = {buttons: selected_buttons.sort_by{|button| button.desc}.reverse!,
-                  progress_bars: selected_progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
-                  sliders: selected_sliders.sort_by{|slider| slider.desc}.reverse!,
-                  text_fields: selected_text_fields.sort_by{|text_field| text_field.desc}.reverse!}
-    else
-      @widgets = {buttons: buttons.sort_by{|button| button.desc}.reverse!,
-                  progress_bars: progress_bars.sort_by{|progress_bar| progress_bar.desc}.reverse!,
-                  sliders: sliders.sort_by{|slider| slider.desc}.reverse!,
-                  text_fields: text_fields.sort_by{|text_field| text_field.desc}.reverse!}
+    respond_to do |format|
+      case params[:sort_by]
+      when 'org_units'
+        format.js { render "sort_by_org_units" }
+      when 'locations'
+        format.js { render "sort_by_locations" }
+      when 'alphabetically'
+        format.js { render "sort_alphabetically" }
+      when 'backwards_alphabetically'
+        format.js { render "sort_backwards_alphabetically" }
+      else
+        format.js
+        format.html
+      end
     end
   end
 
@@ -154,7 +82,6 @@ class WidgetsController < ApplicationController
   def update
     # Get widget with id and send the params to the device
     @widget = Widget.find_by_id(params[:id])
-
     case @widget
     when Widget::Button
       @widget.send_param

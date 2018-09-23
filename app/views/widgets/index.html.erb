@@ -9,16 +9,16 @@
       <div class="col-lg-4">
         <div class="navbar-brand">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <%= link_to sort_by_org_units_widgets_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+            <%= link_to widgets_path(sort_by: 'org_units'), class: "btn btn-outline-secondary mb-0", remote: true do %>
               <input type="radio" name="options" id="option1" autocomplete="off">Org-Unit
             <% end %>
-            <%= link_to sort_by_locations_widgets_path, class: "btn btn-outline-secondary mb-0 active", remote: true do %>
+            <%= link_to widgets_path(sort_by: 'locations'), class: "btn btn-outline-secondary mb-0 active", remote: true do %>
               <input type="radio" name="options" id="option2" autocomplete="off" checked><%= t 'views.location' %>
             <% end %>
-            <%= link_to sort_alphabetically_widgets_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+            <%= link_to widgets_path(sort_by: 'alphabetically'), class: "btn btn-outline-secondary mb-0", remote: true do %>
               <input type="radio" name="options" id="option3" autocomplete="off">A-Z
             <% end %>
-            <%= link_to sort_backwards_alphabetically_widgets_path, class: "btn btn-outline-secondary mb-0", remote: true do %>
+            <%= link_to widgets_path(sort_by: 'backwards_alphabetically'), class: "btn btn-outline-secondary mb-0", remote: true do %>
               <input type="radio" name="options" id="option4" autocomplete="off">Z-A
             <% end %>
           </div>
