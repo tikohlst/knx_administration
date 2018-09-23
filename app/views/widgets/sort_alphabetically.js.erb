@@ -187,7 +187,7 @@ $(':checkbox').bootstrapToggle();
     }).draw();
 
     <% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
-          text_field.dpt == '9.029' and widget.desc == "Azimut Sonne" } %>
+          text_field.dpt == '9.029' and text_field.desc == "Azimut Sonne" } %>
         var canvasAzimut = new RadialGauge({
             renderTo: "canvas-azimut",
             type: "radial-gauge",
@@ -233,7 +233,7 @@ $(':checkbox').bootstrapToggle();
     <% end %>
 
     <% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
-          text_field.dpt == '9.029' and widget.desc == "Elevation Sonne"} %>
+          text_field.dpt == '9.029' and text_field.desc == "Elevation Sonne"} %>
         var canvasElevation = new RadialGauge({
             renderTo: "canvas-elevation",
             type: "radial-gauge",
