@@ -1,6 +1,9 @@
 # KNX-Administration
 
-This web application belongs to the bachelor thesis "Web-Frontend für KNX-basierte Home Automation-Installationen mit ereignisgesteuerter Aktualisierung über WebSockets" by Tim Kohlstadt. The application can be used to manage all connected KNX devices belonging to a KNX bus.
+This web application belongs to the bachelor thesis "Web-Frontend für KNX-
+basierte Home Automation-Installationen mit ereignisgesteuerter Aktualisierung
+über WebSockets" by Tim Kohlstadt. The application can be used to manage all
+connected KNX devices belonging to a KNX bus.
 
 ## System dependencies
 
@@ -9,11 +12,10 @@ This web application belongs to the bachelor thesis "Web-Frontend für KNX-basi
 
 ## Configuration
 
-* Set actors, sensors and devices in a XML-file
-* Write the path of the XML-file in line 14 of:
+Set actors, sensors and devices in:
 
 ```
-/config/initializers/knx4r.rb
+/config/knx_config.xml
 ```
 
 ### Install Ruby
@@ -39,44 +41,48 @@ bundle --without development test
 nano config/database.yml
 ```
 
-Please change the username, the password and the path to your socket in the default settings at the top of the file.
+Please change the username, the password and the path to your socket in the
+default settings at the top of the file.
 (Line 16, 17, 18)
 
 ## Database creation
 
 ```
-rails db:create
+RAILS_ENV=production HOST_IP=10.200.73.20 rails db:create
 ```
 
 ## Database initialization
 
 ```
-rails db:migrate
+RAILS_ENV=production HOST_IP=10.200.73.20 rails db:migrate
 ```
 
 ## Precompile assets
 
 ```
-RAILS_ENV=production rails assets:precompile
+RAILS_ENV=production HOST_IP=10.200.73.20 rails assets:precompile
 ```
 
 ## How to run the application
 
-SEEDS=0/1: Define if seeds should be used or not<br/>
-HOST_IP=own_ip_address: Set up own ip address
+Run redis and the puma webserver:
 
-Example:
 ```
+redis-server &
 RAILS_ENV=production SEEDS=1 HOST_IP=10.200.73.20 rails s
 ```
 
+SEEDS=0/1: Define if seeds should be used or not
+
+HOST_IP=own_ip_address: Set up own ip address
+
 ## Login
 
-URL:				<http://localhost:3000/de/my/users/sign_in>
+URL: <http://localhost:3000/de/my/users/sign_in>
 
-Example user:		'admin'
+Example user: 'admin'
 
-Example password:	'123456'
+Example password: '123456'
 
 ## How to run the test suite
 
