@@ -15,6 +15,10 @@ gem 'bootstrap-toggle-rails'
 gem 'glyphicons'
 gem 'flag-icons-rails'
 gem 'knx4r'#, path: "~/Documents/Studium (Bachelor)/8.Semester/Thesis (Werntges + Martin)/Daten von Werntges/knx4r-0.8.11/"
+# Simplifies the handling with nokogiri
+gem 'pkg-config', '~> 1.1', '>= 1.1.7'
+# Needed for production
+gem 'redis-rails'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
