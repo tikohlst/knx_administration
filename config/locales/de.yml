@@ -1,9 +1,9 @@
 de:
   error:
-    single: "Fehler muss behoben werden"
-    several: "Fehler müssen behoben werden"
+    single: Fehler muss behoben werden
+    several: Fehler müssen behoben werden
   errors:
-    format: "%{attribute} %{message}"
+    format: '%{attribute} %{message}'
     messages:
       admin: Es muss mindestens einen Admin geben.
       accepted: muss akzeptiert werden.
@@ -43,46 +43,47 @@ de:
         one: 'Konnte %{model} nicht speichern: ein Fehler.'
         other: 'Konnte %{model} nicht speichern: %{count} Fehler.'
   views:
-    widgets: "Widgets"
+    widgets: Widgets
     widget:
-      lightings: "Lampen"
-      blinds: "Fensterläden und Jalousien"
-      dimmer: "Dimmer"
-      mc: "Monitoring-Control"
-      windows: "Fenster und Türen"
+      lightings: Lampen
+      blinds: Fensterläden und Jalousien
+      dimmer: Dimmer
+      mc: Monitoring-Control
+      windows: Fenster und Türen
       window:
-        open: "Offen"
-        closed: "Geschlossen"
-      weather: "Wetter"
-    role: "Rolle"
-    'on': "An"
-    'off': "Aus"
-    create: "Erstellen"
-    update: "Speichern"
-    destroy: "Löschen"
-    created: "%{created} wurde erfolgreich erstellt."
-    updated: "%{updated} wurde erfolgreich aktualisiert."
-    destroyed: "%{destroyed} wurde erfolgreich gelöscht."
-    sortby: "Sortieren"
-    location: "Ort"
-    search: "Suchen"
-    user: "Benutzer"
-    single_user: "Benutzer"
-    username: "Benutzername"
-    new_user: "Neuer Benutzer"
-    new_password: "Neues Passwort"
-    password: "Passwort"
-    account: "Account bearbeiten"
-    note: "(Lassen Sie das Passwort leer, wenn Sie es nicht ändern möchten)"
-    destroy_account: "Account löschen"
-    home: "Home"
-    login: "Anmeldung"
-    to_login: "Anmelden"
-    to_logout: "Abmelden"
-    settings: "Einstellungen"
-    remember_me: "Angemeldet bleiben"
-    logged_in_as: "Eingeloggt als"
-    language: "Sprache"
-    all_off: "Alle ausschalten"
-    close_all: "Alle schließen"
-    reset: "Zurücksetzen"
+        open: Offen
+        closed: Geschlossen
+      weather: Wetter
+    role: Rolle
+    on: An
+    off: Aus
+    create: Erstellen
+    update: Speichern
+    destroy: Löschen
+    created: '%{created} wurde erfolgreich erstellt.'
+    updated: '%{updated} wurde erfolgreich aktualisiert.'
+    destroyed: '%{destroyed} wurde erfolgreich gelöscht.'
+    id: ID
+    sortby: Sortieren
+    location: Ort
+    search: Suchen
+    user: Benutzer
+    single_user: Benutzer
+    username: Benutzername
+    new_user: Neuer Benutzer
+    new_password: Neues Passwort
+    password: Passwort
+    account: Account bearbeiten
+    note: (Lassen Sie das Passwort leer, wenn Sie es nicht ändern möchten)
+    destroy_account: Account löschen
+    home: Home
+    login: Anmeldung
+    to_login: Anmelden
+    to_logout: Abmelden
+    settings: Einstellungen
+    remember_me: Angemeldet bleiben
+    logged_in_as: Eingeloggt als
+    language: Sprache
+    all_off: Alle ausschalten
+    close_all: Alle schließen
+    reset: Zurücksetzen

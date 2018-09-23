@@ -1,9 +1,9 @@
 en:
   error:
-    single: "error must be fixed"
-    several: "errors must be fixed"
+    single: error must be fixed
+    several: errors must be fixed
   errors:
-    format: "%{attribute} %{message}"
+    format: '%{attribute} %{message}'
     messages:
       admin: There must be one admin.
       accepted: must be accepted
@@ -20,7 +20,7 @@ en:
       invalid: is invalid
       less_than: must be less than %{count}
       less_than_or_equal_to: must be less than or equal to %{count}
-      model_invalid: "Validation failed: %{errors}"
+      model_invalid: 'Validation failed: %{errors}'
       not_a_number: is not a number
       not_an_integer: must be an integer
       odd: must be odd
@@ -41,48 +41,49 @@ en:
       body: 'There were problems with the following fields:'
       header:
         one: 1 error prohibited this %{model} from being saved
-        other: "%{count} errors prohibited this %{model} from being saved"
+        other: '%{count} errors prohibited this %{model} from being saved'
   views:
-    widgets: "Widgets"
+    widgets: Widgets
     widget:
-      lightings: "Lightings"
-      blinds: "Shutters and blinds"
-      dimmer: "Dimmer"
-      mc: "Monitoring-Control"
-      windows: "Windows and doors"
+      lightings: Lightings
+      blinds: Shutters and blinds
+      dimmer: Dimmer
+      mc: Monitoring-Control
+      windows: Windows and doors
       window:
-        open: "Open"
-        closed: "Closed"
-      weather: "Weather"
-    role: "Role"
-    'on': "On"
-    'off': "Off"
-    create: "Create"
-    update: "Update"
-    destroy: "Destroy"
-    created: "%{created} was successfully created."
-    updated: "%{updated} was successfully updated."
-    destroyed: "%{destroyed} was successfully destroyed."
-    sortby: "Sort by"
-    location: "Location"
-    search: "Search"
-    user: "Users"
-    single_user: "User"
-    username: "Username"
-    new_user: "New User"
-    new_password: "New password"
-    password: "Password"
-    account: "Edit account"
-    note: "(leave blank if you don't want to change it)"
-    destroy_account: "Cancel my account"
-    home: "Home"
-    login: "Login"
-    to_login: "Log in"
-    to_logout: "Logout"
-    settings: "Settings"
-    remember_me: "Remember me"
-    logged_in_as: "Logged in as"
-    language: "Language"
-    all_off: "Turn all off"
-    close_all: "Close all"
-    reset: "Reset"
+        open: Open
+        closed: Closed
+      weather: Weather
+    role: Role
+    'on': On
+    'off': Off
+    create: Create
+    update: Update
+    destroy: Destroy
+    created: '%{created} was successfully created.'
+    updated: '%{updated} was successfully updated.'
+    destroyed: '%{destroyed} was successfully destroyed.'
+    id: ID
+    sortby: Sort by
+    location: Location
+    search: Search
+    user: Users
+    single_user: User
+    username: Username
+    new_user: New User
+    new_password: New password
+    password: Password
+    account: Edit account
+    note: (leave blank if you don't want to change it)
+    destroy_account: Cancel my account
+    home: Home
+    login: Login
+    to_login: Log in
+    to_logout: Logout
+    settings: Settings
+    remember_me: Remember me
+    logged_in_as: Logged in as
+    language: Language
+    all_off: Turn all off
+    close_all: Close all
+    reset: Reset
