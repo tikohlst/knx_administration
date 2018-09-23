@@ -4,49 +4,26 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = if (params[:term] && params[:term] != "") ||
-        ($users_search_params[current_user.username] && $users_search_params[current_user.username] != "")
-      $users_search_params[current_user.username] = params[:term] if params[:term]
-      User.where('username LIKE :p OR id LIKE :p', p: "%#{$users_search_params[current_user.username]}%")
-
-      # Searching for role
-      #User.joins(:roles).merge(Role.where('name LIKE :p', p: "%#{params[:term]}%"))
-    else
-      $users_search_params[current_user.username] = nil
-      User.all
-    end
-  end
-
-  def sort_by_ids
-    @users = if (params[:term] && params[:term] != "") ||
-        ($users_search_params[current_user.username] && $users_search_params[current_user.username] != "")
+    @users = if params[:term].present? or $users_search_params[current_user.username].present?
       $users_search_params[current_user.username] = params[:term] if params[:term]
       User.where('username LIKE :p OR id LIKE :p', p: "%#{$users_search_params[current_user.username]}%")
     else
       $users_search_params[current_user.username] = nil
       User.all
     end
-  end
 
-  def sort_by_usernames
-    @users = if (params[:term] && params[:term] != "") ||
-        ($users_search_params[current_user.username] && $users_search_params[current_user.username] != "")
-      $users_search_params[current_user.username] = params[:term] if params[:term]
-      User.where('username LIKE :p OR id LIKE :p', p: "%#{$users_search_params[current_user.username]}%")
-    else
-      $users_search_params[current_user.username] = nil
-      User.all
-    end
-  end
-
-  def sort_by_roles
-    @users = if (params[:term] && params[:term] != "") ||
-        ($users_search_params[current_user.username] && $users_search_params[current_user.username] != "")
-      $users_search_params[current_user.username] = params[:term] if params[:term]
-      User.where('username LIKE :p OR id LIKE :p', p: "%#{$users_search_params[current_user.username]}%")
-    else
-      $users_search_params[current_user.username] = nil
-      User.all
+    respond_to do |format|
+      case params[:sort_by]
+      when 'id'
+        format.js { render "sort_by_ids" }
+      when 'username'
+        format.js { render "sort_by_usernames" }
+      when 'role'
+        format.js { render "sort_by_roles" }
+      else
+        format.js
+        format.html
+      end
     end
   end
 

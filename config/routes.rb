@@ -2,11 +2,7 @@ Rails.application.routes.draw do
   scope "/:locale" do
     root to: 'widgets#index'
     devise_for :users, path_prefix: '/:locale/my', controllers: { registrations: 'registrations' }
-    resources :users do
-      get 'sort_by_ids', on: :collection
-      get 'sort_by_roles', on: :collection
-      get 'sort_by_usernames', on: :collection
-    end
+    resources :users
     resources :widgets do
       get 'sort_by_org_units', on: :collection
       get 'sort_by_locations', on: :collection
