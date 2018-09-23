@@ -13,14 +13,18 @@ class UsersController < ApplicationController
     end
 
     respond_to do |format|
-      case params[:sort_by]
-      when 'id'
-        format.js { render "sort_by_ids" }
-      when 'username'
-        format.js { render "sort_by_usernames" }
-      when 'role'
-        format.js { render "sort_by_roles" }
+      if params[:sort_by]
+        case params[:sort_by]
+        when 'id'
+          @users = @users.order(:id)
+        when 'username'
+          @users = @users.order(:username)
+        when 'role'
+          @users = @users.sort_by{|user| user.roles.first.name}
+        end
+        format.js
       else
+        @users = @users.order(:username)
         format.js
         format.html
       end

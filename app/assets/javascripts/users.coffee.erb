@@ -13,3 +13,10 @@ $(document).ready ->
     if $('#table_users').length > 0
       window.location.href = "users/" + $(this).attr('data-link') + "/edit"
     return
+
+  # Set the actual sorting in the search form, so the sorting can stay the same
+  $(document).on 'click', '.justify-content-between > .col-md-4 > .navbar-brand > .btn-group > a', ->
+    $(this).attr('href').match(/sort_by=(.*)$/g)
+    sort_by = RegExp.$1
+    $('#actual_sort_by').val(sort_by.toString())
+    return

@@ -1,4 +1,4 @@
-<% users.order(:id).each do |user| %>
+<% users.each do |user| %>
   <tr data-link="<%= user.id %>">
     <td><%= user.id %></td>
     <td><%= user.username %></td>
