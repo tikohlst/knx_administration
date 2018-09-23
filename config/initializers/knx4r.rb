@@ -20,7 +20,7 @@ $locations = @prj.locations
 ###################################################################################
 # Create Roles, Users, OrgUnits and Accesses in the database                      #
 ###################################################################################
-if ENV['SEEDS']
+if ENV['SEEDS'] == "1"
   connection = ActiveRecord::Base.connection()
   connection.execute("TRUNCATE TABLE roles;")
   connection.execute("TRUNCATE TABLE users;")
