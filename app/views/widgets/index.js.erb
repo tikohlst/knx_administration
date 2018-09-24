@@ -1,62 +1,299 @@
-var render;
-/* Save current tab to display the same tab after entering the search */
+<%# Save current tab to display the same tab after changing the sort algorithm or the search %>
 var currentTab = $('#nav-tabContent > .show.active').attr('id');
-/* Save current sort to display the same sort after entering the search */
-var currentSort = $('.navbar-brand > .btn-group.btn-group-toggle > .btn.btn-outline-secondary.mb-0.active').text().replace(/\s/g,'');
-switch(currentSort) {
-    case "Org-Unit":
-        render = "<%= escape_javascript(render partial: 'sort_by_org_units', locals: {widgets: @widgets}) %>";
-        break;
-    case "Ort":
-    case "Location":
-        render = "<%= escape_javascript(render partial: 'sort_by_locations', locals: {widgets: @widgets}) %>";
-        break;
-    case "A-Z":
-        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
-        break;
-    case "Z-A":
-        render = "<%= escape_javascript(render partial: 'sort_alphabetically', locals: {widgets: @widgets}) %>";
-}
-/* Positioning the rendered partial */
-$('#widgets_card').html(render);
-/* Remove class of current tab in card-header */
+
+<%# Positioning the rendered partial %>
+$('#widgets_card').html("<%= escape_javascript(render partial: partial, locals: {widgets: @widgets}) %>");
+
+<%# Remove class of current tab in card-header %>
 $('#widgets_card > .card-header > ul#nav-tab > li.nav-item > .nav-link.active').removeClass('active');
 $('#widgets_card > .card-header > ul#nav-tab-responsive > li > .nav-link.active').removeClass('active');
-if ($('#' + currentTab + '-tab').length > 0)
+
+<%# If the old current tab doesn't exist anymore, find the new first tab %>
+if ($('#' + currentTab + '-tab').length === 0)
 {
-    /* Add class active if there exists the same tab as before */
-    $('ul#nav-tab > li > #' + currentTab + '-tab').addClass('active');
-    $('ul#nav-tab-responsive > li > #' + currentTab + '-tab').addClass('active');
-}
-else
-{
-    /* Else add class active to the first tab */
-    $('#nav-tab > .nav-item > .nav-link').first().addClass('active');
-}
-/* Remove class of current tab in card-body */
-$('.tab-content > .tab-pane.fade.show.active').removeClass('show active');
-if ($('#' + currentTab).length > 0)
-{
-    /* Add class active if there exists the same tab as before */
-    $('#' + currentTab).addClass('show active');
-}
-else
-{
-    /* Else add class active to the first tab */
-    $('#widgets_card > .card-body > .tab-content > .tab-pane.fade').first().addClass('show active');
+    var firstChild = $('ul#nav-tab > li:first-child > a');
+    if (firstChild.length > 0)
+    {
+        firstChild.attr('id').match(/^(.*)-tab$/g);
+        currentTab = (RegExp.$1).toString();
+    }
 }
 
-/* Open first entry in every tab */
-var array = $('#widgets_card > .card-body > .tab-content > .tab-pane.fade > .accordion').map(function() {
+<%# Add class active to the new current tab in card-header %>
+$('ul#nav-tab > li > #' + currentTab + '-tab').addClass('active');
+$('ul#nav-tab-responsive > li > #' + currentTab + '-tab').addClass('active');
+
+<%# Remove class of current tab in card-body %>
+$('.tab-content > .tab-pane.fade.show.active').removeClass('show active');
+<%# Add class active to the new current tab in card-body %>
+$('#' + currentTab).addClass('show active');
+
+<%# Activate all toggles %>
+$(':checkbox').bootstrapToggle();
+
+<% if %w[sort_by_org_units sort_by_locations].include? partial %>
+<%# Open the first entry in every tab %>
+var array = $('#widgets_card > .card-body > .tab-content > .tab-pane.fade > .accordion').map(function(){
     return this.id;
 }).get();
-$.each(array, function( index, value ) {
-    /* Turn first triangle */
-    $('#' + value + ' > div > div > .row > .col > .mb-0 > button > span').first()
+$.each(array, function(index, value) {
+    <%# Turn first triangle %>
+    $('#' + value + ' > div > .mb-2 > .row > .col > .mb-0 > button > span').first()
         .removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
-    /* Show first content */
+    <%# Show first content %>
     $('#' + value + ' > div > .collapse').first().addClass('show');
 });
+<% end %>
 
-/* Activate all toggles */
-$(':checkbox').bootstrapToggle();
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
+      text_field.dpt == '9.001' } %>
+$( '#canvas-temperature' ).replaceWith( '<canvas id="canvas-temperature"></canvas>' );
+var canvasTemperature = new LinearGauge({
+    renderTo: "canvas-temperature",
+    type: "linear-gauge",
+    width: 270,
+    height: 100,
+    minValue: -20,
+    maxValue: 40,
+    majorTicks: [-20,-10,0,10,20,30,40],
+    minorTicks: 5,
+    strokeTicks: true,
+    ticksWidth: 20,
+    ticksWidthMinor: 10,
+    highlights: [
+        { "from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)" },
+        { "from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)" },
+        { "from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)" },
+        { "from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)" },
+        { "from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)" },
+        { "from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)" },
+        { "from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)" },
+        { "from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)" },
+        { "from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)" },
+        { "from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)" },
+        { "from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)" },
+        { "from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)" }],
+    highlightsWidth: 20,
+    colorMajorTicks: "#000",
+    colorMinorTicks: "#000",
+    colorTitle: "#000",
+    colorUnits: "#000",
+    colorNumbers: "#000",
+    colorPlate: "transparent",
+    borderShadowWidth: 0,
+    borders: false,
+    borderRadius: 6,
+    needleType: "arrow",
+    needleWidth: 12,
+    needleStart: 50,
+    needleEnd: 140,
+    animationDuration: 1500,
+    animationRule: "linear",
+    colorNeedle: "#000",
+    colorBarProgress: "#C0C0C0",
+    colorBar: "#919191",
+    barStroke: 0,
+    barWidth: 0,
+    barBeginCircle: false,
+    value: <%= @widgets[:text_fields].select{|widget| widget.dpt == "9.001"}.first.try(:status) %>,
+    tickSide: "left",
+    numberSide: "right",
+    needleSide: "left",
+    fontUnitsSize: 30,
+    fontTitleSize: 30,
+    fontNumbersSize: 32,
+    numbersMargin: -30
+}).draw();
+<% end %>
+
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
+      text_field.dpt == '9.005' } %>
+$( '#canvas-wind-speed' ).replaceWith( '<canvas id="canvas-wind-speed"></canvas>' );
+var canvasWindSpeed = new LinearGauge({
+    renderTo: "canvas-wind-speed",
+    type: "linear-gauge",
+    width: 270,
+    height: 100,
+    minValue: 0,
+    maxValue: 35,
+    majorTicks: [0,5,10,15,20,25,30,35],
+    minorTicks: 5,
+    strokeTicks: true,
+    ticksWidth: 20,
+    ticksWidthMinor: 10,
+    highlights: [
+        { "from": 0, "to": 5, "color": "rgba(0, 255, 0, 0.3)" },
+        { "from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)" },
+        { "from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)" },
+        { "from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)" },
+        { "from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)" },
+        { "from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)" },
+        { "from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)" }],
+    highlightsWidth: 20,
+    colorMajorTicks: "#000",
+    colorMinorTicks: "#000",
+    colorTitle: "#000",
+    colorUnits: "#000",
+    colorNumbers: "#000",
+    colorPlate: "transparent",
+    borderShadowWidth: 0,
+    borders: false,
+    borderRadius: 6,
+    needleType: "arrow",
+    needleWidth: 12,
+    needleStart: 50,
+    needleEnd: 140,
+    animationDuration: 1500,
+    animationRule: "linear",
+    colorNeedle: "#000",
+    colorBarProgress: "#C0C0C0",
+    colorBar: "#919191",
+    barStroke: 0,
+    barWidth: 0,
+    barBeginCircle: false,
+    value: <%= @widgets[:text_fields].select{|widget| widget.dpt == "9.005"}.first.try(:status) %>,
+    tickSide: "left",
+    numberSide: "right",
+    needleSide: "left",
+    fontUnitsSize: 30,
+    fontTitleSize: 30,
+    fontNumbersSize: 32,
+    numbersMargin: -30
+}).draw();
+<% end %>
+
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
+      text_field.dpt == '9.004' } %>
+var canvasBrightness = new LinearGauge({
+    renderTo: "canvas-brightness",
+    type: "linear-gauge",
+    width: 260,
+    height: 100,
+    minValue: 0,
+    maxValue: 20000,
+    majorTicks: [0,5000,10000,15000,20000],
+    minorTicks: 5,
+    strokeTicks: true,
+    ticksWidth: 20,
+    ticksWidthMinor: 10,
+    highlights: [
+        { "from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)" },
+        { "from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)" },
+        { "from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)" },
+        { "from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)" },
+        { "from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)" },
+        { "from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)" },
+        { "from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)" },
+        { "from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)" }],
+    highlightsWidth: 20,
+    colorMajorTicks: "#000",
+    colorMinorTicks: "#000",
+    colorTitle: "#000",
+    colorUnits: "#000",
+    colorNumbers: "#000",
+    colorPlate: "transparent",
+    borderShadowWidth: 0,
+    borders: false,
+    borderRadius: 6,
+    needleType: "arrow",
+    needleWidth: 12,
+    needleStart: 50,
+    needleEnd: 140,
+    animationDuration: 1500,
+    animationRule: "linear",
+    colorNeedle: "#000",
+    colorBarProgress: "#C0C0C0",
+    colorBar: "#919191",
+    barStroke: 0,
+    barWidth: 0,
+    barBeginCircle: false,
+    value: <%= @widgets[:text_fields].select{|widget| widget.dpt == "9.004"}.first.try(:status) %>,
+    tickSide: "left",
+    numberSide: "right",
+    needleSide: "left",
+    fontUnitsSize: 30,
+    fontTitleSize: 30,
+    fontNumbersSize: 28,
+    numbersMargin: -30
+}).draw();
+<% end %>
+
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
+      text_field.dpt == '9.029' and text_field.desc == "Azimut Sonne" } %>
+var canvasAzimut = new RadialGauge({
+    renderTo: "canvas-azimut",
+    type: "radial-gauge",
+    width: 200,
+    height: 170,
+    minValue: 0,
+    maxValue: 360,
+    majorTicks: ["S","SW","W","NW","N","NE","E","SE","S"],
+    minorTicks: 9,
+    strokeTicks: false,
+    highlights: false,
+    colorMajorTicks: "#f5f5f5",
+    colorMinorTicks: "#ddd",
+    colorNumbers: "#ccc",
+    colorPlate: "#222",
+    borderShadowWidth: 0,
+    borders: true,
+    needleType: "line",
+    needleWidth: 4,
+    needleStart: 70,
+    needleEnd: 99,
+    animationDuration: 1500,
+    animationRule: "linear",
+    colorNeedle: "rgba(240, 128, 128, 1)",
+    colorNeedleEnd: "rgba(255, 160, 122, .9)",
+    ticksAngle: 360,
+    startAngle: 180,
+    value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Azimut Sonne"}.first.try(:status) %>,
+    valueBox: false,
+    valueTextShadow: false,
+    colorCircleInner: "#fff",
+    needleCircleOuter: false,
+    colorNeedleCircleOuter: "#ccc",
+    needleCircleSize: 15,
+    borderInnerWidth: 0,
+    borderMiddleWidth: 0,
+    borderOuterWidth: 10,
+    colorBorderOuter: "#ccc",
+    colorBorderOuterEnd: "#ccc",
+    colorNeedleShadowDown: "#222",
+    fontNumbersSize: 28
+}).draw();
+<% end %>
+
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and
+      text_field.dpt == '9.029' and text_field.desc == "Elevation Sonne"} %>
+var canvasElevation = new RadialGauge({
+    renderTo: "canvas-elevation",
+    type: "radial-gauge",
+    width: 300,
+    height: 300,
+    minValue: 0,
+    maxValue: 90,
+    majorTicks: [0,15,30,45,60,75,90],
+    minorTicks: 2,
+    strokeTicks: true,
+    highlights: [{ "from": 0, "to": 90, "color": "rgba(255,255,0,1)" }],
+    colorPlate: "transparent",
+    borderShadowWidth: 0,
+    borders: false,
+    needleType: "line",
+    needleWidth: 2,
+    needleStart: 0,
+    needleEnd: 90,
+    animationDuration: 1500,
+    animationRule: "linear",
+    colorNeedle: "#000",
+    colorNeedleEnd: "rgba(0, 0, 0, 1)",
+    ticksAngle: 90,
+    startAngle: 90,
+    value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Elevation Sonne"}.first.try(:status) %>,
+    valueBox: false,
+    needleCircleSize: 8,
+    needleCircleOuter: true,
+    needleCircleInner: true
+}).draw();
+<% end %>

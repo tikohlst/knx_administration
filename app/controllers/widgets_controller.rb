@@ -63,15 +63,13 @@ class WidgetsController < ApplicationController
     respond_to do |format|
       case params[:sort_by]
       when 'org_units'
-        format.js { render "sort_by_org_units" }
+        format.js { render "index", locals: {partial: "sort_by_org_units"} }
       when 'locations'
-        format.js { render "sort_by_locations" }
-      when 'alphabetically'
-        format.js { render "sort_alphabetically" }
-      when 'backwards_alphabetically'
-        format.js { render "sort_backwards_alphabetically" }
+        format.js { render "index", locals: {partial: "sort_by_locations"} }
+      when 'alphabetically', 'backwards_alphabetically'
+        format.js { render "index", locals: {partial: "sort_alphabetically"} }
       else
-        format.js
+        format.js { render "index", locals: {partial: "sort_by_locations"} }
         format.html
       end
     end

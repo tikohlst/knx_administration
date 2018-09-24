@@ -18,3 +18,12 @@
 //= require activestorage
 //= require gauge.min.js
 //= require_tree .
+
+$(document).ready(function() {
+    // Set the actual sorting in the search form, so the sorting can stay the same
+    $(document).on('click', '.justify-content-between > div > .navbar-brand > .btn-group > a', function() {
+        $(this).attr('href').match(/sort_by=(.*)$/g);
+        var sort_by = RegExp.$1;
+        $('#actual_sort_by').val(sort_by.toString());
+    });
+});
