@@ -38,7 +38,7 @@
         <div class="float-md-right">
           <%= form_tag users_path, class: "form-inline my-2 my-lg-0", method: :get, remote: true do %>
             <%= hidden_field_tag :sort_by, params[:sort_by], value: 'username', id: "actual_sort_by" %>
-            <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;", value: "#{$users_search_params[current_user.username]}" %>
+            <%= text_field_tag :term, params[:term], class: "form-control", style: "width: 70%;", value: "#{cookies[:search_users]}" %>
             <%= submit_tag t('views.search'), name: nil, class: "btn btn-outline-success my-2 my-sm-0", style: "width: 28%;margin-left: 2%;" %>
           <% end %>
         </div>

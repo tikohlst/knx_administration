@@ -4,11 +4,11 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = if params[:term].present? or $users_search_params[current_user.username].present?
-      $users_search_params[current_user.username] = params[:term] if params[:term]
-      User.where('username LIKE :p OR id LIKE :p', p: "%#{$users_search_params[current_user.username]}%")
+    @users = if params[:term].present? or cookies[:search_users].present?
+      cookies[:search_users] = params[:term] if params[:term]
+      User.where('username LIKE :p OR id LIKE :p', p: "%#{cookies[:search_users]}%")
     else
-      $users_search_params[current_user.username] = nil
+      cookies[:search_users] = nil
       User.all
     end
 

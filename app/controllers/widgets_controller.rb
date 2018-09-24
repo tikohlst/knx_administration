@@ -16,13 +16,12 @@ class WidgetsController < ApplicationController
     sliders       = Widget::Slider.find_by_org_units(access_org_units)
     text_fields   = Widget::TextField.find_by_org_units(access_org_units)
 
-    $widgets_search_params[current_user.username] = params[:term] if params[:term]
-
-    if params[:term].present? or $widgets_search_params[current_user.username].present?
-      selected_buttons        = buttons.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_progress_bars  = progress_bars.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_sliders        = sliders.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
-      selected_text_fields    = text_fields.select{|widget| widget.desc.include? $widgets_search_params[current_user.username] }
+    if params[:term].present? or cookies[:search_widgets].present?
+      cookies[:search_widgets] = params[:term] if params[:term]
+      selected_buttons        = buttons.select{|widget| widget.desc.include? cookies[:search_widgets] }
+      selected_progress_bars  = progress_bars.select{|widget| widget.desc.include? cookies[:search_widgets] }
+      selected_sliders        = sliders.select{|widget| widget.desc.include? cookies[:search_widgets] }
+      selected_text_fields    = text_fields.select{|widget| widget.desc.include? cookies[:search_widgets] }
       case params[:sort_by]
       when 'alphabetically'
         @widgets = {buttons:        selected_buttons.sort_by{|button| button.desc},
