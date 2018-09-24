@@ -55,8 +55,8 @@ de:
         closed: Geschlossen
       weather: Wetter
     role: Rolle
-    on: An
-    off: Aus
+    'on': An
+    'off': Aus
     create: Erstellen
     update: Speichern
     destroy: Löschen

@@ -55,8 +55,8 @@ en:
         closed: Closed
       weather: Weather
     role: Role
-    'on': On
-    'off': Off
+    'on': 'On'
+    'off': 'Off'
     create: Create
     update: Update
     destroy: Destroy
