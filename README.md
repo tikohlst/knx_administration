@@ -31,36 +31,49 @@ gem update --system
 
 ```
 cd /path/to/knx_administration
+export RAILS_ENV=production HOST_IP=own_ip_address KNX_CONNECTION=0
 gem install bundler
 bundle --without development test
 ```
 
 ## Setup your database in the project
 
+Change the path to your socket in the default settings (line 12) and the
+username in the production settings (line 47):
+
 ```
 nano config/database.yml
 ```
 
-Please change the username, the password and the path to your socket in the
-default settings at the top of the file.
-(Line 16, 17, 18)
+Generate a new secret key and write it together with your database password in
+the credentials:
+
+```
+bin/rails secret
+EDITOR=nano bin/rails credentials:edit
+
+secret_key_base: new_generated_key
+mysql:
+  password:
+    production: own_database_password
+```
 
 ## Database creation
 
 ```
-RAILS_ENV=production HOST_IP=10.200.73.20 rails db:create
+bin/rails db:create
 ```
 
 ## Database initialization
 
 ```
-RAILS_ENV=production HOST_IP=10.200.73.20 rails db:migrate
+bin/rails db:migrate
 ```
 
 ## Precompile assets
 
 ```
-RAILS_ENV=production HOST_IP=10.200.73.20 rails assets:precompile
+bin/rails assets:precompile
 ```
 
 ## How to run the application
@@ -69,12 +82,10 @@ Run redis and the puma webserver:
 
 ```
 redis-server &
-RAILS_ENV=production SEEDS=1 HOST_IP=10.200.73.20 rails s
+SEEDS=1 KNX_CONNECTION=1 bin/rails s
 ```
 
 SEEDS=0/1: Define if seeds should be used or not
-
-HOST_IP=own_ip_address: Set up own ip address
 
 ## Login
 
@@ -87,9 +98,11 @@ Example password: '123456'
 ## How to run the test suite
 
 ```
-rails spec
+bin/rails spec
 ```
 
-## Author
+## License
 
-Tim Kohlstadt, tim.kohlstadt@student.hs-rm.de
+KNX-Administration is developed by
+[Tim Kohlstadt](mailto:tim.kohlstadt@student.hs-rm.de). It is released under
+the [MIT](../knx_administration/LICENSE.txt) License.
