@@ -23,13 +23,13 @@
         <div class="navbar-brand">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <%= link_to users_path(sort_by: 'id'), class: "btn btn-outline-secondary mb-0", remote: true do %>
-              <input type="radio" name="options" autocomplete="off"><%= t 'views.id' %>
+              <input type="radio" name="options" id="option1" autocomplete="off"><%= t 'views.id' %>
             <% end %>
             <%= link_to users_path(sort_by: 'username'), class: "btn btn-outline-secondary mb-0 active", remote: true do %>
-              <input type="radio" name="options" autocomplete="off" checked><%= t 'views.username' %>
+              <input type="radio" name="options" id="option2" autocomplete="off" checked><%= t 'views.username' %>
             <% end %>
             <%= link_to users_path(sort_by: 'role'), class: "btn btn-outline-secondary mb-0", remote: true do %>
-              <input type="radio" name="options" autocomplete="off"><%= t 'views.role' %>
+              <input type="radio" name="options" id="option3" autocomplete="off"><%= t 'views.role' %>
             <% end %>
           </div>
         </div>
