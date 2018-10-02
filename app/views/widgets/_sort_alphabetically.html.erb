@@ -1,5 +1,5 @@
 <% if widgets.select{|key, hash| hash == [] }.count < 4 %>
-  <div class="card-header">
+  <div class="card-header" id="sort_alphabetically">
     <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
       <% if widgets[:buttons].any? %>
         <li class="nav-item">
@@ -312,7 +312,7 @@
     </div>
   </div>
 <% else %>
-  <div class="card-header">
+  <div class="card-header" id="sort_alphabetically">
     <div class="text-center">
       <h5>
         <%= t 'errors.messages.search' %>

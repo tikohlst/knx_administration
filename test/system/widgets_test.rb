@@ -2,48 +2,69 @@ require "application_system_test_case"
 
 class WidgetsTest < ApplicationSystemTestCase
   setup do
-    @widget = widgets(:one)
+    @user = users(:one)
+    # Sign in as user one
+    visit "en/my/users/sign_in"
+    fill_in "Username", with: @user.username
+    fill_in "Password", with: "123456"
+    click_button "Log in"
+    # Add Org-Unit for user one
+    visit "en/users/1/edit"
+    find(:css, '#org_unit_id_1').click
+    click_button "Update"
   end
 
   test "visiting the index" do
-    visit widgets_url
-    assert_selector "h1", text: "Widgets"
+    visit "en/widgets"
+    # TODO: Can't print urls or paths => I think this is the problem
+    # visit users_url
+    # puts widgets_url
+    # puts users_url
+    # puts users_path
+    assert_selector "div", text: "Sort by:"
   end
 
-  test "creating a Widget" do
-    visit widgets_url
-    click_on "New Widget"
-
-    fill_in "Active", with: @widget.active
-    fill_in "Use", with: @widget.use
-    fill_in "Name", with: @widget.name
-    fill_in "Value", with: @widget.value
-    click_on "Create Widget"
-
-    assert_text "Widget was successfully created"
-    click_on "Back"
+  test "changing the sort algorithm to 'Org-Unit'" do
+    visit "en/widgets"
+    # TODO: Can't print urls or paths => I think this is the problem
+    # visit users_url
+    # puts widgets_url
+    # puts users_url
+    # puts users_path
+    find(:css, '#option1').find(:xpath, '..').click
+    assert_selector "div", id: "sort_by_org_units"
   end
 
-  test "updating a Widget" do
-    visit widgets_url
-    click_on "Edit", match: :first
-
-    fill_in "Active", with: @widget.active
-    fill_in "Use", with: @widget.use
-    fill_in "Name", with: @widget.name
-    fill_in "Value", with: @widget.value
-    click_on "Update Widget"
-
-    assert_text "Widget was successfully updated"
-    click_on "Back"
+  test "changing the sort algorithm to 'Location'" do
+    visit "en/widgets"
+    # TODO: Can't print urls or paths => I think this is the problem
+    # visit users_url
+    # puts widgets_url
+    # puts users_url
+    # puts users_path
+    find(:css, '#option2').find(:xpath, '..').click
+    assert_selector "div", id: "sort_by_locations"
   end
 
-  test "destroying a Widget" do
-    visit widgets_url
-    page.accept_confirm do
-      click_on "Destroy", match: :first
-    end
+  test "changing the sort algorithm to 'A-Z'" do
+    visit "en/widgets"
+    # TODO: Can't print urls or paths => I think this is the problem
+    # visit users_url
+    # puts widgets_url
+    # puts users_url
+    # puts users_path
+    find(:css, '#option3').find(:xpath, '..').click
+    assert_selector "div", id: "sort_alphabetically"
+  end
 
-    assert_text "Widget was successfully destroyed"
+  test "changing the sort algorithm to 'Z-A'" do
+    visit "en/widgets"
+    # TODO: Can't print urls or paths => I think this is the problem
+    # visit users_url
+    # puts widgets_url
+    # puts users_url
+    # puts users_path
+    find(:css, '#option4').find(:xpath, '..').click
+    assert_selector "div", id: "sort_alphabetically"
   end
 end

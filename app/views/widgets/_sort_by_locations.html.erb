@@ -1,5 +1,5 @@
 <% if widgets.select{|key, hash| hash == [] }.count < 4 %>
-  <div class="card-header">
+  <div class="card-header" id="sort_by_locations">
     <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
       <% if widgets[:buttons].any? %>
         <li class="nav-item">
@@ -106,12 +106,16 @@
                               <h5 class="mt-2"><%= button.desc %></h5>
                             </div>
                             <div class="float-right">
-                              <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true, html: { id: "edit_widget_#{button.id}", class: "edit_widget" }, method: :patch do |f| %>
+                              <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true,
+                                           html: { id: "edit_widget_#{button.id}", class: "edit_widget" },
+                                           method: :patch do |f| %>
                                 <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                                    name: "authenticity_token" %>
                                 <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'), off: t('views.off'), width: "63", height: "39"},
-                                                id: "widget_active_#{button.id}", class: "edit_widget", checked: if button.status == 1 then "checked" end,
+                                <%= f.check_box :status, data: { toggle: 'toggle', on: t('views.on'),
+                                                off: t('views.off'), width: "63", height: "39"},
+                                                id: "widget_active_#{button.id}", class: "edit_widget",
+                                                checked: if button.status == 1 then "checked" end,
                                                 disabled: (current_user.has_role? :observer) %>
                               <% end %>
                             </div>
@@ -627,7 +631,7 @@
     </div>
   </div>
 <% else %>
-  <div class="card-header">
+  <div class="card-header" id="sort_by_locations">
     <div class="text-center">
       <h5>
         <%= t 'errors.messages.search' %>
