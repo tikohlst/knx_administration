@@ -106,7 +106,7 @@
                               <h5 class="mt-2"><%= button.desc %></h5>
                             </div>
                             <div class="float-right">
-                              <%= form_for :widget, url: "/de/widgets/#{button.id}", remote: true,
+                              <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{button.id}", remote: true,
                                            html: { id: "edit_widget_#{button.id}", class: "edit_widget" },
                                            method: :patch do |f| %>
                                 <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
@@ -154,7 +154,7 @@
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
                             <h5 class="mt-2"><%= progress_bar.desc %></h5>
-                            <%= form_for :widget, url: "/de/widgets/#{progress_bar.id}", remote: true, html: { id: "edit_widget_#{progress_bar.id}", class: "edit_widget" }, method: :patch do |f| %>
+                            <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{progress_bar.id}", remote: true, html: { id: "edit_widget_#{progress_bar.id}", class: "edit_widget" }, method: :patch do |f| %>
                               <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
                                                  name: "authenticity_token" %>
                               <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
@@ -225,7 +225,7 @@
                           <div class="card-body">
                             <h5 class="mt-2"><%= slider.desc %></h5>
                             <div class="">
-                              <%= form_for :widget, url: "/de/widgets/#{slider.id}", remote: true,
+                              <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
                                            html: { id: "edit_widget_#{slider.id}",
                                            class: "edit_widget" }, method: :patch do |f| %>
                                 <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
