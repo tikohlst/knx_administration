@@ -88,7 +88,6 @@ class Widget
 
     # Gets called when a telegram was send from the knx-bus
     def knx_update(status)
-      puts "\n\n\n\nProgressBar knx_update: #{status}, #{status.class}, #{status.to_s}, #{status.to_s.class}\n\n\n\n"
       # Find widget for actual devise
       @widget = self.class.find_by_id(self.id)
       # Update widget status
@@ -166,7 +165,12 @@ class Widget
       # Find widget for actual devise
       @widget = self.class.find_by_id(self.id)
       # Update widget status
-      @widget.status = status
+      @widget.status = case status
+                       when Float
+                         "%8.2f" % [status]
+                       else
+                         status.to_s
+                       end
       # Send the update to all running sessions
       ActionCable.server.broadcast 'widgets', {type: "textField", id: self.id, status: @widget.status}
     end
