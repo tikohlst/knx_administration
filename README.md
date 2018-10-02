@@ -51,7 +51,9 @@ the credentials:
 ```
 bin/rails secret
 EDITOR=nano bin/rails credentials:edit
+```
 
+```
 secret_key_base: new_generated_key
 mysql:
   password:
@@ -97,8 +99,22 @@ Example password: '123456'
 
 ## How to run the test suite
 
+Run normal tests:
+
 ```
-bin/rails spec
+bin/rails test
+```
+
+Run system tests:
+
+```
+RAILS_ENV=test bin/rails test:system
+```
+
+Run normal and system tests together:
+
+```
+RAILS_ENV=test bin/rails test:system test
 ```
 
 ## License
