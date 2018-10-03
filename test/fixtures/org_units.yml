@@ -1,13 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 firstOrgUnit:
-  id: 1
-  name: 'Wohneinheit oben'
+  id:   1
+  name: 'Demoboard ou'
+  key:  'ou001'
 
 secondOrgUnit:
-  id: 2
-  name: 'Wohneinheit unten'
+  id:   2
+  name: 'Second ou'
+  key:  'ou002'
 
 thirdOrgUnit:
-  id: 3
+  id:   3
   name: 'Zentralfunktionen'
+  key:  'ou003'

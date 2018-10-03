@@ -29,6 +29,7 @@ class Widget
   # Find all widgets by the org units
   def self.find_by_org_units(org_units)
     widgets = []
+    org_units = org_units.flatten
     org_units.each do |org_unit|
       # Select all widgets with the allowed org units
       widgets << self.all.select{|widget| widget.org_unit.to_s == org_unit.to_s }

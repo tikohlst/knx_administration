@@ -10,10 +10,34 @@
     <ga id='ga_0_0_3' ouref='ou001' use='Lighting' dpt='1.001'>
       <desc>Demoboard ga</desc>
     </ga>
+    <ga id='ga_0_5_1' ouref='ou001' use='Weather' dpt='9.001' central='true'>
+      <desc>Temperatur</desc>
+    </ga>
+    <ga id='ga_1_1_0' ouref='ou001' use='Lighting' dpt='1.001'>
+      <desc>Dimmer an/aus</desc>
+    </ga>
+    <ga id='ga_1_1_1' ouref='ou001' use='Lighting' dpt='3.007'>
+      <desc>Dimmer fahren, 4b</desc>
+    </ga>
+    <ga id='ga_1_1_2' ouref='ou001' use='Lighting' dpt='5.001'>
+      <desc>Dimmwert, 1B</desc>
+    </ga>
+    <ga id='ga_1_1_6' ouref='ou001' use='Lighting' dpt='1.001'>
+      <desc>Dimmer Zustand</desc>
+    </ga>
+    <ga id='ga_1_1_7' ouref='ou001' use='Lighting' dpt='5.001'>
+      <desc>Dimmer Prozentwert</desc>
+    </ga>
+    <ga id='ga_1_1_10' ouref='ou001' use='Lighting' dpt='1.001'>
+      <desc>EnOcean-Dimmer an/aus</desc>
+    </ga>
+    <ga id='ga_1_1_11' ouref='ou001' use='Lighting' dpt='3.007'>
+      <desc>EnOcean-Dimmer fahren</desc>
+    </ga>
   </group_addresses>
 
   <actuators>
-    <actuator_group ouref='ou001' type="binary" lref='l001'>
+    <actuator_group ouref='ou002' type="binary" lref='l001'>
       <device_info pa="1.1.1">
         <manufacturer>Busch-Jaeger Elektro</manufacturer>
         <product>6119/20 2f Universalschnittstelle, UP</product>
@@ -41,6 +65,27 @@
         <slider t_inv='0.5' min="0" max="1" value="0"/>
       </blind>
     </actuator_group>
+
+    <actuator_group ouref='ou001' type='dimmer' lref='l001'>
+      <device_info pa='1.1.8'>
+        <manufacturer>Hager Electro</manufacturer>
+        <product>TXA210A Dimmer 1x300W,REG</product>
+        <order_no>TXA210A</order_no>
+      </device_info>
+      <dimmer label='A'>
+        <desc>Dimmer</desc>
+        <switch id='sw_dim' listen_to='ga_1_1_0 ga_1_1_6 ga_1_1_10' label='X'/>
+        <setter id='st_dim' listen_to='ga_1_1_2 ga_1_1_7' label='Y'/>
+        <dimmer_driver listen_to='ga_1_1_1 ga_1_1_11'>
+          <desc_postfix>dimmen</desc_postfix>
+          <timer action='stop' t='5.0' triggered_by='increase decrease'/>
+        </dimmer_driver>
+        <!--  scenes listen_to='ga_1_1_5'>
+          <scene number="0" status="20"/--> <!-- Scene 0: Set to 20 % -->
+        <!-- /scenes-->
+        <slider max='100' t_inv='0' value='0' min='0'/>
+      </dimmer>
+    </actuator_group>
   </actuators>
 
   <sensors>
@@ -51,6 +96,15 @@
         <order_no>123</order_no>
       </device_info>
       <toggle on_click='ga_0_0_3' label='A'/>
+    </sensor_group>
+
+    <sensor_group ouref="ou002" loc_detail="Mast" lref="l002">
+      <device_info pa="1.0.7">
+        <manufacturer>Elsner Elektronik</manufacturer>
+        <product>Suntracer KNX</product>
+        <order_no>XXXX</order_no>
+      </device_info>
+      <value label="A"  on_activation="ga_0_5_1" central="true" id="va_Temperatur"/>
     </sensor_group>
   </sensors>
 
@@ -68,27 +122,11 @@
   </interfaces>
 
   <locations>
-    <location id='l001'>Demoboard location</location>
-    <location id='lDG_AZi'>DG AZi</location>
-    <location id='lDG_Bad'>DG Bad</location>
-    <location id='lDG_SchZi'>DG SchZi</location>
-    <location id='lDG_Tr'>DG Treppenhaus</location>
-    <location id='lDG_V'>DG Verteiler</location>
-    <location id='lOG_KZN'>OG KiZi Nord</location>
-    <location id='lOG_KZS'>OG KiZi Süd</location>
-    <location id='lOG_V'>OG Schaltkasten</location>
-    <location id='lEG_Kü'>EG Küche</location>
-    <location id='lEG_V'>EG Verteiler</location>
-    <location id='lEG_Vf'>EG Vorflur</location>
-    <location id='lEG_WZi'>EG Wohnzimmer</location>
-    <location id='lKE_V'>KE Verteiler</location>
-    <location id='lKE_Z'>KE Zählerschrank</location>
-    <location id='Keller'>Keller</location>
+    <location id='l001'>Demoboard</location>
+    <location id='l002'>Second location</location>
   </locations>
   <org_units>
     <org_unit id='ou001'>Demoboard ou</org_unit>
-    <org_unit id='ouWEo'>Wohneinheit oben</org_unit>
-    <org_unit id='ouWEu'>Wohneinheit unten</org_unit>
-    <org_unit id='ouZF'>Zentralfunktionen</org_unit>
+    <org_unit id='ou002'>Second ou</org_unit>
   </org_units>
 </KNXproject>
