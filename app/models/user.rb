@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
   def at_least_one_admin?
     if not (User.with_role :admin).exists?
-      errors.add(:min_one_admin, I18n.t('errors.messages.admin'))
+      errors.add(:base, I18n.t('errors.messages.admin'))
     end
   end
 end

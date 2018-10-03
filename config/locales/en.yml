@@ -6,6 +6,7 @@ en:
     format: '%{attribute} %{message}'
     messages:
       admin: There must be one admin.
+      org_unit: At least one org unit must be selected.
       accepted: must be accepted
       blank: can't be blank
       present: must be blank
