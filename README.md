@@ -34,7 +34,7 @@ gem update --system
 cd /path/to/knx_administration
 export RAILS_ENV=production HOST_IP=own_ip_address KNX_CONNECTION=0
 gem install bundler
-bundle --without development test
+bundle --without development
 ```
 
 ## Setup your database in the project
@@ -103,7 +103,7 @@ Example password: '123456'
 Run normal tests:
 
 ```
-bin/rails test
+RAILS_ENV=test bin/rails test
 ```
 
 Run system tests:
