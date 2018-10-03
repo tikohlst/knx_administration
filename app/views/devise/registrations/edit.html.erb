@@ -71,7 +71,7 @@
 
               <div class="form-group row">
                 <div class="col">
-                  <%= link_to t('views.destroy_account'), registration_path(resource_name), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+                  <%= link_to t('views.destroy_account'), registration_path(resource_name), method: :delete, data: { confirm: t('views.sure') }, class: "btn btn-danger" %>
                 </div>
                 <div class="col">
                   <div class="actions float-right">

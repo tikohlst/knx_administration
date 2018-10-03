@@ -93,7 +93,7 @@
               <div class="form-group row">
                 <% if not @user.new_record? %>
                   <div class="col">
-                    <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+                    <%= link_to t('views.destroy'), @user, method: :delete, data: { confirm: t('views.sure') }, class: "btn btn-danger" %>
                   </div>
                 <% end %>
                 <div class="col">

@@ -60,6 +60,7 @@ en:
     create: Create
     update: Update
     destroy: Destroy
+    sure: Are you sure?
     created: '%{created} was successfully created.'
     updated: '%{updated} was successfully updated.'
     destroyed: '%{destroyed} was successfully destroyed.'

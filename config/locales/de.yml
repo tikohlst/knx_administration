@@ -60,6 +60,7 @@ de:
     create: Erstellen
     update: Speichern
     destroy: Löschen
+    sure: Sind Sie sich sicher?
     created: '%{created} wurde erfolgreich erstellt.'
     updated: '%{updated} wurde erfolgreich aktualisiert.'
     destroyed: '%{destroyed} wurde erfolgreich gelöscht.'
