@@ -14,7 +14,7 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'bootstrap-toggle-rails'
 gem 'glyphicons'
 gem 'flag-icons-rails'
-gem 'knx4r'#, path: "~/Documents/Studium (Bachelor)/8.Semester/Thesis (Werntges + Martin)/Daten von Werntges/knx4r-0.8.11/"
+gem 'knx4r'
 # Simplifies the handling with nokogiri
 gem 'pkg-config', '~> 1.1', '>= 1.1.7'
 # Needed for production
