@@ -20,11 +20,10 @@ class User < ApplicationRecord
   validates :password, length: { in: 6..20 }, if: :password_required?
 
   validates :language, presence: true
-  validates :role_ids, presence: true, if: :seeds_blank?
-  validates :org_unit_ids, presence: true, if: :seeds_blank?
+  validates :role_ids, presence: true, if: :seeds?
+  validates :org_unit_ids, presence: true, if: :seeds?
 
-  # Validate if there is at least one admin
-  validate :at_least_one_admin?, if: :seeds_blank?
+  validate :at_least_one_admin?, if: :seeds?
 
   def password_required?
     !persisted? || !password.nil? || !password_confirmation.nil?
@@ -32,8 +31,8 @@ class User < ApplicationRecord
 
   private
 
-  def seeds_blank?
-    ENV['SEEDS'].blank?
+  def seeds?
+    ENV['SEEDS'] == "0" ? true : false
   end
 
   def at_least_one_admin?

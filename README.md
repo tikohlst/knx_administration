@@ -71,6 +71,7 @@ bin/rails db:create
 
 ```
 bin/rails db:migrate
+SEEDS=1 KNX_CONNECTION=1 bin/rails db:seed
 ```
 
 ## Precompile assets
@@ -85,14 +86,14 @@ Run redis and the puma webserver:
 
 ```
 redis-server &
-SEEDS=1 KNX_CONNECTION=1 bin/rails s
+SEEDS=0 KNX_CONNECTION=1 bin/rails s
 ```
 
 SEEDS=0/1: Define if seeds should be used or not
 
 ## Login
 
-URL: <http://localhost:3000/de/my/users/sign_in>
+URL: <http://localhost:3000/en/login>
 
 Example user: 'admin'
 
