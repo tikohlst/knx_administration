@@ -9,6 +9,7 @@ connected KNX devices belonging to a KNX bus.
 
 * Ruby Version: 2.5.1
 * Rails Version: 5.2.1
+* Redis Version: 4.0.9 (<https://redis.io/topics/quickstart>)
 
 ## Configuration
 
