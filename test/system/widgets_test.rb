@@ -16,54 +16,29 @@ class WidgetsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit "en/widgets"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     assert_selector "div", text: "Sort by:"
   end
 
   test "changing the sort algorithm to 'Org-Unit'" do
     visit "en/widgets"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     find(:css, '#option1').find(:xpath, '..').click
     assert_selector "div", id: "sort_by_org_units"
   end
 
   test "changing the sort algorithm to 'Location'" do
     visit "en/widgets"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     find(:css, '#option2').find(:xpath, '..').click
     assert_selector "div", id: "sort_by_locations"
   end
 
   test "changing the sort algorithm to 'A-Z'" do
     visit "en/widgets"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     find(:css, '#option3').find(:xpath, '..').click
     assert_selector "div", id: "sort_alphabetically"
   end
 
   test "changing the sort algorithm to 'Z-A'" do
     visit "en/widgets"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     find(:css, '#option4').find(:xpath, '..').click
     assert_selector "div", id: "sort_alphabetically"
   end

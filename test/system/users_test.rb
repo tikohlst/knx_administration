@@ -16,21 +16,11 @@ class UsersTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit "en/users"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     assert_selector "h1", text: "Users"
   end
 
   test "creating a User" do
     visit "en/users"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     click_on "New User"
 
     fill_in "user_username", with: "user_three"
@@ -47,11 +37,6 @@ class UsersTest < ApplicationSystemTestCase
 
   test "updating a User" do
     visit "en/users"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     find(:css, 'tbody tr:last-child').click
 
     fill_in "user_username", with: "user_two_edited"
@@ -67,11 +52,6 @@ class UsersTest < ApplicationSystemTestCase
 
   test "destroying a User" do
     visit "en/users"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     find(:css, 'tbody tr:last-child').click
 
     page.accept_confirm do
@@ -104,11 +84,6 @@ class UsersTest < ApplicationSystemTestCase
 
   test "searching for user" do
     visit "en/users"
-    # TODO: Can't print urls or paths => I think this is the problem
-    # visit users_url
-    # puts widgets_url
-    # puts users_url
-    # puts users_path
     fill_in "term", with: "user_one"
     click_on "Search"
 
