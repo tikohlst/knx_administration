@@ -28,18 +28,12 @@ rvm --default use ruby-2.5.1
 gem update --system
 ```
 
-### Install knx4r
-
-```
-cd /path/to/knx4r
-gem install --local knx4r-0.8.11.gem
-```
-
 ### Install Bundles
 
 ```
 cd /path/to/knx_administration
 export RAILS_ENV=production HOST_IP=own_ip_address KNX_CONNECTION=0
+gem install --local knx4r-0.8.11.gem
 gem install bundler
 bundle --without development
 ```
@@ -57,34 +51,39 @@ Generate a new secret key and write it together with your database password in
 the credentials:
 
 ```
+rm config/credentials.yml.enc
 bin/rails secret
-EDITOR=nano bin/rails credentials:edit
+EDITOR=nano KNX_ADMINISTRATION_DATABASE_PASSWORD=1 bundle exec rails credentials:edit
 ```
 
 ```
 secret_key_base: new_generated_key
-mysql:
-  password:
-    production: own_database_password
+production:
+  mysql:
+    password: own_database_password
+
+test:
+  mysql:
+    password: own_test_database_password
 ```
 
 ## Database creation
 
 ```
-bin/rails db:create
+bundle exec rails db:create
 ```
 
 ## Database initialization
 
 ```
-bin/rails db:migrate
-SEEDS=1 KNX_CONNECTION=1 bin/rails db:seed
+bundle exec rails db:migrate
+SEEDS=1 KNX_CONNECTION=1 bundle exec rails db:seed
 ```
 
 ## Precompile assets
 
 ```
-bin/rails assets:precompile
+bundle exec rails assets:precompile
 ```
 
 ## How to run the application
@@ -93,7 +92,7 @@ Run redis and the puma webserver:
 
 ```
 redis-server &
-SEEDS=0 KNX_CONNECTION=1 bin/rails s
+SEEDS=0 KNX_CONNECTION=1 bundle exec rails s
 ```
 
 SEEDS=0/1: Define if seeds should be used or not
