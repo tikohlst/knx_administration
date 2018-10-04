@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get '/', to: redirect('/en/login')
+  get '/de', to: redirect('/de/login')
+  get '/en', to: redirect('/de/login')
   scope "/:locale" do
     root to: 'widgets#index'
     devise_for :user, skip: [:sessions], controllers: { registrations: 'registrations' }
