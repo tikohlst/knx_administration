@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def set_locale
-    # Only if the parameter "username" matches the username of the current user, the language
-    # may be changed
-    if params.try(:[], :user).try(:[], :username) == current_user.try(:[], :username)
+    # Only if no parameter "id" exists or the parameter "id" matches the ID of the current user,
+    # the language may be changed
+    if params.try(:[], :id) == nil or params.try(:[], :id).to_i == current_user.try("id").to_i
       # Whitelist locales available for the application
       locales = I18n.available_locales.map(&:to_s)
       I18n.locale = if locales.include? params.try(:[], :user).try(:[], :language)
