@@ -28,6 +28,13 @@ rvm --default use ruby-2.5.1
 gem update --system
 ```
 
+### Install knx4r
+
+```
+cd /path/to/knx4r
+gem install --local knx4r-0.8.11.gem
+```
+
 ### Install Bundles
 
 ```
