@@ -56,10 +56,12 @@ if ENV['KNX_CONNECTION'] == "1"
         accesses_list << [user_id, org_unit_id]
       end
     end
+    
     accesses_list.each do |user_id, org_unit_id|
       Access.create!( user_id: user_id, org_unit_id: org_unit_id )
     end
   end
+
   ###################################################################################
   # Create a widget for each device                                                 #
   ###################################################################################
