@@ -32,7 +32,7 @@ class User < ApplicationRecord
   private
 
   def seeds?
-    ENV['SEEDS'] == "0" ? true : false
+    ENV['SEEDS'] == "1" ? false : true
   end
 
   def at_least_one_admin?

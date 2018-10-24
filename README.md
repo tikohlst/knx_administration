@@ -77,7 +77,7 @@ bundle exec rails db:create
 
 ```
 bundle exec rails db:migrate
-SEEDS=1 KNX_CONNECTION=1 bundle exec rails db:seed
+SEEDS=1 bundle exec rails db:seed
 ```
 
 ## Precompile assets
@@ -92,10 +92,8 @@ Run redis and the puma webserver:
 
 ```
 redis-server &
-SEEDS=0 KNX_CONNECTION=1 bundle exec rails s
+KNX_CONNECTION=1 bundle exec rails s
 ```
-
-SEEDS=0/1: Define if seeds should be used or not
 
 ## Login
 
