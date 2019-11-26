@@ -108,20 +108,20 @@
         <div class="card mb-3">
           <div class="card-header">
             <div class="row">
-            <div class="col-sm">
-              <%= t 'views.logged_in_as' %>
-              <div class="font-weight-bold d-inline-block">
-                <%= current_user.username %>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="float-sm-right">
-                <%= t 'views.role' %>:
+              <div class="col-sm">
+                <%= t 'views.logged_in_as' %>
                 <div class="font-weight-bold d-inline-block">
-                  <%=current_user.roles.pluck(:name).join(", ")%>
+                  <%= current_user.username %>
                 </div>
               </div>
-            </div>
+              <div class="col-sm">
+                <div class="float-sm-right">
+                  <%= t 'views.role' %>:
+                  <div class="font-weight-bold d-inline-block">
+                    <%=current_user.roles.pluck(:name).join(", ")%>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
