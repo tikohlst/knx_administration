@@ -13,16 +13,15 @@ if ENV['KNX_CONNECTION'] == "1"
   @gw.connect( @gw.find || {} )
   @prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
   @prj.emi_server = emi_server
-  # Update devices and add devices to emi_server
-  @prj.attach_devices
-  devs = @prj.devices
-  $locations = @prj.locations
 
   ###################################################################################
   # Create a widget for each device                                                 #
   ###################################################################################
 
-  devs.sort do |a,b|
+  # Update devices and add devices to emi_server
+  @prj.attach_devices
+
+  @prj.devices.sort do |a,b|
     rc = @prj.org_units[a.ouref] <=> @prj.org_units[b.ouref]
     rc==0 ? a.desc <=> b.desc : rc
   end.each do |dev|
