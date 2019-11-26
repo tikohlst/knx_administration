@@ -19,7 +19,7 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009'} %>
         <li class="nav-item">
           <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
@@ -57,7 +57,7 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009'} %>
         <li>
           <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
@@ -186,7 +186,9 @@
                 <div class="card-body">
                   <h5 class="mt-2"><%= text_field.desc %></h5>
                   <div class="">
-                    <%= text_field.status %>
+                    <div id="widget_active_<%= text_field.id %>">
+                      <%= text_field.status %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -238,7 +240,9 @@
                     </div>
                     <div class="col-4 text-right">
                       <h5 class="mt-2">
-                        <%= text_field.status %>
+                        <div id="widget_active_<%= text_field.id %>">
+                          <%= text_field.status %>
+                        </div>
                         <% case text_field.dpt %>
                         <% when "9.001" %>
                           °C
@@ -255,29 +259,15 @@
                   </div>
                   <% case text_field.dpt %>
                   <% when "9.001" %>
-                    <div class="row">
-                      <div class="col">
-                        Min: <%= widgets[:text_fields].select { |widget| widget.desc == "T_min" }.first.try(:status) %> °C
-                        <br>
-                        Max: <%= widgets[:text_fields].select { |widget| widget.desc == "T_max" }.first.try(:status) %> °C
-                      </div>
-                      <div class="col text-right">
-                        <button type="button" class="btn btn-danger btn-sm mt-2"><%= t 'views.reset' %></button>
-                      </div>
-                    </div>
                     <canvas id="canvas-temperature"></canvas>
                   <% when "9.005" %>
                     <div class="row">
                       <div class="col">
-                        Max: <%= widgets[:text_fields].select{|widget| widget.desc == "v_max"}.first.try(:status) %> m/s
                         <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
                           <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
                         <% else %>
                           <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
                         <% end %>
-                      </div>
-                      <div class="col text-right">
-                        <button type="button" class="btn btn-danger btn-sm"><%= t 'views.reset' %></button>
                       </div>
                     </div>
                     <canvas id="canvas-wind-speed"></canvas>
