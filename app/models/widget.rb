@@ -173,7 +173,7 @@ class Widget
                          status.to_s
                        end
       # Send the update to all running sessions
-      ActionCable.server.broadcast 'widgets', {type: "textField", id: self.id, status: @widget.status}
+      ActionCable.server.broadcast 'widgets', {type: "textField", id: self.id, status: @widget.status, dpt: @widget.dpt, desc: @widget.desc}
     end
   end
 end

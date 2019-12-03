@@ -350,7 +350,14 @@
                   </div>
                   <% case text_field.dpt %>
                   <% when "9.001" %>
-                    <canvas id="canvas-temperature"></canvas>
+                    <% case text_field.desc %>
+                    <% when "Temperatur" %>
+                      <canvas id="canvas-temperature"></canvas>
+                    <% when "Temperatur 1" %>
+                      <canvas id="canvas-temperature1"></canvas>
+                    <% when "Temperatur 2" %>
+                      <canvas id="canvas-temperature2"></canvas>
+                    <% end %>
                   <% when "9.005" %>
                     <div class="row">
                       <div class="col">

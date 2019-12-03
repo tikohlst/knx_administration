@@ -30,14 +30,37 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
       when "slider"
         $('#widget_active_' + data.id).val(data.status)
       when "textField"
-        if (data.dpt == '1.009')
-          # Change open and closed status for windows and doors
-          if (data.status == 1)
-            $('#widget_active_' + data.id + '> .red-note').addClass('d-none')
-            $('#widget_active_' + data.id + '> .green-note').removeClass('d-none')
-          else
-            $('#widget_active_' + data.id + '> .green-note').addClass('d-none')
-            $('#widget_active_' + data.id + '> .red-note').removeClass('d-none')
-        else
-          # Change textField
+        if (data.dpt != '1.009')
+          # Change textField, if it is not a status of a window
           $('#widget_active_' + data.id).text(data.status)
+        switch data.dpt
+          when '1.009'
+            # Update open and closed status for windows and doors
+            if (data.status == 'off')
+              $('#widget_active_' + data.id + ' > .red-note').addClass('d-none')
+              $('#widget_active_' + data.id + ' > .green-note').removeClass('d-none')
+            else
+              $('#widget_active_' + data.id + ' > .green-note').addClass('d-none')
+              $('#widget_active_' + data.id + ' > .red-note').removeClass('d-none')
+          when '9.001'
+            # Update temperature
+            switch data.desc
+              when 'Temperatur'
+                $('#canvas-temperature').attr('data-value', data.status)
+              when 'Temperatur 1'
+                $('#canvas-temperature1').attr('data-value', data.status)
+              when 'Temperatur 2'
+                $('#canvas-temperature2').attr('data-value', data.status)
+          when '9.004'
+            # Update brightness
+            $('#canvas-brightness').attr('data-value', data.status)
+          when '9.005'
+            # Update wind speed
+            $('#canvas-wind-speed').attr('data-value', data.status)
+          when '9.029'
+            if (data.desc == "Azimut Sonne")
+              # Update azimut
+              $('#canvas-azimut').attr('data-value', data.status)
+            else
+              # Update elevation
+              $('#canvas-elevation').attr('data-value', data.status)
