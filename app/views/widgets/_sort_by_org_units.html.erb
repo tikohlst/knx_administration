@@ -334,17 +334,19 @@
                         <div id="widget_active_<%= text_field.id %>">
                           <%= text_field.status %>
                         </div>
-                        <% case text_field.dpt %>
-                        <% when "9.001" %>
-                          °C
-                        <% when "9.005" %>
-                          m/s
-                        <% when "9.004" %>
-                          lx
-                        <% when "9.029" %>
-                          °
-                        <% else %>
-                        <% end %>
+                        <div class="margin-left">
+                          <% case text_field.dpt %>
+                          <% when "9.001" %>
+                            °C
+                          <% when "9.005" %>
+                            m/s
+                          <% when "9.004" %>
+                            lx
+                          <% when "9.029" %>
+                            °
+                          <% else %>
+                          <% end %>
+                        </div>
                       </h5>
                     </div>
                   </div>
