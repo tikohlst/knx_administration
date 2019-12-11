@@ -321,8 +321,8 @@
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
             <% if text_field.use == 'Weather' and
-                %w[ T_min T_max v_max ].exclude?(text_field.desc) and
-                %w[ 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
+                %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) and
+                %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="row">
@@ -332,7 +332,17 @@
                     <div class="col-4 text-right">
                       <h5 class="mt-2">
                         <div id="widget_active_<%= text_field.id %>">
-                          <%= text_field.status %>
+                          <% if text_field.dpt == "1.002" %>
+                            <% if text_field.status == "off" %>
+                              <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
+                              <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
+                            <% else %>
+                              <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
+                              <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
+                            <% end %>
+                          <% else %>
+                            <%= text_field.status %>
+                          <% end %>
                         </div>
                         <div class="margin-left">
                           <% case text_field.dpt %>

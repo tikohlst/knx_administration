@@ -55,6 +55,9 @@ en:
         open: Open
         closed: Closed
       weather: Weather
+      rain_alarm:
+        'on': Rain!
+        'off': No rain
     role: Role
     'on': 'On'
     'off': 'Off'
