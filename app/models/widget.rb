@@ -56,7 +56,7 @@ class Widget
 
     # Gets called when a telegram was send from the knx-bus
     def knx_update(status)
-      # Find widget for actual devise
+      # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
       @widget.status = (status == :on ? 1.0 : 0.0).to_i
@@ -89,7 +89,7 @@ class Widget
 
     # Gets called when a telegram was send from the knx-bus
     def knx_update(status)
-      # Find widget for actual devise
+      # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
       @widget.status = {position: (status.position * 100).to_i, slider_status: status.slider_status}
@@ -133,7 +133,7 @@ class Widget
 
     # Gets called when a telegram was send from the knx-bus
     def knx_update(status)
-      # Find widget for actual devise
+      # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
       @widget.status = status
@@ -163,7 +163,7 @@ class Widget
 
     # Gets called when a telegram was send from the knx-bus
     def knx_update(status)
-      # Find widget for actual devise
+      # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
       @widget.status = case status
