@@ -13,6 +13,7 @@ if ENV['KNX_CONNECTION'] == "1"
   @gw.connect( @gw.find || {} )
   @prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
   @prj.emi_server = emi_server
+  $locations = @prj.locations
 
   ###################################################################################
   # Create a widget for each device                                                 #
