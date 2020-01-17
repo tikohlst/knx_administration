@@ -319,422 +319,452 @@
         </div>
       </div>
       <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
-        <div class="d-flex align-content-start flex-wrap">
-          <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == 'Weather' and
-                %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) and
-                %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
-              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                <div class="card-body">
+        <div id="accordion-weather" class="accordion">
+          <% $locations.each do |key, location| %>
+            <% if widgets[:text_fields].any?{|text_field| text_field.location == key \
+                and text_field.use == 'Weather' \
+                and %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) \
+                and %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) } %>
+              <div>
+                <div class="mb-2" id="heading<%= key %>_weather">
                   <div class="row">
-                    <div class="col-8">
-                      <h5 class="mt-2"><%= text_field.desc %></h5>
-                    </div>
-                    <div class="col-4 text-right">
-                      <h5 class="mt-2">
-                        <div id="widget_active_<%= text_field.id %>">
-                          <% if text_field.dpt == "1.002" %>
-                            <% if text_field.status == "off" %>
-                              <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% else %>
-                              <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% end %>
-                          <% else %>
-                            <%= text_field.status %>
-                          <% end %>
-                        </div>
-                        <div class="margin-left">
-                          <% case text_field.dpt %>
-                          <% when "9.001" %>
-                            °C
-                          <% when "9.005" %>
-                            m/s
-                          <% when "9.004" %>
-                            lx
-                          <% when "9.029" %>
-                            °
-                          <% else %>
-                          <% end %>
-                        </div>
+                    <div class="col">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link pl-0" data-toggle="collapse"
+                                data-target="#collapse<%= key %>_weather"
+                                aria-expanded="true" aria-controls="collapse<%= key %>_weather">
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                          <%= location %>
+                        </button>
                       </h5>
                     </div>
                   </div>
-                  <% case text_field.dpt %>
-                  <% when "9.001" %>
-                    <% case text_field.desc %>
-                    <% when "Temperatur" %>
-                      <canvas id="canvas-temperature"
-                              data-type="linear-gauge"
-                              data-width="270"
-                              data-height="100"
-                              data-min-value="-20"
-                              data-max-value="40"
-                              data-major-ticks="[-20,-10,0,10,20,30,40]"
-                              data-minor-ticks="5"
-                              data-stroke-ticks="true"
-                              data-ticks-width="20"
-                              data-ticks-width-minor="10"
-                              data-highlights='[
-                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                        {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                        {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                        {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                        {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                        {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                        {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                        {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                        {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
-                              data-highlights-width="20"
-                              data-color-major-ticks="#000"
-                              data-color-minor-ticks="#000"
-                              data-color-title="#000"
-                              data-color-units="#000"
-                              data-color-numbers="#000"
-                              data-color-plate="transparent"
-                              data-border-shadow-width="0"
-                              data-borders="false"
-                              data-border-radius="6"
-                              data-needle-type="arrow"
-                              data-needle-width="12"
-                              data-needle-start="50"
-                              data-needle-end="140"
-                              data-animation-duration="1500"
-                              data-animation-rule="linear"
-                              data-color-needle="#000"
-                              data-color-bar-progress="#C0C0C0"
-                              data-color-bar="#919191"
-                              data-bar-stroke="0"
-                              data-bar-width="0"
-                              data-bar-begin-circle="false"
-                              data-value="<%= text_field.status %>"
-                              data-tick-side="left"
-                              data-number-side="right"
-                              data-needle-side="left"
-                              data-font-units-size="30"
-                              data-font-title-size="30"
-                              data-font-numbers-size="32"
-                              data-numbers-margin="-30"
-                      ></canvas>
-                    <% when "Temperatur 1" %>
-                      <canvas id="canvas-temperature1"
-                              data-type="linear-gauge"
-                              data-width="270"
-                              data-height="100"
-                              data-min-value="-20"
-                              data-max-value="40"
-                              data-major-ticks="[-20,-10,0,10,20,30,40]"
-                              data-minor-ticks="5"
-                              data-stroke-ticks="true"
-                              data-ticks-width="20"
-                              data-ticks-width-minor="10"
-                              data-highlights='[
-                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                        {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                        {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                        {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                        {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                        {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                        {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                        {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                        {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
-                              data-highlights-width="20"
-                              data-color-major-ticks="#000"
-                              data-color-minor-ticks="#000"
-                              data-color-title="#000"
-                              data-color-units="#000"
-                              data-color-numbers="#000"
-                              data-color-plate="transparent"
-                              data-border-shadow-width="0"
-                              data-borders="false"
-                              data-border-radius="6"
-                              data-needle-type="arrow"
-                              data-needle-width="12"
-                              data-needle-start="50"
-                              data-needle-end="140"
-                              data-animation-duration="1500"
-                              data-animation-rule="linear"
-                              data-color-needle="#000"
-                              data-color-bar-progress="#C0C0C0"
-                              data-color-bar="#919191"
-                              data-bar-stroke="0"
-                              data-bar-width="0"
-                              data-bar-begin-circle="false"
-                              data-value="<%= text_field.status %>"
-                              data-tick-side="left"
-                              data-number-side="right"
-                              data-needle-side="left"
-                              data-font-units-size="30"
-                              data-font-title-size="30"
-                              data-font-numbers-size="32"
-                              data-numbers-margin="-30"
-                      ></canvas>
-                    <% when "Temperatur 2" %>
-                      <canvas id="canvas-temperature2"
-                              data-type="linear-gauge"
-                              data-width="270"
-                              data-height="100"
-                              data-min-value="-20"
-                              data-max-value="40"
-                              data-major-ticks="[-20,-10,0,10,20,30,40]"
-                              data-minor-ticks="5"
-                              data-stroke-ticks="true"
-                              data-ticks-width="20"
-                              data-ticks-width-minor="10"
-                              data-highlights='[
-                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                        {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                        {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                        {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                        {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                        {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                        {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                        {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                        {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
-                              data-highlights-width="20"
-                              data-color-major-ticks="#000"
-                              data-color-minor-ticks="#000"
-                              data-color-title="#000"
-                              data-color-units="#000"
-                              data-color-numbers="#000"
-                              data-color-plate="transparent"
-                              data-border-shadow-width="0"
-                              data-borders="false"
-                              data-border-radius="6"
-                              data-needle-type="arrow"
-                              data-needle-width="12"
-                              data-needle-start="50"
-                              data-needle-end="140"
-                              data-animation-duration="1500"
-                              data-animation-rule="linear"
-                              data-color-needle="#000"
-                              data-color-bar-progress="#C0C0C0"
-                              data-color-bar="#919191"
-                              data-bar-stroke="0"
-                              data-bar-width="0"
-                              data-bar-begin-circle="false"
-                              data-value="<%= text_field.status %>"
-                              data-tick-side="left"
-                              data-number-side="right"
-                              data-needle-side="left"
-                              data-font-units-size="30"
-                              data-font-title-size="30"
-                              data-font-numbers-size="32"
-                              data-numbers-margin="-30"
-                      ></canvas>
-                    <% end %>
-                  <% when "9.005" %>
-                    <div class="row">
-                      <div class="col">
-                        <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
-                          <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
-                        <% else %>
-                          <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
-                        <% end %>
-                      </div>
-                    </div>
-                    <canvas id="canvas-wind-speed"
-                      data-type="linear-gauge"
-                      data-width="270"
-                      data-height="100"
-                      data-min-value="0"
-                      data-max-value="35"
-                      data-major-ticks="[0,5,10,15,20,25,30,35]"
-                      data-minor-ticks="5"
-                      data-stroke-ticks="true"
-                      data-ticks-width="20"
-                      data-ticks-width-minor="10"
-                      data-highlights='[
-                        {"from": 0, "to": 5, "color": "rgba(0, 255, 0, 0.3)"},
-                        {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                        {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                        {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                        {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                        {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                        {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"}]'
-                      data-highlights-width="20"
-                      data-color-major-ticks="#000"
-                      data-color-minor-ticks="#000"
-                      data-color-title="#000"
-                      data-color-units="#000"
-                      data-color-numbers="#000"
-                      data-color-plate="transparent"
-                      data-border-shadow-width="0"
-                      data-borders="false"
-                      data-border-radius="6"
-                      data-needle-type="arrow"
-                      data-needle-width="12"
-                      data-needle-start="50"
-                      data-needle-end="140"
-                      data-animation-duration="1500"
-                      data-animation-rule="linear"
-                      data-color-needle="#000"
-                      data-color-bar-progress="#C0C0C0"
-                      data-color-bar="#919191"
-                      data-bar-stroke="0"
-                      data-bar-width="0"
-                      data-bar-begin-circle="false"
-                      data-value="<%= text_field.status %>"
-                      data-tick-side="left"
-                      data-number-side="right"
-                      data-needle-side="left"
-                      data-font-units-size="30"
-                      data-font-title-size="30"
-                      data-font-numbers-size="32"
-                      data-numbers-margin="-30"
-                    ></canvas>
-                  <% when "9.004" %>
-                    <div class="row">
-                      <div class="col">
-                        <canvas id="canvas-brightness"
-                          data-type="linear-gauge"
-                          data-width="260"
-                          data-height="100"
-                          data-min-value="0"
-                          data-max-value="20000"
-                          data-major-ticks="[0,5000,10000,15000,20000]"
-                          data-minor-ticks="5"
-                          data-stroke-ticks="true"
-                          data-ticks-width="20"
-                          data-ticks-width-minor="10"
-                          data-highlights='[
-                            {"from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)"},
-                            {"from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)"},
-                            {"from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)"},
-                            {"from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)"},
-                            {"from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)"},
-                            {"from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)"},
-                            {"from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)"},
-                            {"from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)"}]'
-                          data-highlights-width="20"
-                          data-color-major-ticks="#000"
-                          data-color-minor-ticks="#000"
-                          data-color-title="#000"
-                          data-color-units="#000"
-                          data-color-numbers="#000"
-                          data-color-plate="transparent"
-                          data-border-shadow-width="0"
-                          data-borders="false"
-                          data-border-radius="6"
-                          data-needle-type="arrow"
-                          data-needle-width="12"
-                          data-needle-start="50"
-                          data-needle-end="140"
-                          data-animation-duration="1500"
-                          data-animation-rule="linear"
-                          data-color-needle="#000"
-                          data-color-bar-progress="#C0C0C0"
-                          data-color-bar="#919191"
-                          data-bar-stroke="0"
-                          data-bar-width="0"
-                          data-bar-begin-circle="false"
-                          data-value="<%= text_field.status %>"
-                          data-tick-side="left"
-                          data-number-side="right"
-                          data-needle-side="left"
-                          data-font-units-size="30"
-                          data-font-title-size="30"
-                          data-font-numbers-size="28"
-                          data-numbers-margin="-30"
-                        ></canvas>
-                      </div>
-                    </div>
-                  <% when "9.029" %>
-                    <% if text_field.desc == "Azimut Sonne" %>
-                      <div class="row">
-                        <div class="col">
-                          <canvas id="canvas-azimut"
-                            data-type="radial-gauge"
-                            data-width="200"
-                            data-height="170"
-                            data-min-value="0"
-                            data-max-value="360"
-                            data-major-ticks="S,SW,W,NW,N,NE,E,SE,S"
-                            data-minor-ticks="9"
-                            data-ticks-angle="360"
-                            data-start-angle="180"
-                            data-stroke-ticks="false"
-                            data-highlights="false"
-                            data-color-plate="#222"
-                            data-color-major-ticks="#f5f5f5"
-                            data-color-minor-ticks="#ddd"
-                            data-color-numbers="#ccc"
-                            data-color-needle="rgba(240, 128, 128, 1)"
-                            data-color-needle-end="rgba(255, 160, 122, .9)"
-                            data-value-box="false"
-                            data-value-text-shadow="false"
-                            data-value="<%= text_field.status %>"
-                            data-color-circle-inner="#fff"
-                            data-color-needle-circle-outer="#ccc"
-                            data-needle-circle-size="15"
-                            data-needle-circle-outer="false"
-                            data-animation-rule="linear"
-                            data-needle-type="line"
-                            data-needle-start="70"
-                            data-needle-end="99"
-                            data-needle-width="4"
-                            data-borders="true"
-                            data-border-inner-width="0"
-                            data-border-middle-width="0"
-                            data-border-outer-width="10"
-                            data-color-border-outer="#ccc"
-                            data-color-border-outer-end="#ccc"
-                            data-color-needle-shadow-down="#222"
-                            data-border-shadow-width="0"
-                            data-animation-duration="1500"
-                            data-font-numbers-size="28"
-                          ></canvas>
+                </div>
+                <div id="collapse<%= key %>_weather" class="collapse"
+                     aria-labelledby="heading<%= key %>_weather"
+                     data-parent="#accordion-weather">
+                  <div class="d-flex align-content-start flex-wrap">
+                    <% widgets[:text_fields].each do |text_field| %>
+                      <% if text_field.location == key \
+                          and text_field.use == 'Weather' \
+                          and %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) \
+                          and %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
+                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-8">
+                                <h5 class="mt-2"><%= text_field.desc %></h5>
+                              </div>
+                              <div class="col-4 text-right">
+                                <h5 class="mt-2">
+                                  <div id="widget_active_<%= text_field.id %>">
+                                    <% if text_field.dpt == "1.002" %>
+                                      <% if text_field.status == "on" %>
+                                        <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
+                                        <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
+                                      <% else %>
+                                        <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
+                                        <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
+                                      <% end %>
+                                    <% else %>
+                                      <%= text_field.status %>
+                                    <% end %>
+                                  </div>
+                                  <div class="margin-left">
+                                    <% case text_field.dpt %>
+                                    <% when "9.001" %>
+                                      °C
+                                    <% when "9.005" %>
+                                      m/s
+                                    <% when "9.004" %>
+                                      lx
+                                    <% when "9.029" %>
+                                      °
+                                    <% else %>
+                                    <% end %>
+                                  </div>
+                                </h5>
+                              </div>
+                            </div>
+                            <% case text_field.dpt %>
+                            <% when "9.001" %>
+                              <% case text_field.desc %>
+                              <% when "Temperatur" %>
+                                <canvas id="canvas-temperature"
+                                        data-type="linear-gauge"
+                                        data-width="270"
+                                        data-height="100"
+                                        data-min-value="-20"
+                                        data-max-value="40"
+                                        data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                        data-minor-ticks="5"
+                                        data-stroke-ticks="true"
+                                        data-ticks-width="20"
+                                        data-ticks-width-minor="10"
+                                        data-highlights='[
+                                  {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                  {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                  {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                  {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                  {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                        data-highlights-width="20"
+                                        data-color-major-ticks="#000"
+                                        data-color-minor-ticks="#000"
+                                        data-color-title="#000"
+                                        data-color-units="#000"
+                                        data-color-numbers="#000"
+                                        data-color-plate="transparent"
+                                        data-border-shadow-width="0"
+                                        data-borders="false"
+                                        data-border-radius="6"
+                                        data-needle-type="arrow"
+                                        data-needle-width="12"
+                                        data-needle-start="50"
+                                        data-needle-end="140"
+                                        data-animation-duration="1500"
+                                        data-animation-rule="linear"
+                                        data-color-needle="#000"
+                                        data-color-bar-progress="#C0C0C0"
+                                        data-color-bar="#919191"
+                                        data-bar-stroke="0"
+                                        data-bar-width="0"
+                                        data-bar-begin-circle="false"
+                                        data-value="<%= text_field.status %>"
+                                        data-tick-side="left"
+                                        data-number-side="right"
+                                        data-needle-side="left"
+                                        data-font-units-size="30"
+                                        data-font-title-size="30"
+                                        data-font-numbers-size="32"
+                                        data-numbers-margin="-30"
+                                ></canvas>
+                              <% when "Temperatur 1" %>
+                                <canvas id="canvas-temperature1"
+                                        data-type="linear-gauge"
+                                        data-width="270"
+                                        data-height="100"
+                                        data-min-value="-20"
+                                        data-max-value="40"
+                                        data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                        data-minor-ticks="5"
+                                        data-stroke-ticks="true"
+                                        data-ticks-width="20"
+                                        data-ticks-width-minor="10"
+                                        data-highlights='[
+                                  {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                  {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                  {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                  {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                  {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                        data-highlights-width="20"
+                                        data-color-major-ticks="#000"
+                                        data-color-minor-ticks="#000"
+                                        data-color-title="#000"
+                                        data-color-units="#000"
+                                        data-color-numbers="#000"
+                                        data-color-plate="transparent"
+                                        data-border-shadow-width="0"
+                                        data-borders="false"
+                                        data-border-radius="6"
+                                        data-needle-type="arrow"
+                                        data-needle-width="12"
+                                        data-needle-start="50"
+                                        data-needle-end="140"
+                                        data-animation-duration="1500"
+                                        data-animation-rule="linear"
+                                        data-color-needle="#000"
+                                        data-color-bar-progress="#C0C0C0"
+                                        data-color-bar="#919191"
+                                        data-bar-stroke="0"
+                                        data-bar-width="0"
+                                        data-bar-begin-circle="false"
+                                        data-value="<%= text_field.status %>"
+                                        data-tick-side="left"
+                                        data-number-side="right"
+                                        data-needle-side="left"
+                                        data-font-units-size="30"
+                                        data-font-title-size="30"
+                                        data-font-numbers-size="32"
+                                        data-numbers-margin="-30"
+                                ></canvas>
+                              <% when "Temperatur 2" %>
+                                <canvas id="canvas-temperature2"
+                                        data-type="linear-gauge"
+                                        data-width="270"
+                                        data-height="100"
+                                        data-min-value="-20"
+                                        data-max-value="40"
+                                        data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                        data-minor-ticks="5"
+                                        data-stroke-ticks="true"
+                                        data-ticks-width="20"
+                                        data-ticks-width-minor="10"
+                                        data-highlights='[
+                                  {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                  {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                  {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                  {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                  {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                        data-highlights-width="20"
+                                        data-color-major-ticks="#000"
+                                        data-color-minor-ticks="#000"
+                                        data-color-title="#000"
+                                        data-color-units="#000"
+                                        data-color-numbers="#000"
+                                        data-color-plate="transparent"
+                                        data-border-shadow-width="0"
+                                        data-borders="false"
+                                        data-border-radius="6"
+                                        data-needle-type="arrow"
+                                        data-needle-width="12"
+                                        data-needle-start="50"
+                                        data-needle-end="140"
+                                        data-animation-duration="1500"
+                                        data-animation-rule="linear"
+                                        data-color-needle="#000"
+                                        data-color-bar-progress="#C0C0C0"
+                                        data-color-bar="#919191"
+                                        data-bar-stroke="0"
+                                        data-bar-width="0"
+                                        data-bar-begin-circle="false"
+                                        data-value="<%= text_field.status %>"
+                                        data-tick-side="left"
+                                        data-number-side="right"
+                                        data-needle-side="left"
+                                        data-font-units-size="30"
+                                        data-font-title-size="30"
+                                        data-font-numbers-size="32"
+                                        data-numbers-margin="-30"
+                                ></canvas>
+                              <% end %>
+                            <% when "9.005" %>
+                              <div class="row">
+                                <div class="col">
+                                  <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
+                                    <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
+                                  <% else %>
+                                    <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
+                                  <% end %>
+                                </div>
+                              </div>
+                              <canvas id="canvas-wind-speed"
+                                data-type="linear-gauge"
+                                data-width="270"
+                                data-height="100"
+                                data-min-value="0"
+                                data-max-value="35"
+                                data-major-ticks="[0,5,10,15,20,25,30,35]"
+                                data-minor-ticks="5"
+                                data-stroke-ticks="true"
+                                data-ticks-width="20"
+                                data-ticks-width-minor="10"
+                                data-highlights='[
+                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 0, 0.3)"},
+                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"}]'
+                                data-highlights-width="20"
+                                data-color-major-ticks="#000"
+                                data-color-minor-ticks="#000"
+                                data-color-title="#000"
+                                data-color-units="#000"
+                                data-color-numbers="#000"
+                                data-color-plate="transparent"
+                                data-border-shadow-width="0"
+                                data-borders="false"
+                                data-border-radius="6"
+                                data-needle-type="arrow"
+                                data-needle-width="12"
+                                data-needle-start="50"
+                                data-needle-end="140"
+                                data-animation-duration="1500"
+                                data-animation-rule="linear"
+                                data-color-needle="#000"
+                                data-color-bar-progress="#C0C0C0"
+                                data-color-bar="#919191"
+                                data-bar-stroke="0"
+                                data-bar-width="0"
+                                data-bar-begin-circle="false"
+                                data-value="<%= text_field.status %>"
+                                data-tick-side="left"
+                                data-number-side="right"
+                                data-needle-side="left"
+                                data-font-units-size="30"
+                                data-font-title-size="30"
+                                data-font-numbers-size="32"
+                                data-numbers-margin="-30"
+                              ></canvas>
+                            <% when "9.004" %>
+                              <div class="row">
+                                <div class="col">
+                                  <canvas id="canvas-brightness"
+                                    data-type="linear-gauge"
+                                    data-width="260"
+                                    data-height="100"
+                                    data-min-value="0"
+                                    data-max-value="20000"
+                                    data-major-ticks="[0,5000,10000,15000,20000]"
+                                    data-minor-ticks="5"
+                                    data-stroke-ticks="true"
+                                    data-ticks-width="20"
+                                    data-ticks-width-minor="10"
+                                    data-highlights='[
+                                      {"from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)"},
+                                      {"from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)"},
+                                      {"from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)"},
+                                      {"from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)"},
+                                      {"from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)"},
+                                      {"from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)"},
+                                      {"from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)"},
+                                      {"from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)"}]'
+                                    data-highlights-width="20"
+                                    data-color-major-ticks="#000"
+                                    data-color-minor-ticks="#000"
+                                    data-color-title="#000"
+                                    data-color-units="#000"
+                                    data-color-numbers="#000"
+                                    data-color-plate="transparent"
+                                    data-border-shadow-width="0"
+                                    data-borders="false"
+                                    data-border-radius="6"
+                                    data-needle-type="arrow"
+                                    data-needle-width="12"
+                                    data-needle-start="50"
+                                    data-needle-end="140"
+                                    data-animation-duration="1500"
+                                    data-animation-rule="linear"
+                                    data-color-needle="#000"
+                                    data-color-bar-progress="#C0C0C0"
+                                    data-color-bar="#919191"
+                                    data-bar-stroke="0"
+                                    data-bar-width="0"
+                                    data-bar-begin-circle="false"
+                                    data-value="<%= text_field.status %>"
+                                    data-tick-side="left"
+                                    data-number-side="right"
+                                    data-needle-side="left"
+                                    data-font-units-size="30"
+                                    data-font-title-size="30"
+                                    data-font-numbers-size="28"
+                                    data-numbers-margin="-30"
+                                  ></canvas>
+                                </div>
+                              </div>
+                            <% when "9.029" %>
+                              <% if text_field.desc == "Azimut Sonne" %>
+                                <div class="row">
+                                  <div class="col">
+                                    <canvas id="canvas-azimut"
+                                      data-type="radial-gauge"
+                                      data-width="200"
+                                      data-height="170"
+                                      data-min-value="0"
+                                      data-max-value="360"
+                                      data-major-ticks="S,SW,W,NW,N,NE,E,SE,S"
+                                      data-minor-ticks="9"
+                                      data-ticks-angle="360"
+                                      data-start-angle="180"
+                                      data-stroke-ticks="false"
+                                      data-highlights="false"
+                                      data-color-plate="#222"
+                                      data-color-major-ticks="#f5f5f5"
+                                      data-color-minor-ticks="#ddd"
+                                      data-color-numbers="#ccc"
+                                      data-color-needle="rgba(240, 128, 128, 1)"
+                                      data-color-needle-end="rgba(255, 160, 122, .9)"
+                                      data-value-box="false"
+                                      data-value-text-shadow="false"
+                                      data-value="<%= text_field.status %>"
+                                      data-color-circle-inner="#fff"
+                                      data-color-needle-circle-outer="#ccc"
+                                      data-needle-circle-size="15"
+                                      data-needle-circle-outer="false"
+                                      data-animation-rule="linear"
+                                      data-needle-type="line"
+                                      data-needle-start="70"
+                                      data-needle-end="99"
+                                      data-needle-width="4"
+                                      data-borders="true"
+                                      data-border-inner-width="0"
+                                      data-border-middle-width="0"
+                                      data-border-outer-width="10"
+                                      data-color-border-outer="#ccc"
+                                      data-color-border-outer-end="#ccc"
+                                      data-color-needle-shadow-down="#222"
+                                      data-border-shadow-width="0"
+                                      data-animation-duration="1500"
+                                      data-font-numbers-size="28"
+                                    ></canvas>
+                                  </div>
+                                </div>
+                              <% else %>
+                                <div class="row">
+                                  <div class="col">
+                                    <canvas id="canvas-elevation"
+                                      data-type="radial-gauge"
+                                      data-width="300"
+                                      data-height="300"
+                                      data-min-value="0"
+                                      data-max-value="90"
+                                      data-value="<%= text_field.status %>"
+                                      data-start-angle="90"
+                                      data-ticks-angle="90"
+                                      data-value-box="false"
+                                      data-major-ticks="0,15,30,45,60,75,90"
+                                      data-minor-ticks="2"
+                                      data-stroke-ticks="true"
+                                      data-highlights='[
+                                        {"from": 0, "to": 90, "color": "rgba(255,255,0,1)"}
+                                      ]'
+                                      data-color-plate="transparent"
+                                      data-color-needle="#000"
+                                      data-color-needle-end="rgba(0, 0, 0, 1)"
+                                      data-border-shadow-width="0"
+                                      data-borders="false"
+                                      data-needle-type="line"
+                                      data-needle-width="2"
+                                      data-needle-start="0"
+                                      data-needle-end="90"
+                                      data-needle-circle-size="8"
+                                      data-needle-circle-outer="true"
+                                      data-needle-circle-inner="true"
+                                      data-animation-duration="1500"
+                                      data-animation-rule="linear"
+                                    ></canvas>
+                                  </div>
+                                </div>
+                              <% end %>
+                            <% else %>
+                            <% end %>
+                          </div>
                         </div>
-                      </div>
-                    <% else %>
-                      <div class="row">
-                        <div class="col">
-                          <canvas id="canvas-elevation"
-                            data-type="radial-gauge"
-                            data-width="300"
-                            data-height="300"
-                            data-min-value="0"
-                            data-max-value="90"
-                            data-value="<%= text_field.status %>"
-                            data-start-angle="90"
-                            data-ticks-angle="90"
-                            data-value-box="false"
-                            data-major-ticks="0,15,30,45,60,75,90"
-                            data-minor-ticks="2"
-                            data-stroke-ticks="true"
-                            data-highlights='[
-                              {"from": 0, "to": 90, "color": "rgba(255,255,0,1)"}
-                            ]'
-                            data-color-plate="transparent"
-                            data-color-needle="#000"
-                            data-color-needle-end="rgba(0, 0, 0, 1)"
-                            data-border-shadow-width="0"
-                            data-borders="false"
-                            data-needle-type="line"
-                            data-needle-width="2"
-                            data-needle-start="0"
-                            data-needle-end="90"
-                            data-needle-circle-size="8"
-                            data-needle-circle-outer="true"
-                            data-needle-circle-inner="true"
-                            data-animation-duration="1500"
-                            data-animation-rule="linear"
-                          ></canvas>
-                        </div>
-                      </div>
+                      <% end %>
                     <% end %>
-                  <% else %>
-                  <% end %>
+                  </div>
                 </div>
               </div>
             <% end %>

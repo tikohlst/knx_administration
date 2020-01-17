@@ -318,91 +318,121 @@
         </div>
       </div>
       <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
-        <div class="d-flex align-content-start flex-wrap">
-          <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == 'Weather' and
-                %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) and
-                %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
-              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                <div class="card-body">
+        <div id="accordion-weather" class="accordion">
+          <% OrgUnit.all.each do |org_unit| %>
+            <% if widgets[:text_fields].any?{|text_field| text_field.org_unit == org_unit.key \
+                and text_field.use == 'Weather' \
+                and %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) \
+                and %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) } %>
+              <div>
+                <div class="mb-2" id="heading<%= org_unit.id %>_weather">
                   <div class="row">
-                    <div class="col-8">
-                      <h5 class="mt-2"><%= text_field.desc %></h5>
-                    </div>
-                    <div class="col-4 text-right">
-                      <h5 class="mt-2">
-                        <div id="widget_active_<%= text_field.id %>">
-                          <% if text_field.dpt == "1.002" %>
-                            <% if text_field.status == "off" %>
-                              <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% else %>
-                              <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% end %>
-                          <% else %>
-                            <%= text_field.status %>
-                          <% end %>
-                        </div>
-                        <div class="margin-left">
-                          <% case text_field.dpt %>
-                          <% when "9.001" %>
-                            °C
-                          <% when "9.005" %>
-                            m/s
-                          <% when "9.004" %>
-                            lx
-                          <% when "9.029" %>
-                            °
-                          <% else %>
-                          <% end %>
-                        </div>
+                    <div class="col">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link pl-0" data-toggle="collapse"
+                                data-target="#collapse<%= org_unit.id %>_weather"
+                                aria-expanded="true" aria-controls="collapse<%= org_unit.id %>_weather">
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                          <%= org_unit.name %>
+                        </button>
                       </h5>
                     </div>
                   </div>
-                  <% case text_field.dpt %>
-                  <% when "9.001" %>
-                    <% case text_field.desc %>
-                    <% when "Temperatur" %>
-                      <canvas id="canvas-temperature"></canvas>
-                    <% when "Temperatur 1" %>
-                      <canvas id="canvas-temperature1"></canvas>
-                    <% when "Temperatur 2" %>
-                      <canvas id="canvas-temperature2"></canvas>
-                    <% end %>
-                  <% when "9.005" %>
-                    <div class="row">
-                      <div class="col">
-                        <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
-                          <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
-                        <% else %>
-                          <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
-                        <% end %>
-                      </div>
-                    </div>
-                    <canvas id="canvas-wind-speed"></canvas>
-                  <% when "9.004" %>
-                    <div class="row">
-                      <div class="col">
-                        <canvas id="canvas-brightness"></canvas>
-                      </div>
-                    </div>
-                  <% when "9.029" %>
-                    <% if text_field.desc == "Azimut Sonne" %>
-                      <div class="row">
-                        <div class="col">
-                          <canvas id="canvas-azimut"></canvas>
+                </div>
+                <div id="collapse<%= org_unit.id %>_weather" class="collapse"
+                     aria-labelledby="heading<%= org_unit.id %>_weather"
+                     data-parent="#accordion-weather">
+                  <div class="d-flex align-content-start flex-wrap">
+                    <% widgets[:text_fields].each do |text_field| %>
+                      <% if text_field.org_unit == org_unit.key \
+                          and text_field.use == 'Weather' \
+                          and %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) \
+                          and %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
+                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-8">
+                                <h5 class="mt-2"><%= text_field.desc %></h5>
+                              </div>
+                              <div class="col-4 text-right">
+                                <h5 class="mt-2">
+                                  <div id="widget_active_<%= text_field.id %>">
+                                    <% if text_field.dpt == "1.002" %>
+                                      <% if text_field.status == "on" %>
+                                        <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
+                                        <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
+                                      <% else %>
+                                        <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
+                                        <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
+                                      <% end %>
+                                    <% else %>
+                                      <%= text_field.status %>
+                                    <% end %>
+                                  </div>
+                                  <div class="margin-left">
+                                    <% case text_field.dpt %>
+                                    <% when "9.001" %>
+                                      °C
+                                    <% when "9.005" %>
+                                      m/s
+                                    <% when "9.004" %>
+                                      lx
+                                    <% when "9.029" %>
+                                      °
+                                    <% else %>
+                                    <% end %>
+                                  </div>
+                                </h5>
+                              </div>
+                            </div>
+                            <% case text_field.dpt %>
+                            <% when "9.001" %>
+                              <% case text_field.desc %>
+                              <% when "Temperatur" %>
+                                <canvas id="canvas-temperature"></canvas>
+                              <% when "Temperatur 1" %>
+                                <canvas id="canvas-temperature1"></canvas>
+                              <% when "Temperatur 2" %>
+                                <canvas id="canvas-temperature2"></canvas>
+                              <% end %>
+                            <% when "9.005" %>
+                              <div class="row">
+                                <div class="col">
+                                  <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
+                                    <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
+                                  <% else %>
+                                    <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
+                                  <% end %>
+                                </div>
+                              </div>
+                              <canvas id="canvas-wind-speed"></canvas>
+                            <% when "9.004" %>
+                              <div class="row">
+                                <div class="col">
+                                  <canvas id="canvas-brightness"></canvas>
+                                </div>
+                              </div>
+                            <% when "9.029" %>
+                              <% if text_field.desc == "Azimut Sonne" %>
+                                <div class="row">
+                                  <div class="col">
+                                    <canvas id="canvas-azimut"></canvas>
+                                  </div>
+                                </div>
+                              <% else %>
+                                <div class="row">
+                                  <div class="col">
+                                    <canvas id="canvas-elevation"></canvas>
+                                  </div>
+                                </div>
+                              <% end %>
+                            <% else %>
+                            <% end %>
+                          </div>
                         </div>
-                      </div>
-                    <% else %>
-                      <div class="row">
-                        <div class="col">
-                          <canvas id="canvas-elevation"></canvas>
-                        </div>
-                      </div>
+                      <% end %>
                     <% end %>
-                  <% else %>
-                  <% end %>
+                  </div>
                 </div>
               </div>
             <% end %>

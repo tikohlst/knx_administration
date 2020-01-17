@@ -242,12 +242,12 @@
                       <h5 class="mt-2">
                         <div id="widget_active_<%= text_field.id %>">
                           <% if text_field.dpt == "1.002" %>
-                            <% if text_field.status == "off" %>
-                              <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% else %>
+                            <% if text_field.status == "on" %>
                               <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
                               <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
+                            <% else %>
+                              <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
+                              <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
                             <% end %>
                           <% else %>
                             <%= text_field.status %>
