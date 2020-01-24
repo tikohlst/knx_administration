@@ -127,4 +127,4 @@ RAILS_ENV=test bin/rails test:system test
 
 KNX-Administration is developed by
 [Tim Kohlstadt](mailto:tim.kohlstadt@student.hs-rm.de). It is released under
-the [MIT](../knx_administration/LICENSE.txt) License.
+the [MIT](./LICENSE) License.
