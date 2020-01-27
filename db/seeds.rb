@@ -13,10 +13,9 @@ connection.execute("TRUNCATE TABLE accesses;")
 
 # User username:string password:string password_confirmation:string role:int language:string
 users_list = [
-    [ "admin", "123456", "123456", :admin, "de" ],
-    [ "tikoh", "123456", "123456", :editor, "de" ],
-    [ "user1", "123456", "123456", :observer, "en" ],
-    [ "user2", "123456", "123456", :editor, "de" ],
+    [ "admin_example", "123456", "123456", :admin, "de" ],
+    [ "editor_example", "123456", "123456", :editor, "de" ],
+    [ "observer_example", "123456", "123456", :observer, "en" ]
 ]
 
 users_list.each do |username, password, password_confirmation, role, language|
