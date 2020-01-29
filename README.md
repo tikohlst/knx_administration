@@ -9,9 +9,9 @@ this web application with the KNX devices is fundamentally based on the RubyGem
 
 ## System dependencies
 
-* Ruby Version: 2.5.1
-* Rails Version: 5.2.1
-* Redis Version: 4.0.9 (<https://redis.io/topics/quickstart>)
+* Ruby: ~> 2.5.0
+* Rails: ~> 5.2.0
+* Redis: 4.0.9 (<https://redis.io/topics/quickstart>)
 
 ## Configuration
 
@@ -104,6 +104,10 @@ URL: <http://localhost:3000/en/login>
 Example user: 'admin'
 
 Example password: '123456'
+
+![Login screen](/Screenshot_login_screen.png?raw=true "Login screen")
+
+![Lighting widgets](/Screenshot_lighting_widgets.png?raw=true "Lighting widgets")
 
 ## How to run the test suite
 
