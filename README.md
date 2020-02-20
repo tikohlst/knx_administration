@@ -3,9 +3,12 @@
 This web application belongs to the bachelor thesis "Web-Frontend für KNX-
 basierte Home Automation-Installationen mit ereignisgesteuerter Aktualisierung
 über WebSockets" by Tim Kohlstadt. The application can be used to manage all
-connected KNX devices belonging to a KNX bus. However, the communication of
-this web application with the KNX devices is fundamentally based on the RubyGem
-"knx4r" by Prof. Dr. Heinz Werntges, which hasn't been published yet.
+connected KNX devices belonging to a KNX bus. The [RheinMain University of
+Applied Sciences](https://www.hs-rm.de/de/) is currently using this web
+application to diagnose and manage their KNX and EnOcean actuators and sensors
+in several auditoriums. However, the communication of this web application with
+the KNX devices is fundamentally based on the RubyGem "knx4r" by Prof. Dr.
+Heinz Werntges, which hasn't been published yet.
 
 ## System dependencies
 
