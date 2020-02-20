@@ -58,6 +58,10 @@ de:
       rain_alarm:
         'on': Regen!
         'off': Kein Regen
+      radiators: Heizung
+      radiator:
+        full: Voll
+        low: Schwach
     role: Rolle
     'on': An
     'off': Aus

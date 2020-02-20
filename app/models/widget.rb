@@ -114,7 +114,7 @@ class Widget
     end
   end
 
-  # Sliders for dimmers
+  # Sliders for dimmers and radiators
   class Slider < Widget
     attr_accessor :status
     attr_reader :device
@@ -142,8 +142,8 @@ class Widget
     end
 
     # Gets called when a telegram should be send to the knx-bus
-    def send_param(brightness)
-      self.device.send(:set_to, brightness)
+    def send_param(value)
+      self.device.send(:set_to, value)
     end
   end
 

@@ -58,6 +58,10 @@ en:
       rain_alarm:
         'on': Rain!
         'off': No rain
+      radiators: Radiators
+      radiator:
+        full: Full
+        low: Low
     role: Role
     'on': 'On'
     'off': 'Off'

@@ -33,7 +33,7 @@ if ENV['KNX_CONNECTION'] == "1"
         pdev.driver.update_from_bus
         @progress_bar = Widget::ProgressBar.new(pdev)
         pdev.slider.attach( @progress_bar )
-      when KNX_Dimmer
+      when KNX_Dimmer, KNX_Setter
         pdev.driver.update_from_bus
         @slider = Widget::Slider.new(pdev)
         pdev.slider.attach( @slider )
@@ -47,13 +47,13 @@ if ENV['KNX_CONNECTION'] == "1"
       dev.attach( @text_field )
     when KNX_Switch
       # Don't show the switch for the dimmers
-      unless dev.parent.is_a? KNX_Dimmer
+      unless [KNX_Dimmer, KNX_Setter].member? dev.parent.class
         # Update to the actual status of the KNX_Switch
         dev.update_from_bus
         @button = Widget::Button.new(dev)
         dev.attach( @button )
       end
-    when KNX_Toggle, KNX_Rocker, KNX_Date, KNX_Time, KNX_Setter, KNX_Interface,
+    when KNX_Toggle, KNX_Rocker, KNX_Date, KNX_Time, KNX_Interface,
         KNX_Stepper, Slider
       # Ignore
     else

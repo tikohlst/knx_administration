@@ -165,7 +165,7 @@ var canvasTemperature1 = new LinearGauge({
 }).draw();
 
 $( '#canvas-temperature2' ).replaceWith( '<canvas id="canvas-temperature2"></canvas>' );
-var canvasTemperature = new LinearGauge({
+var canvasTemperature2 = new LinearGauge({
     renderTo: "canvas-temperature2",
     type: "linear-gauge",
     width: 270,
@@ -221,6 +221,72 @@ var canvasTemperature = new LinearGauge({
     fontNumbersSize: 32,
     numbersMargin: -30
 }).draw();
+<% end %>
+
+<%# Load radiators widgets when sorting is changed %>
+<% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and
+      text_field.dpt == '9.001' } %>
+  <% @widgets[:text_fields].each do |text_field| %>
+    <% if text_field.dpt == "9.001" and text_field.desc.match(/^Ist-Temperatur - Heizungsaktor/) %>
+      $( '#canvas-temperature-radiators<%= text_field.id %>' ).replaceWith( '<canvas id="canvas-temperature-radiators<%= text_field.id %>"></canvas>' );
+      var canvasTemperatureRadiators = new LinearGauge({
+          renderTo: "canvas-temperature-radiators<%= text_field.id %>",
+          type: "linear-gauge",
+          width: 270,
+          height: 100,
+          minValue: -20,
+          maxValue: 40,
+          majorTicks: [-20,-10,0,10,20,30,40],
+          minorTicks: 5,
+          strokeTicks: true,
+          ticksWidth: 20,
+          ticksWidthMinor: 10,
+          highlights: [
+              { "from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)" },
+              { "from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)" },
+              { "from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)" },
+              { "from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)" },
+              { "from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)" },
+              { "from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)" },
+              { "from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)" },
+              { "from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)" },
+              { "from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)" },
+              { "from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)" },
+              { "from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)" },
+              { "from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)" }],
+          highlightsWidth: 20,
+          colorMajorTicks: "#000",
+          colorMinorTicks: "#000",
+          colorTitle: "#000",
+          colorUnits: "#000",
+          colorNumbers: "#000",
+          colorPlate: "transparent",
+          borderShadowWidth: 0,
+          borders: false,
+          borderRadius: 6,
+          needleType: "arrow",
+          needleWidth: 12,
+          needleStart: 50,
+          needleEnd: 140,
+          animationDuration: 1500,
+          animationRule: "linear",
+          colorNeedle: "#000",
+          colorBarProgress: "#C0C0C0",
+          colorBar: "#919191",
+          barStroke: 0,
+          barWidth: 0,
+          barBeginCircle: false,
+          value: <%= @widgets[:text_fields].select{|widget| widget.desc == text_field.desc}.first.try(:status) %>,
+          tickSide: "left",
+          numberSide: "right",
+          needleSide: "left",
+          fontUnitsSize: 30,
+          fontTitleSize: 30,
+          fontNumbersSize: 32,
+          numbersMargin: -30
+      }).draw();
+    <% end %>
+  <% end %>
 <% end %>
 
 <% if @widgets[:text_fields].any?{|text_field| text_field.use == 'Weather' and

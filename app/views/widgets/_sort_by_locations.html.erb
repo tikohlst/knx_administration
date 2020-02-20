@@ -1,7 +1,7 @@
 <% if widgets.select{|key, hash| hash == [] }.count < 4 %>
   <div class="card-header" id="sort_by_locations">
     <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
-      <% if widgets[:buttons].any? %>
+      <% if widgets[:buttons].any?{|button| button.dpt == '1.001'} %>
         <li class="nav-item">
           <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
              role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -13,13 +13,13 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
         </li>
       <% end %>
-      <% if widgets[:sliders].any? %>
+      <% if widgets[:sliders].any?{|slider| slider.dpt == '3.007'} %>
         <li class="nav-item">
           <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'} %>
         <li class="nav-item">
           <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
@@ -37,9 +37,16 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
         </li>
       <% end %>
+      <% if (widgets[:sliders].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt == '5.001'})\
+        or (widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and (text_field.dpt == '1.002' or text_field.dpt == '9.001')}) %>
+        <li class="nav-item">
+          <a class="nav-link" id="nav-radiator-tab" data-toggle="tab" href="#nav-radiator"
+             role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.radiators' %></a>
+        </li>
+      <% end %>
     </ul>
     <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
-      <% if widgets[:buttons].any? %>
+      <% if widgets[:buttons].any?{|button| button.dpt == '1.001'} %>
         <li>
           <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
              role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -51,13 +58,13 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
         </li>
       <% end %>
-      <% if widgets[:sliders].any? %>
+      <% if widgets[:sliders].any?{|slider| slider.dpt == '3.007'} %>
         <li>
           <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'} %>
         <li>
           <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
@@ -75,6 +82,13 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
         </li>
       <% end %>
+      <% if (widgets[:sliders].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt == '5.001'})\
+        or (widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and (text_field.dpt == '1.002' or text_field.dpt == '9.001')}) %>
+        <li>
+          <a class="nav-link" id="nav-radiator-tab" data-toggle="tab" href="#nav-radiator"
+             role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.radiators' %></a>
+        </li>
+      <% end %>
     </ul>
   </div>
   <div class="card-body">
@@ -82,7 +96,7 @@
       <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
         <div id="accordion-lightings" class="accordion">
           <% $locations.each do |key, location| %>
-            <% if widgets[:buttons].any?{|button| button.location == key} %>
+            <% if widgets[:buttons].any?{|button| button.location == key and button.dpt == '1.001'} %>
               <div>
                 <div class="mb-2" id="heading<%= key %>_lighting">
                   <div class="row">
@@ -99,7 +113,7 @@
                 <div id="collapse<%= key %>_lighting" class="collapse" aria-labelledby="heading<%= key %>_lighting" data-parent="#accordion-lightings">
                   <div class="d-flex align-content-start flex-wrap">
                     <% widgets[:buttons].each do |button| %>
-                      <% if button.location == key %>
+                      <% if button.location == key and button.dpt == "1.001" %>
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
                             <div class="float-left">
@@ -203,7 +217,7 @@
       <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
         <div id="accordion-dimmers" class="accordion">
           <% $locations.each do |key, location| %>
-            <% if widgets[:sliders].any?{|slider| slider.location == key} %>
+            <% if widgets[:sliders].any?{|slider| slider.location == key and slider.dpt == '3.007'} %>
               <div>
                 <div class="mb-2" id="heading<%= key %>_dimmer">
                   <div class="row">
@@ -220,7 +234,7 @@
                 <div id="collapse<%= key %>_dimmer" class="collapse" aria-labelledby="heading<%= key %>_dimmer" data-parent="#accordion-dimmers">
                   <div class="d-flex align-content-start flex-wrap">
                     <% widgets[:sliders].each do |slider| %>
-                      <% if slider.location == key %>
+                      <% if slider.location == key and slider.dpt == '3.007' %>
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
                             <h5 class="mt-2"><%= slider.desc %></h5>
@@ -253,7 +267,7 @@
       <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == "Monitoring_Control" and text_field.dpt != '1.009' and text_field.dpt != '1.017'%>
+            <% if text_field.use == "Monitoring_Control" and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'%>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <h5 class="mt-2"><%= text_field.desc %></h5>
@@ -760,6 +774,147 @@
                               <% end %>
                             <% else %>
                             <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-radiator" role="tabpanel" aria-labelledby="nav-radiator-tab">
+        <div id="accordion-radiators" class="accordion">
+          <% $locations.each do |key, location| %>
+            <% if widgets[:sliders].any?{|slider| slider.location == key} %>
+              <div>
+                <div class="mb-2" id="heading<%= key %>_radiator">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_radiator" aria-expanded="true" aria-controls="collapse<%= key %>_radiator">
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                          <%= location %>
+                        </button>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div id="collapse<%= key %>_radiator" class="collapse" aria-labelledby="heading<%= key %>_radiator" data-parent="#accordion-radiators">
+                  <div class="d-flex align-content-start flex-wrap">
+                    <% widgets[:text_fields].each do |text_field| %>
+                      <% if text_field.location == key and text_field.use == "Monitoring_Control" and (text_field.dpt == '9.001' or text_field.dpt == '1.002') %>
+                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-8">
+                                <h5 class="mt-2"><%= text_field.desc %></h5>
+                              </div>
+                              <div class="col-4 text-right">
+                                <h5 class="mt-2">
+                                  <div id="widget_active_<%= text_field.id %>">
+                                    <% if text_field.dpt == "1.002" %>
+                                      <% if text_field.status == "on" or text_field.status == 0 %>
+                                        <div class="red-note"><%= t 'views.widget.radiator.low' %></div>
+                                        <div class="green-note d-none"><%= t 'views.widget.radiator.full' %></div>
+                                      <% else %>
+                                        <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
+                                        <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
+                                      <% end %>
+                                    <% else %>
+                                      <%= text_field.status %>
+                                    <% end %>
+                                  </div>
+                                  <% if text_field.dpt == "9.001" %>
+                                    <div class="margin-left">°C</div>
+                                  <% end %>
+                                </h5>
+                              </div>
+                            </div>
+                            <% if text_field.dpt == "9.001" and text_field.desc.match(/^Ist-Temperatur - Heizungsaktor/) %>
+                              <canvas id="canvas-temperature-radiators<%= text_field.id %>"
+                                      class="canvas-temperature-radiators"
+                                      data-type="linear-gauge"
+                                      data-width="270"
+                                      data-height="100"
+                                      data-min-value="-20"
+                                      data-max-value="40"
+                                      data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                      data-minor-ticks="5"
+                                      data-stroke-ticks="true"
+                                      data-ticks-width="20"
+                                      data-ticks-width-minor="10"
+                                      data-highlights='[
+                                {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                      data-highlights-width="20"
+                                      data-color-major-ticks="#000"
+                                      data-color-minor-ticks="#000"
+                                      data-color-title="#000"
+                                      data-color-units="#000"
+                                      data-color-numbers="#000"
+                                      data-color-plate="transparent"
+                                      data-border-shadow-width="0"
+                                      data-borders="false"
+                                      data-border-radius="6"
+                                      data-needle-type="arrow"
+                                      data-needle-width="12"
+                                      data-needle-start="50"
+                                      data-needle-end="140"
+                                      data-animation-duration="1500"
+                                      data-animation-rule="linear"
+                                      data-color-needle="#000"
+                                      data-color-bar-progress="#C0C0C0"
+                                      data-color-bar="#919191"
+                                      data-bar-stroke="0"
+                                      data-bar-width="0"
+                                      data-bar-begin-circle="false"
+                                      data-value="<%= text_field.status %>"
+                                      data-tick-side="left"
+                                      data-number-side="right"
+                                      data-needle-side="left"
+                                      data-font-units-size="30"
+                                      data-font-title-size="30"
+                                      data-font-numbers-size="32"
+                                      data-numbers-margin="-30"
+                              ></canvas>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
+                    <% widgets[:sliders].each do |slider| %>
+                      <% if slider.location == key %>
+                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                          <div class="card-body">
+                            <h5 class="mt-2"><%= slider.desc %></h5>
+                            <div class="">
+                              <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
+                                           html: { id: "edit_widget_#{slider.id}",
+                                                   class: "edit_widget" }, method: :patch do |f| %>
+                                <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                   name: "authenticity_token" %>
+                                <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                                <div class="slider-wrapper-horizontal">
+                                  <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                                    class: "custom-range", type: "range",
+                                                    disabled: (current_user.has_role? :observer),
+                                                    min: 0, max: 100, step: 1, value: slider.status %>
+                                </div>
+                              <% end %>
+                            </div>
                           </div>
                         </div>
                       <% end %>

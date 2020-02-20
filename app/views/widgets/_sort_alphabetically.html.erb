@@ -1,7 +1,7 @@
 <% if widgets.select{|key, hash| hash == [] }.count < 4 %>
   <div class="card-header" id="sort_alphabetically">
     <ul class="nav nav-tabs card-header-tabs" id="nav-tab">
-      <% if widgets[:buttons].any? %>
+      <% if widgets[:buttons].any?{|button| button.dpt == '1.001'} %>
         <li class="nav-item">
           <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
              role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -13,13 +13,13 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
         </li>
       <% end %>
-      <% if widgets[:sliders].any? %>
+      <% if widgets[:sliders].any?{|slider| slider.dpt == '3.007'} %>
         <li class="nav-item">
           <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'} %>
         <li class="nav-item">
           <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
@@ -35,11 +35,18 @@
         <li class="nav-item">
           <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
+        </li>
+      <% end %>
+      <% if (widgets[:sliders].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt == '5.001'})\
+        or (widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and (text_field.dpt == '1.002' or text_field.dpt == '9.001')}) %>
+        <li class="nav-item">
+          <a class="nav-link" id="nav-radiator-tab" data-toggle="tab" href="#nav-radiator"
+             role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.radiators' %></a>
         </li>
       <% end %>
     </ul>
     <ul class="nav nav-pills nav-stacked well" id="nav-tab-responsive">
-      <% if widgets[:buttons].any? %>
+      <% if widgets[:buttons].any?{|button| button.dpt == '1.001'} %>
         <li>
           <a class="nav-link active" id="nav-lightings-tab" data-toggle="tab" href="#nav-lightings"
              role="tab" aria-controls="nav-home" aria-selected="true"><%= t 'views.widget.lightings' %></a>
@@ -51,13 +58,13 @@
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.blinds' %></a>
         </li>
       <% end %>
-      <% if widgets[:sliders].any? %>
+      <% if widgets[:sliders].any?{|slider| slider.dpt == '3.007'} %>
         <li>
           <a class="nav-link" id="nav-dimmer-tab" data-toggle="tab" href="#nav-dimmer"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.dimmer' %></a>
         </li>
       <% end %>
-      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009'} %>
+      <% if widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'} %>
         <li>
           <a class="nav-link" id="nav-mc-tab" data-toggle="tab" href="#nav-mc"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.mc' %></a>
@@ -73,6 +80,13 @@
         <li>
           <a class="nav-link" id="nav-weather-tab" data-toggle="tab" href="#nav-weather"
              role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.weather' %></a>
+        </li>
+      <% end %>
+      <% if (widgets[:sliders].any?{|text_field| text_field.use == 'Monitoring_Control' and text_field.dpt == '5.001'})\
+        or (widgets[:text_fields].any?{|text_field| text_field.use == 'Monitoring_Control' and (text_field.dpt == '1.002' or text_field.dpt == '9.001')}) %>
+        <li>
+          <a class="nav-link" id="nav-radiator-tab" data-toggle="tab" href="#nav-radiator"
+             role="tab" aria-controls="nav-contact" aria-selected="false"><%= t 'views.widget.radiators' %></a>
         </li>
       <% end %>
     </ul>
@@ -82,7 +96,7 @@
       <div class="tab-pane fade show active" id="nav-lightings" role="tabpanel" aria-labelledby="nav-lightings-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:buttons].each do |button| %>
-            <% if button.use == "Lighting" %>
+            <% if button.use == "Lighting" and button.dpt == '1.001' %>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="float-left">
@@ -153,35 +167,37 @@
       <div class="tab-pane fade" id="nav-dimmer" role="tabpanel" aria-labelledby="nav-dimmer-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:sliders].each do |slider| %>
-            <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-              <div class="card-body">
-                <div>
-                  <h5 class="mt-2"><%= slider.desc %></h5>
-                </div>
-                <div class="">
-                  <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
-                               html: { id: "edit_widget_#{slider.id}",
-                                       class: "edit_widget" }, method: :patch do |f| %>
-                    <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                       name: "authenticity_token" %>
-                    <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                    <div class="slider-wrapper-horizontal">
-                      <%= f.range_field :status, id: "widget_active_#{slider.id}",
-                                        class: "custom-range", type: "range",
-                                        disabled: (current_user.has_role? :observer),
-                                        min: 0, max: 100, step: 1, value: slider.status %>
-                    </div>
-                  <% end %>
+            <% if slider.dpt == '3.007' %>
+              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                <div class="card-body">
+                  <div>
+                    <h5 class="mt-2"><%= slider.desc %></h5>
+                  </div>
+                  <div class="">
+                    <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
+                                 html: { id: "edit_widget_#{slider.id}",
+                                         class: "edit_widget" }, method: :patch do |f| %>
+                      <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                         name: "authenticity_token" %>
+                      <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                      <div class="slider-wrapper-horizontal">
+                        <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                          class: "custom-range", type: "range",
+                                          disabled: (current_user.has_role? :observer),
+                                          min: 0, max: 100, step: 1, value: slider.status %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
         </div>
       </div>
       <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == "Monitoring_Control" and text_field.dpt != '1.009' and text_field.dpt != '1.017'%>
+            <% if text_field.use == "Monitoring_Control" and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'%>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <h5 class="mt-2"><%= text_field.desc %></h5>
@@ -316,6 +332,71 @@
               </div>
             <% end %>
           <% end %>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-radiator" role="tabpanel" aria-labelledby="nav-radiator-tab">
+        <div id="accordion-radiators" class="accordion">
+          <div class="d-flex align-content-start flex-wrap">
+            <% widgets[:text_fields].each do |text_field| %>
+              <% if text_field.use == "Monitoring_Control" and (text_field.dpt == '9.001' or text_field.dpt == '1.002') %>
+                <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-8">
+                        <h5 class="mt-2"><%= text_field.desc %></h5>
+                      </div>
+                      <div class="col-4 text-right">
+                        <h5 class="mt-2">
+                          <div id="widget_active_<%= text_field.id %>">
+                            <% if text_field.dpt == "1.002" %>
+                              <% if text_field.status == "on" or text_field.status == 0 %>
+                                <div class="red-note"><%= t 'views.widget.radiator.low' %></div>
+                                <div class="green-note d-none"><%= t 'views.widget.radiator.full' %></div>
+                              <% else %>
+                                <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
+                                <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
+                              <% end %>
+                            <% else %>
+                              <%= text_field.status %>
+                            <% end %>
+                          </div>
+                          <% if text_field.dpt == "9.001" %>
+                            <div class="margin-left">°C</div>
+                          <% end %>
+                        </h5>
+                      </div>
+                    </div>
+                    <% if text_field.dpt == "9.001" %>
+                      <canvas id="canvas-temperature-radiators<%= text_field.id %>"
+                              class="canvas-temperature-radiators"></canvas>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+            <% widgets[:sliders].each do |slider| %>
+              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                <div class="card-body">
+                  <h5 class="mt-2"><%= slider.desc %></h5>
+                  <div class="">
+                    <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
+                                 html: { id: "edit_widget_#{slider.id}",
+                                         class: "edit_widget" }, method: :patch do |f| %>
+                      <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                         name: "authenticity_token" %>
+                      <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                      <div class="slider-wrapper-horizontal">
+                        <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                          class: "custom-range", type: "range",
+                                          disabled: (current_user.has_role? :observer),
+                                          min: 0, max: 100, step: 1, value: slider.status %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
