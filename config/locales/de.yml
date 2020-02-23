@@ -44,6 +44,7 @@ de:
         one: 'Konnte %{model} nicht speichern: ein Fehler.'
         other: 'Konnte %{model} nicht speichern: %{count} Fehler.'
   views:
+    keyboard: Klicken Sie hier, um die virtuelle Tastatur zu öffnen
     widgets: Widgets
     widget:
       lightings: Lampen

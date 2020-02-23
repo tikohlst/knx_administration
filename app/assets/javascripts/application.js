@@ -17,6 +17,8 @@
 //= require rails-ujs
 //= require activestorage
 //= require gauge.min.js
+//= require jquery.keyboard.js
+//= require jquery.keyboard.extension-typing.js
 //= require_tree .
 
 $(document).ready(function() {
@@ -25,5 +27,41 @@ $(document).ready(function() {
         $(this).attr('href').match(/sort_by=(.*)$/g);
         var sort_by = RegExp.$1;
         $('#actual_sort_by').val(sort_by.toString());
+    });
+
+    $('#user_username')
+        .keyboard({
+            openOn : null,
+            stayOpen : true,
+            layout : 'qwerty'
+        })
+        .addTyping();
+
+    $('#user_password')
+        .keyboard({
+            openOn : null,
+            stayOpen : true,
+            layout : 'qwerty'
+        })
+        .addTyping();
+
+    $('#keyboard_username').click(function(){
+        var kb = $('#user_username').getkeyboard();
+        // close the keyboard if the keyboard is visible and the button is clicked a second time
+        if ( kb.isOpen ) {
+            kb.close();
+        } else {
+            kb.reveal();
+        }
+    });
+
+    $('#keyboard_password').click(function(){
+        var kb = $('#user_password').getkeyboard();
+        // close the keyboard if the keyboard is visible and the button is clicked a second time
+        if ( kb.isOpen ) {
+            kb.close();
+        } else {
+            kb.reveal();
+        }
     });
 });

@@ -6,12 +6,16 @@
       <div class="form-group row">
         <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
           <%= f.text_field :username, placeholder: (t ('views.username')), class: "form-control" %>
+          <%= image_tag "keyboard.svg", id: "keyboard_username", class: "tooltip-tipsy",
+                        title: (t ('views.keyboard')) %>
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
           <%= f.password_field :password, autocomplete: "off", placeholder: (t ('views.password')), class: "form-control" %>
+          <%= image_tag "keyboard.svg", id: "keyboard_password", class: "tooltip-tipsy",
+                        title: (t ('views.keyboard')) %>
         </div>
       </div>
 

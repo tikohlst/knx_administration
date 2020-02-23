@@ -44,6 +44,7 @@ en:
         one: 1 error prohibited this %{model} from being saved
         other: '%{count} errors prohibited this %{model} from being saved'
   views:
+    keyboard: Click to open the virtual keyboard
     widgets: Widgets
     widget:
       lightings: Lightings
