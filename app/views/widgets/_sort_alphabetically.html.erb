@@ -257,15 +257,9 @@
                     <div class="col-4 text-right">
                       <h5 class="mt-2">
                         <div id="widget_active_<%= text_field.id %>">
-                          <% if text_field.dpt == "1.002" %>
-                            <% if text_field.status == "on" %>
-                              <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% else %>
-                              <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
-                              <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
-                            <% end %>
-                          <% else %>
+                          <% if %w[9.004 9.005].include? text_field.dpt %>
+                            <%= text_field.status.to_i %>
+                          <% elsif %w[9.001 9.029].include? text_field.dpt %>
                             <%= text_field.status %>
                           <% end %>
                         </div>
@@ -285,25 +279,35 @@
                       </h5>
                     </div>
                   </div>
+                  <% if text_field.dpt == "1.002" %>
+                    <div class="row justify-content-center">
+                      <% if text_field.status == "on" %>
+                        <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
+                        <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
+                      <% else %>
+                        <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
+                        <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
+                      <% end %>
+                    </div>
+                    <div class="row"></div>
+                  <% end %>
                   <% case text_field.dpt %>
                   <% when "9.001" %>
                     <% case text_field.desc %>
                     <% when "Temperatur" %>
                       <canvas id="canvas-temperature"></canvas>
-                    <% when "Temperatur 1" %>
-                      <canvas id="canvas-temperature1"></canvas>
-                    <% when "Temperatur 2" %>
-                      <canvas id="canvas-temperature2"></canvas>
+                    <% when "Temperatur rechts" %>
+                      <canvas id="canvas-temperature-right"></canvas>
+                    <% when "Temperatur links" %>
+                      <canvas id="canvas-temperature-left"></canvas>
                     <% end %>
                   <% when "9.005" %>
-                    <div class="row">
-                      <div class="col">
-                        <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
-                          <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
-                        <% else %>
-                          <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
-                        <% end %>
-                      </div>
+                    <div class="row justify-content-center">
+                      <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
+                        <div style="width:62px;height:32px;" class="red-note mt-1"><%= t 'views.widget.storm_alarm.on' %></div>
+                      <% else %>
+                        <div style="width:93px;height:32px;" class="green-note mt-1"><%= t 'views.widget.storm_alarm.off' %></div>
+                      <% end %>
                     </div>
                     <canvas id="canvas-wind-speed"></canvas>
                   <% when "9.004" %>
@@ -342,31 +346,39 @@
                 <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-8">
-                        <h5 class="mt-2"><%= text_field.desc %></h5>
-                      </div>
-                      <div class="col-4 text-right">
-                        <h5 class="mt-2">
-                          <div id="widget_active_<%= text_field.id %>">
-                            <% if text_field.dpt == "1.002" %>
-                              <% if text_field.status == "on" or text_field.status == 0 %>
-                                <div class="red-note"><%= t 'views.widget.radiator.low' %></div>
-                                <div class="green-note d-none"><%= t 'views.widget.radiator.full' %></div>
-                              <% else %>
-                                <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
-                                <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
-                              <% end %>
-                            <% else %>
+                      <% if text_field.dpt == "1.002" %>
+                        <div class="col-12">
+                          <h5 class="mt-2"><%= text_field.desc %></h5>
+                        </div>
+                      <% else %>
+                        <div class="col-8">
+                          <h5 class="mt-2"><%= text_field.desc %></h5>
+                        </div>
+                        <div class="col-4 text-right">
+                          <h5 class="mt-2">
+                            <div id="widget_active_<%= text_field.id %>">
                               <%= text_field.status %>
+                            </div>
+                            <% if text_field.dpt == "9.001" %>
+                              <div class="margin-left">°C</div>
                             <% end %>
-                          </div>
-                          <% if text_field.dpt == "9.001" %>
-                            <div class="margin-left">°C</div>
-                          <% end %>
-                        </h5>
-                      </div>
+                          </h5>
+                        </div>
+                      <% end %>
                     </div>
-                    <% if text_field.dpt == "9.001" %>
+                    <% if text_field.dpt == "1.002" %>
+                      <div class="row justify-content-center">
+                        <% if text_field.status == "on" or text_field.status == 1 %>
+                          <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
+                          <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
+                        <% else %>
+                          <div class="red-note"><%= t 'views.widget.radiator.low' %></div>
+                          <div class="green-note d-none"><%= t 'views.widget.radiator.full' %></div>
+                        <% end %>
+                      </div>
+                      <div class="row">
+                      </div>
+                    <% elsif text_field.dpt == "9.001" and text_field.desc.match(/^Ist-Temperatur - Heizungsaktor/) %>
                       <canvas id="canvas-temperature-radiators<%= text_field.id %>"
                               class="canvas-temperature-radiators"></canvas>
                     <% end %>

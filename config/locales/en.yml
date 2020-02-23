@@ -58,6 +58,9 @@ en:
       rain_alarm:
         'on': Rain!
         'off': No rain
+      storm_alarm:
+        'on': Storm!
+        'off': No storm
       radiators: Radiators
       radiator:
         full: Full

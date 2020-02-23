@@ -30,10 +30,22 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
       when "slider"
         $('#widget_active_' + data.id).val(data.status)
       when "textField"
-        if (data.dpt != '1.009')
-          # Change textField, if it is not a status of a window
-          $('#widget_active_' + data.id).text(data.status)
+        # Change textField, if it is not a status of a window or the rain alarm
+        if (data.dpt != '1.002' && data.dpt != '1.009')
+          # Show brightness and wind speed as integers
+          if (data.dpt == '9.004' || data.dpt == '9.005')
+            $('#widget_active_' + data.id).text(Math.round(data.status))
+          else
+            $('#widget_active_' + data.id).text(data.status)
         switch data.dpt
+          when '1.002'
+            # Update rain alarm status
+            if (data.status == 'on' || data.status == 1)
+              $('#widget_active_' + data.id + ' > .red-note').addClass('d-none')
+              $('#widget_active_' + data.id + ' > .green-note').removeClass('d-none')
+            else
+              $('#widget_active_' + data.id + ' > .green-note').addClass('d-none')
+              $('#widget_active_' + data.id + ' > .red-note').removeClass('d-none')
           when '1.009'
             # Update open and closed status for windows and doors
             if (data.status == 'off')
@@ -47,13 +59,13 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
             switch data.desc
               when 'Temperatur'
                 $('#canvas-temperature').attr('data-value', data.status)
-              when 'Temperatur 1'
-                $('#canvas-temperature1').attr('data-value', data.status)
-              when 'Temperatur 2'
-                $('#canvas-temperature2').attr('data-value', data.status)
+              when 'Temperatur rechts'
+                $('#canvas-temperature-right').attr('data-value', data.status)
+              when 'Temperatur links'
+                $('#canvas-temperature-left').attr('data-value', data.status)
           when '9.004'
             # Update brightness
-            $('#canvas-brightness').attr('data-value', data.status)
+            $('#canvas-brightness').attr('data-value', Math.log10.parseFloat(data.status))
           when '9.005'
             # Update wind speed
             $('#canvas-wind-speed').attr('data-value', data.status)

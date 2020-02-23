@@ -372,15 +372,9 @@
                               <div class="col-4 text-right">
                                 <h5 class="mt-2">
                                   <div id="widget_active_<%= text_field.id %>">
-                                    <% if text_field.dpt == "1.002" %>
-                                      <% if text_field.status == "on" %>
-                                        <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
-                                        <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
-                                      <% else %>
-                                        <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
-                                        <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
-                                      <% end %>
-                                    <% else %>
+                                    <% if %w[9.004 9.005].include? text_field.dpt %>
+                                      <%= text_field.status.to_i %>
+                                    <% elsif %w[9.001 9.029].include? text_field.dpt %>
                                       <%= text_field.status %>
                                     <% end %>
                                   </div>
@@ -400,6 +394,18 @@
                                 </h5>
                               </div>
                             </div>
+                            <% if text_field.dpt == "1.002" %>
+                              <div class="row justify-content-center">
+                                <% if text_field.status == "on" %>
+                                  <div class="red-note"><%= t 'views.widget.rain_alarm.on' %></div>
+                                  <div class="green-note d-none"><%= t 'views.widget.rain_alarm.off' %></div>
+                                <% else %>
+                                  <div class="red-note d-none"><%= t 'views.widget.rain_alarm.on' %></div>
+                                  <div class="green-note"><%= t 'views.widget.rain_alarm.off' %></div>
+                                <% end %>
+                              </div>
+                              <div class="row"></div>
+                            <% end %>
                             <% case text_field.dpt %>
                             <% when "9.001" %>
                               <% case text_field.desc %>
@@ -416,18 +422,18 @@
                                         data-ticks-width="20"
                                         data-ticks-width-minor="10"
                                         data-highlights='[
-                                  {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                  {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                  {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                  {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                                  {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                          {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                          {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                          {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                          {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                          {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                          {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                          {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                          {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                          {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                          {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                          {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                          {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
                                         data-highlights-width="20"
                                         data-color-major-ticks="#000"
                                         data-color-minor-ticks="#000"
@@ -459,8 +465,8 @@
                                         data-font-numbers-size="32"
                                         data-numbers-margin="-30"
                                 ></canvas>
-                              <% when "Temperatur 1" %>
-                                <canvas id="canvas-temperature1"
+                              <% when "Temperatur rechts" %>
+                                <canvas id="canvas-temperature-right"
                                         data-type="linear-gauge"
                                         data-width="270"
                                         data-height="100"
@@ -472,18 +478,18 @@
                                         data-ticks-width="20"
                                         data-ticks-width-minor="10"
                                         data-highlights='[
-                                  {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                  {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                  {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                  {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                                  {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                          {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                          {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                          {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                          {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                          {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                          {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                          {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                          {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                          {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                          {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                          {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                          {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
                                         data-highlights-width="20"
                                         data-color-major-ticks="#000"
                                         data-color-minor-ticks="#000"
@@ -515,8 +521,8 @@
                                         data-font-numbers-size="32"
                                         data-numbers-margin="-30"
                                 ></canvas>
-                              <% when "Temperatur 2" %>
-                                <canvas id="canvas-temperature2"
+                              <% when "Temperatur links" %>
+                                <canvas id="canvas-temperature-left"
                                         data-type="linear-gauge"
                                         data-width="270"
                                         data-height="100"
@@ -528,18 +534,18 @@
                                         data-ticks-width="20"
                                         data-ticks-width-minor="10"
                                         data-highlights='[
-                                  {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                  {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                  {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                  {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                                  {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                                  {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                                  {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                                  {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                                  {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                                  {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                                  {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                                  {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                          {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                          {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                          {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                          {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                          {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                          {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                          {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                          {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                          {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                          {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                          {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                          {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
                                         data-highlights-width="20"
                                         data-color-major-ticks="#000"
                                         data-color-minor-ticks="#000"
@@ -573,14 +579,12 @@
                                 ></canvas>
                               <% end %>
                             <% when "9.005" %>
-                              <div class="row">
-                                <div class="col">
-                                  <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
-                                    <div style="width:62px;height:32px;" class="red-note mt-1">Sturm!</div>
-                                  <% else %>
-                                    <div style="width:93px;height:32px;" class="green-note mt-1">Kein Sturm</div>
-                                  <% end %>
-                                </div>
+                              <div class="row justify-content-center">
+                                <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
+                                  <div style="width:62px;height:32px;" class="red-note mt-1"><%= t 'views.widget.storm_alarm.on' %></div>
+                                <% else %>
+                                  <div style="width:93px;height:32px;" class="green-note mt-1"><%= t 'views.widget.storm_alarm.off' %></div>
+                                <% end %>
                               </div>
                               <canvas id="canvas-wind-speed"
                                 data-type="linear-gauge"
@@ -640,21 +644,23 @@
                                     data-width="260"
                                     data-height="100"
                                     data-min-value="0"
-                                    data-max-value="20000"
-                                    data-major-ticks="[0,5000,10000,15000,20000]"
+                                    data-max-value="5"
+                                    data-major-ticks="[0,10,100,1000,10000,100000]"
                                     data-minor-ticks="5"
                                     data-stroke-ticks="true"
                                     data-ticks-width="20"
                                     data-ticks-width-minor="10"
                                     data-highlights='[
-                                      {"from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)"},
-                                      {"from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)"},
-                                      {"from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)"},
-                                      {"from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)"},
-                                      {"from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)"},
-                                      {"from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)"},
-                                      {"from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)"},
-                                      {"from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)"}]'
+                                      {"from": 0, "to": 1, "color": "rgba(0, 0, 0, 0.8)"},
+                                      {"from": 1, "to": 2, "color": "rgba(0, 0, 0, 0.8)"},
+                                      {"from": 2, "to": 3, "color": "rgba(0, 0, 0, 0.7)"},
+                                      {"from": 3, "to": 3.2, "color": "rgba(0, 0, 0, 0.6)"},
+                                      {"from": 3.2, "to": 3.4, "color": "rgba(0, 0, 0, 0.5)"},
+                                      {"from": 3.4, "to": 3.6, "color": "rgba(0, 0, 0, 0.4)"},
+                                      {"from": 3.6, "to": 3.8, "color": "rgba(0, 0, 0, 0.3)"},
+                                      {"from": 3.8, "to": 4.0, "color": "rgba(0, 0, 0, 0.2)"},
+                                      {"from": 4.0, "to": 4.4, "color": "rgba(0, 0, 0, 0.1)"},
+                                      {"from": 4.4, "to": 5, "color": "rgba(0, 0, 0, 0.0)"}]'
                                     data-highlights-width="20"
                                     data-color-major-ticks="#000"
                                     data-color-minor-ticks="#000"
@@ -677,14 +683,14 @@
                                     data-bar-stroke="0"
                                     data-bar-width="0"
                                     data-bar-begin-circle="false"
-                                    data-value="<%= text_field.status %>"
+                                    data-value="<%= Math.log10(text_field.status.to_f) %>"
                                     data-tick-side="left"
                                     data-number-side="right"
                                     data-needle-side="left"
                                     data-font-units-size="30"
                                     data-font-title-size="30"
-                                    data-font-numbers-size="28"
-                                    data-numbers-margin="-30"
+                                    data-font-numbers-size="22"
+                                    data-numbers-margin="-35"
                                   ></canvas>
                                 </div>
                               </div>
@@ -809,31 +815,39 @@
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
                             <div class="row">
-                              <div class="col-8">
-                                <h5 class="mt-2"><%= text_field.desc %></h5>
-                              </div>
-                              <div class="col-4 text-right">
-                                <h5 class="mt-2">
-                                  <div id="widget_active_<%= text_field.id %>">
-                                    <% if text_field.dpt == "1.002" %>
-                                      <% if text_field.status == "on" or text_field.status == 0 %>
-                                        <div class="red-note"><%= t 'views.widget.radiator.low' %></div>
-                                        <div class="green-note d-none"><%= t 'views.widget.radiator.full' %></div>
-                                      <% else %>
-                                        <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
-                                        <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
-                                      <% end %>
-                                    <% else %>
+                              <% if text_field.dpt == "1.002" %>
+                                <div class="col-12">
+                                  <h5 class="mt-2"><%= text_field.desc %></h5>
+                                </div>
+                              <% else %>
+                                <div class="col-8">
+                                  <h5 class="mt-2"><%= text_field.desc %></h5>
+                                </div>
+                                <div class="col-4 text-right">
+                                  <h5 class="mt-2">
+                                    <div id="widget_active_<%= text_field.id %>">
                                       <%= text_field.status %>
+                                    </div>
+                                    <% if text_field.dpt == "9.001" %>
+                                      <div class="margin-left">°C</div>
                                     <% end %>
-                                  </div>
-                                  <% if text_field.dpt == "9.001" %>
-                                    <div class="margin-left">°C</div>
-                                  <% end %>
-                                </h5>
-                              </div>
+                                  </h5>
+                                </div>
+                              <% end %>
                             </div>
-                            <% if text_field.dpt == "9.001" and text_field.desc.match(/^Ist-Temperatur - Heizungsaktor/) %>
+                            <% if text_field.dpt == "1.002" %>
+                              <div class="row justify-content-center">
+                                <% if text_field.status == "on" or text_field.status == 1 %>
+                                  <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
+                                  <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
+                                <% else %>
+                                  <div class="red-note"><%= t 'views.widget.radiator.low' %></div>
+                                  <div class="green-note d-none"><%= t 'views.widget.radiator.full' %></div>
+                                <% end %>
+                              </div>
+                              <div class="row">
+                              </div>
+                            <% elsif text_field.dpt == "9.001" and text_field.desc.match(/^Ist-Temperatur - Heizungsaktor/) %>
                               <canvas id="canvas-temperature-radiators<%= text_field.id %>"
                                       class="canvas-temperature-radiators"
                                       data-type="linear-gauge"
@@ -847,18 +861,18 @@
                                       data-ticks-width="20"
                                       data-ticks-width-minor="10"
                                       data-highlights='[
-                                {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
-                                {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
-                                {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
-                                {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
-                                {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
-                                {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
-                                {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
-                                {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
-                                {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
+                                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
+                                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
+                                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
+                                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
+                                        {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
+                                        {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
+                                        {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
+                                        {"from": 15, "to": 20, "color": "rgba(255, 217, 3, 1)"},
+                                        {"from": 20, "to": 25, "color": "rgba(254, 171, 2, 1)"},
+                                        {"from": 25, "to": 30, "color": "rgba(255, 120, 2, 1)"},
+                                        {"from": 30, "to": 35, "color": "rgba(255, 79, 1, 1)"},
+                                        {"from": 35, "to": 40, "color": "rgba(255, 0, 1, 1)"}]'
                                       data-highlights-width="20"
                                       data-color-major-ticks="#000"
                                       data-color-minor-ticks="#000"

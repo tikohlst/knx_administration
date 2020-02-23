@@ -10,7 +10,7 @@ class WidgetsController < ApplicationController
     current_user.accesses.each do |access|
       access_org_units << OrgUnit.where(id: access.org_unit_id).pluck(:key).first
     end
-    # Get all widgets by the org units were the user has access to
+    # Get all widgets by the org units that the user has access to
     buttons       = Widget::Button.find_by_org_units(access_org_units)
     progress_bars = Widget::ProgressBar.find_by_org_units(access_org_units)
     sliders       = Widget::Slider.find_by_org_units(access_org_units)

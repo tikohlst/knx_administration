@@ -106,9 +106,9 @@ var canvasTemperature = new LinearGauge({
     numbersMargin: -30
 }).draw();
 
-$( '#canvas-temperature1' ).replaceWith( '<canvas id="canvas-temperature1"></canvas>' );
-var canvasTemperature1 = new LinearGauge({
-    renderTo: "canvas-temperature1",
+$( '#canvas-temperature-right' ).replaceWith( '<canvas id="canvas-temperature-right"></canvas>' );
+var canvasTemperatureRight = new LinearGauge({
+    renderTo: "canvas-temperature-right",
     type: "linear-gauge",
     width: 270,
     height: 100,
@@ -154,7 +154,7 @@ var canvasTemperature1 = new LinearGauge({
     barStroke: 0,
     barWidth: 0,
     barBeginCircle: false,
-    value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Temperatur 1"}.first.try(:status) %>,
+    value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Temperatur rechts"}.first.try(:status) %>,
     tickSide: "left",
     numberSide: "right",
     needleSide: "left",
@@ -164,9 +164,9 @@ var canvasTemperature1 = new LinearGauge({
     numbersMargin: -30
 }).draw();
 
-$( '#canvas-temperature2' ).replaceWith( '<canvas id="canvas-temperature2"></canvas>' );
-var canvasTemperature2 = new LinearGauge({
-    renderTo: "canvas-temperature2",
+$( '#canvas-temperature-left' ).replaceWith( '<canvas id="canvas-temperature-left"></canvas>' );
+var canvasTemperatureLeft = new LinearGauge({
+    renderTo: "canvas-temperature-left",
     type: "linear-gauge",
     width: 270,
     height: 100,
@@ -212,7 +212,7 @@ var canvasTemperature2 = new LinearGauge({
     barStroke: 0,
     barWidth: 0,
     barBeginCircle: false,
-    value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Temperatur 2"}.first.try(:status) %>,
+    value: <%= @widgets[:text_fields].select{|widget| widget.desc == "Temperatur links"}.first.try(:status) %>,
     tickSide: "left",
     numberSide: "right",
     needleSide: "left",
@@ -353,21 +353,23 @@ var canvasBrightness = new LinearGauge({
     width: 260,
     height: 100,
     minValue: 0,
-    maxValue: 20000,
-    majorTicks: [0,5000,10000,15000,20000],
+    maxValue: 5,
+    majorTicks: [0,10,100,1000,10000,100000],
     minorTicks: 5,
     strokeTicks: true,
     ticksWidth: 20,
     ticksWidthMinor: 10,
     highlights: [
-        { "from": 0, "to": 2500, "color": "rgba(0, 0, 0, 0.8)" },
-        { "from": 2500, "to": 5000, "color": "rgba(0, 0, 0, 0.7)" },
-        { "from": 5000, "to": 7500, "color": "rgba(0, 0, 0, 0.6)" },
-        { "from": 7500, "to": 10000, "color": "rgba(0, 0, 0, 0.5)" },
-        { "from": 10000, "to": 12500, "color": "rgba(0, 0, 0, 0.4)" },
-        { "from": 12500, "to": 15000, "color": "rgba(0, 0, 0, 0.3)" },
-        { "from": 15000, "to": 17500, "color": "rgba(0, 0, 0, 0.2)" },
-        { "from": 17500, "to": 20000, "color": "rgba(0, 0, 0, 0.1)" }],
+        {"from": 0, "to": 1, "color": "rgba(0, 0, 0, 0.8)"},
+        {"from": 1, "to": 2, "color": "rgba(0, 0, 0, 0.8)"},
+        {"from": 2, "to": 3, "color": "rgba(0, 0, 0, 0.7)"},
+        {"from": 3, "to": 3.2, "color": "rgba(0, 0, 0, 0.6)"},
+        {"from": 3.2, "to": 3.4, "color": "rgba(0, 0, 0, 0.5)"},
+        {"from": 3.4, "to": 3.6, "color": "rgba(0, 0, 0, 0.4)"},
+        {"from": 3.6, "to": 3.8, "color": "rgba(0, 0, 0, 0.3)"},
+        {"from": 3.8, "to": 4.0, "color": "rgba(0, 0, 0, 0.2)"},
+        {"from": 4.0, "to": 4.4, "color": "rgba(0, 0, 0, 0.1)"},
+        {"from": 4.4, "to": 5, "color": "rgba(0, 0, 0, 0.0)"}],
     highlightsWidth: 20,
     colorMajorTicks: "#000",
     colorMinorTicks: "#000",
@@ -390,14 +392,14 @@ var canvasBrightness = new LinearGauge({
     barStroke: 0,
     barWidth: 0,
     barBeginCircle: false,
-    value: <%= @widgets[:text_fields].select{|widget| widget.dpt == "9.004"}.first.try(:status) %>,
+    value: <%= Math.log10(@widgets[:text_fields].select{|widget| widget.dpt == "9.004"}.first.try(:status).to_f) %>,
     tickSide: "left",
     numberSide: "right",
     needleSide: "left",
     fontUnitsSize: 30,
     fontTitleSize: 30,
-    fontNumbersSize: 28,
-    numbersMargin: -30
+    fontNumbersSize: 22,
+    numbersMargin: -35
 }).draw();
 <% end %>
 
