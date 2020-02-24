@@ -61,7 +61,9 @@ class Widget
       # Update widget status
       @widget.status = (status == :on ? 1.0 : 0.0).to_i
       # Send the update to all running sessions
-      ActionCable.server.broadcast 'widgets', {type: "button", id: self.id, status: @widget.status}
+      unless ActionCable.server.logger.nil?
+        ActionCable.server.broadcast 'widgets', {type: "button", id: self.id, status: @widget.status}
+      end
     end
 
     # Gets called when a telegram should be send to the knx-bus
@@ -94,7 +96,9 @@ class Widget
       # Update widget status
       @widget.status = {position: (status.position * 100).to_i, slider_status: status.slider_status}
       # Send the update to all running sessions
-      ActionCable.server.broadcast 'widgets', {type: "progressBar", id: self.id, status: @widget.status}
+      unless ActionCable.server.logger.nil?
+        ActionCable.server.broadcast 'widgets', {type: "progressBar", id: self.id, status: @widget.status}
+      end
     end
 
     # Gets called when a telegram should be send to the knx-bus
@@ -138,7 +142,9 @@ class Widget
       # Update widget status
       @widget.status = status
       # Send the update to all running sessions
-      ActionCable.server.broadcast 'widgets', {type: "slider", id: self.id, status: @widget.status}
+      unless ActionCable.server.logger.nil?
+        ActionCable.server.broadcast 'widgets', {type: "slider", id: self.id, status: @widget.status}
+      end
     end
 
     # Gets called when a telegram should be send to the knx-bus
@@ -173,7 +179,11 @@ class Widget
                          status.to_s
                        end
       # Send the update to all running sessions
-      ActionCable.server.broadcast 'widgets', {type: "textField", id: self.id, status: @widget.status, dpt: @widget.dpt, desc: @widget.desc}
+      unless ActionCable.server.logger.nil?
+        ActionCable.server.broadcast 'widgets',
+          {type: "textField", id: self.id, status: @widget.status,
+          dpt: @widget.dpt, desc: @widget.desc}
+      end
     end
   end
 end
