@@ -59,16 +59,40 @@ class Widget
       # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
-      @widget.status = (status == :on ? 1.0 : 0.0).to_i
+      @widget.status = if status == :on
+                         # Extra logic for a special light switch that turns
+                         # off the light when the light is on and you press
+                         # the switch again
+                         @widget.status == 1 ? 0 : 1
+                       else
+                         0
+                       end
       # Send the update to all running sessions
       unless ActionCable.server.logger.nil?
         ActionCable.server.broadcast 'widgets', {type: "button", id: self.id, status: @widget.status}
       end
+
+      # Extra logic for a special light switch that turns off two lights with one switch
+      if (["Deckenlampe 1", "Deckenlampe 2"].include? self.desc) and (status == :off)
+        # Send the update to all running sessions
+        unless ActionCable.server.logger.nil?
+          id = (self.desc == "Deckenlampe 1" ? self.id + 1 : self.id - 1)
+          self.class.find_by_id(id).status = 0
+          ActionCable.server.broadcast 'widgets', {type: "button", id: id, status: 0}
+        end
+      end
     end
 
     # Gets called when a telegram should be send to the knx-bus
-    def send_param
-      self.device.send(:toggle)
+    def send_param(status)
+      case status
+      when "0"
+        self.device.send(:off)
+      when "1"
+        self.device.send(:on)
+      else
+        puts "Error: '#{status}' is no valid value!"
+      end
     end
   end
 

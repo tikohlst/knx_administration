@@ -81,13 +81,13 @@ class WidgetsController < ApplicationController
     @widget = Widget.find_by_id(params[:id])
     case @widget
     when Widget::Button
-      @widget.send_param
+      @widget.send_param(params[:widget][:status])
     when Widget::ProgressBar
       @widget.send_param(params[:progress_bar])
     when Widget::Slider
       @widget.send_param(params[:status])
     else
-      puts "No valid widget!"
+      puts "Error: '#{@widget}' is no valid widget!"
     end
 
     respond_to do |format|
