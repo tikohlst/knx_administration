@@ -137,7 +137,7 @@ class Widget
       when "step_forward"
         self.device.send(:increase)
       else
-        puts "Error: No valid direction"
+        puts "Error: '#{direction}' is no valid direction!"
       end
     end
   end
