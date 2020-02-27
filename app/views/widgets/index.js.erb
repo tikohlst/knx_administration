@@ -228,7 +228,7 @@ var canvasTemperatureLeft = new LinearGauge({
       text_field.dpt == '9.001' } %>
   <% @widgets[:text_fields].each do |text_field| %>
     <% if text_field.dpt == "9.001" and text_field.desc.match(/^Ist-Temperatur - Heizungsaktor/) %>
-      $( '#canvas-temperature-radiators<%= text_field.id %>' ).replaceWith( '<canvas id="canvas-temperature-radiators<%= text_field.id %>"></canvas>' );
+      $( '#canvas-temperature-radiators<%= text_field.id %>' ).replaceWith( '<canvas id="canvas-temperature-radiators<%= text_field.id %>" class="canvas-temperature-radiators"></canvas>' );
       var canvasTemperatureRadiators = new LinearGauge({
           renderTo: "canvas-temperature-radiators<%= text_field.id %>",
           type: "linear-gauge",

@@ -245,9 +245,9 @@
       <div class="tab-pane fade" id="nav-weather" role="tabpanel" aria-labelledby="nav-weather-tab">
         <div class="d-flex align-content-start flex-wrap">
           <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == 'Weather' and
-                %w[ T_min T_max v_max Windalarm ].exclude?(text_field.desc) and
-                %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
+            <% if text_field.use == 'Weather' \
+                and [ "T_min", "T_max", "v_max", "Windalarm", "Temperatur links", "Temperatur rechts" ].exclude?(text_field.desc) \
+                and %w[ 1.002 9.001 9.004 9.005 9.029 ].include?(text_field.dpt) %>
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <div class="row">
@@ -293,14 +293,7 @@
                   <% end %>
                   <% case text_field.dpt %>
                   <% when "9.001" %>
-                    <% case text_field.desc %>
-                    <% when "Temperatur" %>
-                      <canvas id="canvas-temperature"></canvas>
-                    <% when "Temperatur rechts" %>
-                      <canvas id="canvas-temperature-right"></canvas>
-                    <% when "Temperatur links" %>
-                      <canvas id="canvas-temperature-left"></canvas>
-                    <% end %>
+                    <canvas id="canvas-temperature"></canvas>
                   <% when "9.005" %>
                     <div class="row justify-content-center">
                       <% if widgets[:text_fields].select{|widget| widget.desc == "Sturm! (v > 20m/s)"}.first.try(:status) == 1 %>
@@ -341,18 +334,49 @@
       <div class="tab-pane fade" id="nav-radiator" role="tabpanel" aria-labelledby="nav-radiator-tab">
         <div id="accordion-radiators" class="accordion">
           <div class="d-flex align-content-start flex-wrap">
+            <h5 class="w-100"><%= t 'views.widget.thermometer' %></h5>
             <% widgets[:text_fields].each do |text_field| %>
-              <% if text_field.use == "Monitoring_Control" and (text_field.dpt == '9.001' or text_field.dpt == '1.002') %>
+              <% if text_field.use == 'Weather' \
+                  and [ "Temperatur links", "Temperatur rechts" ].include?(text_field.desc) \
+                  and %w[ 9.001 ].include?(text_field.dpt) %>
+                <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-8">
+                        <h5 class="mt-2"><%= text_field.desc %></h5>
+                      </div>
+                      <div class="col-4 text-right">
+                        <h5 class="mt-2">
+                          <div id="widget_active_<%= text_field.id %>">
+                            <%= text_field.status %>
+                          </div>
+                          <div class="margin-left">°C</div>
+                        </h5>
+                      </div>
+                    </div>
+                    <% case text_field.desc %>
+                    <% when "Temperatur rechts" %>
+                      <canvas id="canvas-temperature-right"></canvas>
+                    <% when "Temperatur links" %>
+                      <canvas id="canvas-temperature-left"></canvas>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+            <% widgets[:heating_actors].each do |heating_actor| %>
+              <h5 class="w-100"><%= heating_actor %></h5>
+              <% widgets[:text_fields].select{|text_field| text_field.desc.match(/.*#{heating_actor}/)}.each do |text_field| %>
                 <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                   <div class="card-body">
                     <div class="row">
                       <% if text_field.dpt == "1.002" %>
                         <div class="col-12">
-                          <h5 class="mt-2"><%= text_field.desc %></h5>
+                          <h5 class="mt-2"><%= text_field.desc[/(.*)( - Heizungsaktor.*)/, 1] %></h5>
                         </div>
                       <% else %>
                         <div class="col-8">
-                          <h5 class="mt-2"><%= text_field.desc %></h5>
+                          <h5 class="mt-2"><%= text_field.desc[/(.*)( - Heizungsaktor.*)/, 1] %></h5>
                         </div>
                         <div class="col-4 text-right">
                           <h5 class="mt-2">
@@ -385,28 +409,28 @@
                   </div>
                 </div>
               <% end %>
-            <% end %>
-            <% widgets[:sliders].each do |slider| %>
-              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                <div class="card-body">
-                  <h5 class="mt-2"><%= slider.desc %></h5>
-                  <div class="">
-                    <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
-                                 html: { id: "edit_widget_#{slider.id}",
-                                         class: "edit_widget" }, method: :patch do |f| %>
-                      <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                         name: "authenticity_token" %>
-                      <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                      <div class="slider-wrapper-horizontal">
-                        <%= f.range_field :status, id: "widget_active_#{slider.id}",
-                                          class: "custom-range", type: "range",
-                                          disabled: (current_user.has_role? :observer),
-                                          min: 0, max: 100, step: 1, value: slider.status %>
-                      </div>
-                    <% end %>
+              <% widgets[:sliders].select{|slider| slider.desc.match(/.*#{heating_actor}/)}.each do |slider| %>
+                <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                  <div class="card-body">
+                    <h5 class="mt-2"><%= slider.desc %></h5>
+                    <div class="">
+                      <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
+                                   html: { id: "edit_widget_#{slider.id}",
+                                           class: "edit_widget" }, method: :patch do |f| %>
+                        <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                           name: "authenticity_token" %>
+                        <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                        <div class="slider-wrapper-horizontal">
+                          <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                            class: "custom-range", type: "range",
+                                            disabled: (current_user.has_role? :observer),
+                                            min: 0, max: 100, step: 1, value: slider.status %>
+                        </div>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
-              </div>
+              <% end %>
             <% end %>
           </div>
         </div>

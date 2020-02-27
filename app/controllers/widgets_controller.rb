@@ -59,6 +59,15 @@ class WidgetsController < ApplicationController
       end
     end
 
+    # Get all the names of the heating actuators
+    heating_actors = []
+    @widgets[:text_fields].each do |widget|
+      if widget.desc.include? "Heizungsaktor"
+        heating_actors |= [widget.desc[/.*(Heizungsaktor.*)/, 1]]
+      end
+    end
+    @widgets[:heating_actors] = heating_actors
+
     respond_to do |format|
       case params[:sort_by]
       when 'org_units'

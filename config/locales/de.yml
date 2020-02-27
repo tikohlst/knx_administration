@@ -66,6 +66,7 @@ de:
       radiator:
         full: Voll
         low: Schwach
+      thermometer: Thermometer
     role: Rolle
     'on': An
     'off': Aus

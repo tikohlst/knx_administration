@@ -63,6 +63,8 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
                 $('#canvas-temperature-right').attr('data-value', data.status)
               when 'Temperatur links'
                 $('#canvas-temperature-left').attr('data-value', data.status)
+              when 'Ist-Temperatur - Heizungsaktor 1'
+                $('#canvas-temperature-radiators' + data.id).attr('data-value', data.status)
           when '9.004'
             # Update brightness
             $('#canvas-brightness').attr('data-value', Math.log10.parseFloat(data.status))
