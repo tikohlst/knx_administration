@@ -374,7 +374,9 @@
                                   <div id="widget_active_<%= text_field.id %>">
                                     <% if %w[9.004 9.005].include? text_field.dpt %>
                                       <%= text_field.status.to_i %>
-                                    <% elsif %w[9.001 9.029].include? text_field.dpt %>
+                                    <% elsif %w[9.001].include? text_field.dpt %>
+                                      <%= '%.1f' % text_field.status.to_i %>
+                                    <% elsif %w[9.029].include? text_field.dpt %>
                                       <%= text_field.status %>
                                     <% end %>
                                   </div>
@@ -531,10 +533,10 @@
                                     data-min-value="0"
                                     data-max-value="5"
                                     data-major-ticks="[0,10,100,1000,10000,100000]"
-                                    data-minor-ticks="5"
+                                    data-minor-ticks="0"
                                     data-stroke-ticks="true"
                                     data-ticks-width="20"
-                                    data-ticks-width-minor="10"
+                                    data-ticks-width-minor="0"
                                     data-highlights='[
                                       {"from": 0, "to": 1, "color": "rgba(0, 0, 0, 0.8)"},
                                       {"from": 1, "to": 2, "color": "rgba(0, 0, 0, 0.8)"},
@@ -710,7 +712,7 @@
                               <div class="col-4 text-right">
                                 <h5 class="mt-2">
                                   <div id="widget_active_<%= text_field.id %>">
-                                    <%= text_field.status %>
+                                    <%= '%.1f' % text_field.status %>
                                   </div>
                                   <div class="margin-left">°C</div>
                                 </h5>
@@ -722,18 +724,14 @@
                                       data-type="linear-gauge"
                                       data-width="270"
                                       data-height="100"
-                                      data-min-value="-20"
+                                      data-min-value="0"
                                       data-max-value="40"
-                                      data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                      data-major-ticks="[0,10,20,30,40]"
                                       data-minor-ticks="5"
                                       data-stroke-ticks="true"
                                       data-ticks-width="20"
                                       data-ticks-width-minor="10"
                                       data-highlights='[
-                                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
                                         {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
                                         {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
                                         {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
@@ -778,18 +776,14 @@
                                       data-type="linear-gauge"
                                       data-width="270"
                                       data-height="100"
-                                      data-min-value="-20"
+                                      data-min-value="0"
                                       data-max-value="40"
-                                      data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                      data-major-ticks="[0,10,20,30,40]"
                                       data-minor-ticks="5"
                                       data-stroke-ticks="true"
                                       data-ticks-width="20"
                                       data-ticks-width-minor="10"
                                       data-highlights='[
-                                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
                                         {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
                                         {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
                                         {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
@@ -851,7 +845,7 @@
                                 <div class="col-4 text-right">
                                   <h5 class="mt-2">
                                     <div id="widget_active_<%= text_field.id %>">
-                                      <%= text_field.status %>
+                                      <%= '%.1f' % text_field.status %>
                                     </div>
                                     <% if text_field.dpt == "9.001" %>
                                       <div class="margin-left">°C</div>
@@ -878,18 +872,14 @@
                                       data-type="linear-gauge"
                                       data-width="270"
                                       data-height="100"
-                                      data-min-value="-20"
+                                      data-min-value="0"
                                       data-max-value="40"
-                                      data-major-ticks="[-20,-10,0,10,20,30,40]"
+                                      data-major-ticks="[0,10,20,30,40]"
                                       data-minor-ticks="5"
                                       data-stroke-ticks="true"
                                       data-ticks-width="20"
                                       data-ticks-width-minor="10"
                                       data-highlights='[
-                                        {"from": -20, "to": -15, "color": "rgba(160, 6, 255, 1)"},
-                                        {"from": -15, "to": -10, "color": "rgba(1, 9, 255, 1)"},
-                                        {"from": -10, "to": -5, "color": "rgba(0, 172, 255, 1)"},
-                                        {"from": -5, "to": 0, "color": "rgba(0, 217, 255, 1)"},
                                         {"from": 0, "to": 5, "color": "rgba(0, 255, 255, 1)"},
                                         {"from": 5, "to": 10, "color": "rgba(127, 255, 2, 1)"},
                                         {"from": 10, "to": 15, "color": "rgba(255, 255, 3, 1)"},
@@ -936,7 +926,7 @@
                       <% widgets[:sliders].select{|slider| slider.desc.match(/.*#{heating_actor}/) and slider.location == key}.each do |slider| %>
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
-                            <h5 class="mt-2"><%= slider.desc %></h5>
+                            <h5 class="mt-2"><%= slider.desc[/(.*)( - Heizungsaktor.*)/, 1] %></h5>
                             <div class="">
                               <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
                                            html: { id: "edit_widget_#{slider.id}",

@@ -30,13 +30,18 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
       when "slider"
         $('#widget_active_' + data.id).val(data.status)
       when "textField"
-        # Change textField, if it is not a status of a window or the rain alarm
+        # Update textField, if it is not a status of a window or the rain alarm
         if (data.dpt != '1.002' && data.dpt != '1.009')
-          # Show brightness and wind speed as integers
-          if (data.dpt == '9.004' || data.dpt == '9.005')
-            $('#widget_active_' + data.id).text(Math.round(data.status))
-          else
-            $('#widget_active_' + data.id).text(data.status)
+          switch data.dpt
+            when '9.001'
+              # Show the temperature as a float with only one digit after comma
+              $('#widget_active_' + data.id).text(parseFloat(data.status).toFixed(1))
+            when '9.004', '9.005'
+              # Show brightness and wind speed as integers
+              $('#widget_active_' + data.id).text(Math.round(data.status))
+            else
+              $('#widget_active_' + data.id).text(data.status)
+        # Update the graphical representation
         switch data.dpt
           when '1.002'
             # Update rain alarm status
@@ -67,7 +72,7 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
                 $('#canvas-temperature-radiators' + data.id).attr('data-value', data.status)
           when '9.004'
             # Update brightness
-            $('#canvas-brightness').attr('data-value', Math.log10.parseFloat(data.status))
+            $('#canvas-brightness').attr('data-value', Math.log10(parseFloat(data.status)))
           when '9.005'
             # Update wind speed
             $('#canvas-wind-speed').attr('data-value', data.status)

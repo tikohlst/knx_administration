@@ -373,7 +373,9 @@
                                   <div id="widget_active_<%= text_field.id %>">
                                     <% if %w[9.004 9.005].include? text_field.dpt %>
                                       <%= text_field.status.to_i %>
-                                    <% elsif %w[9.001 9.029].include? text_field.dpt %>
+                                    <% elsif %w[9.001].include? text_field.dpt %>
+                                      <%= '%.1f' % text_field.status.to_i %>
+                                    <% elsif %w[9.029].include? text_field.dpt %>
                                       <%= text_field.status %>
                                     <% end %>
                                   </div>
@@ -484,7 +486,7 @@
                               <div class="col-4 text-right">
                                 <h5 class="mt-2">
                                   <div id="widget_active_<%= text_field.id %>">
-                                    <%= text_field.status %>
+                                    <%= '%.1f' % text_field.status %>
                                   </div>
                                   <div class="margin-left">°C</div>
                                 </h5>
@@ -517,7 +519,7 @@
                                 <div class="col-4 text-right">
                                   <h5 class="mt-2">
                                     <div id="widget_active_<%= text_field.id %>">
-                                      <%= text_field.status %>
+                                      <%= '%.1f' % text_field.status %>
                                     </div>
                                     <% if text_field.dpt == "9.001" %>
                                       <div class="margin-left">°C</div>
@@ -548,7 +550,7 @@
                       <% widgets[:sliders].select{|slider| slider.desc.match(/.*#{heating_actor}/) and slider.org_unit == org_unit.key}.each do |slider| %>
                         <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                           <div class="card-body">
-                            <h5 class="mt-2"><%= slider.desc %></h5>
+                            <h5 class="mt-2"><%= slider.desc[/(.*)( - Heizungsaktor.*)/, 1] %></h5>
                             <div class="">
                               <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
                                            html: { id: "edit_widget_#{slider.id}",
