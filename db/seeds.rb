@@ -25,8 +25,8 @@ users_list.each do |username, password, password_confirmation, role, language|
 end
 
 # OrgUnit name:string
-@prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
-@prj.org_units.each do |key, value|
+prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
+prj.org_units.each do |key, value|
   OrgUnit.create!( name: value, key: key )
 end
 

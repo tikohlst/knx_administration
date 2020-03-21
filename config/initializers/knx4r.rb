@@ -5,25 +5,25 @@ if ENV['KNX_CONNECTION'] == "1"
   require 'rexml/document'
   include KNX
 
-  @gw = KNXnetIP::Gateway.new( clientHostIP: ENV['HOST_IP'] )
-  emi_server = CEMI_Server.new
+  gw = KNXnetIP::Gateway.new( clientHostIP: ENV['HOST_IP'] )
+  $emi_server = CEMI_Server.new
   logger = KNX_Logger.new(desc: 'L_Data logger')
-  emi_server.attach_logger( logger )
-  @gw.attach( emi_server )
-  @gw.connect( @gw.find || {} )
-  @prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
-  @prj.emi_server = emi_server
-  $locations = @prj.locations
+  $emi_server.attach_logger( logger )
+  gw.attach( $emi_server )
+  gw.connect( gw.find || {} )
+  prj = KNXproject.load(Rails.root.join('config', 'knx_config.xml').to_s)
+  prj.emi_server = $emi_server
+  $locations = prj.locations
 
   ###################################################################################
   # Create a widget for each device                                                 #
   ###################################################################################
 
   # Update devices and add devices to emi_server
-  @prj.attach_devices
+  prj.attach_devices
 
-  @prj.devices.sort do |a,b|
-    rc = @prj.org_units[a.ouref] <=> @prj.org_units[b.ouref]
+  prj.devices.sort do |a,b|
+    rc = prj.org_units[a.ouref] <=> prj.org_units[b.ouref]
     rc==0 ? a.desc <=> b.desc : rc
   end.each do |dev|
     case dev

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/events', to: 'events#create'
   mount ActionCable.server => "/cable"
   get '/', to: redirect('/en/login')
   get '/de', to: redirect('/de/login')
