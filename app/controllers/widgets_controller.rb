@@ -94,7 +94,7 @@ class WidgetsController < ApplicationController
     when Widget::ProgressBar
       @widget.send_param(params[:progress_bar])
     when Widget::Slider
-      @widget.send_param(params[:status])
+      @widget.send_param(params[:widget][:status])
     else
       puts "Error: '#{@widget}' is no valid widget!"
     end

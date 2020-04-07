@@ -164,7 +164,11 @@ class Widget
       # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
-      @widget.status = status
+      if status.class == KNX::Status_of_Slider
+        @widget.status = status.position.to_i
+      else
+        @widget.status = status
+      end
       # Send the update to all running sessions
       unless ActionCable.server.logger.nil?
         ActionCable.server.broadcast 'widgets', {type: "slider", id: self.id, status: @widget.status}
@@ -173,7 +177,18 @@ class Widget
 
     # Gets called when a telegram should be send to the knx-bus
     def send_param(value)
-      self.device.send(:set_to, value)
+      begin
+        self.device.set_to(value)
+      rescue Encoding::CompatibilityError => e
+        puts "Error: #{e}"
+      end
+      # Update widget status
+      @widget = self.class.find_by_id(self.id)
+      @widget.status = value.to_i
+      # Send the update to all running sessions
+      unless ActionCable.server.logger.nil?
+        ActionCable.server.broadcast 'widgets', {type: "slider", id: self.id, status: @widget.status}
+      end
     end
   end
 
