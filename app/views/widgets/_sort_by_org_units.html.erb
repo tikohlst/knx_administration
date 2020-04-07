@@ -529,7 +529,7 @@
                               <% end %>
                             </div>
                             <% if text_field.dpt == "1.002" %>
-                              <div class="row justify-content-center">
+                              <div class="row justify-content-center" id="widget_active_<%= text_field.id %>">
                                 <% if text_field.status == "on" or text_field.status == 1 %>
                                   <div class="red-note d-none"><%= t 'views.widget.radiator.low' %></div>
                                   <div class="green-note"><%= t 'views.widget.radiator.full' %></div>
