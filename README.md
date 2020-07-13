@@ -12,9 +12,9 @@ Heinz Werntges, which hasn't been published yet.
 
 ## System dependencies
 
-* Ruby: ~> 2.5.0
-* Rails: ~> 5.2.0
-* Redis: 4.0.9 (<https://redis.io/topics/quickstart>)
+* Ruby: 2.7.1
+* Rails: ~> 6.0
+* Redis: 4.2.1 (<https://redis.io/topics/quickstart>)
 
 ## Configuration
 
@@ -28,8 +28,8 @@ Set actors, sensors and devices in:
 
 ```
 \curl -sSL https://get.rvm.io | bash -s stable --ruby
-rvm install ruby-2.5.1
-rvm --default use ruby-2.5.1
+rvm install ruby-2.7.1
+rvm --default use ruby-2.7.1
 gem update --system
 ```
 
@@ -97,6 +97,7 @@ Run redis and the puma webserver:
 
 ```
 redis-server &
+export RAILS_SERVE_STATIC_FILES=1
 KNX_CONNECTION=1 bundle exec rails s
 ```
 

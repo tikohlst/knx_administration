@@ -13,7 +13,7 @@ class User < ApplicationRecord
          authentication_keys: [:username]
 
   # Validations
-  validates :username, uniqueness: true, presence: true
+  validates :username, uniqueness: { case_sensitive: true }, presence: true
 
   validates_presence_of :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?
@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def at_least_one_admin?
-    if not (User.with_role :admin).exists?
+    unless (User.with_role :admin).exists?
       errors.add(:base, I18n.t('errors.messages.admin'))
     end
   end

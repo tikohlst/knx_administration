@@ -9,7 +9,7 @@ class UserTest < ActiveSupport::TestCase
         language:               "de",
         role_ids:               "1",
         org_unit_ids:           ["1"]
-    )
+    ).add_role(:admin)
     assert user.valid?
   end
 
