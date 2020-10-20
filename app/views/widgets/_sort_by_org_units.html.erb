@@ -502,6 +502,29 @@
                         </div>
                       <% end %>
                     <% end %>
+                    <% widgets[:sliders].select{|slider| slider.desc.match(/.*Heizungsaktoren.*/) and slider.org_unit == org_unit.key}.each do |slider| %>
+                      <h5 class="w-100"><%= slider.desc %></h5>
+                      <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="card-body">
+                          <h5 class="mt-2"><%= slider.desc[/(.*)( - Heizungsaktor.*)/, 1] %></h5>
+                          <div class="">
+                            <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
+                                         html: { id: "edit_widget_#{slider.id}",
+                                                 class: "edit_widget" }, method: :patch do |f| %>
+                              <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
+                                                 name: "authenticity_token" %>
+                              <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
+                              <div class="slider-wrapper-horizontal">
+                                <%= f.range_field :status, id: "widget_active_#{slider.id}",
+                                                  class: "custom-range", type: "range",
+                                                  disabled: (current_user.has_role? :observer),
+                                                  min: 0, max: 100, step: 1, value: slider.status %>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
                     <% widgets[:heating_actors].each do |heating_actor| %>
                       <h5 class="w-100"><%= heating_actor %></h5>
                       <% widgets[:text_fields].select{|text_field| text_field.desc.match(/.*#{heating_actor}/) and text_field.org_unit == org_unit.key}.each do |text_field| %>
@@ -544,28 +567,6 @@
                               <canvas id="canvas-temperature-radiators<%= text_field.id %>"
                                       class="canvas-temperature-radiators"></canvas>
                             <% end %>
-                          </div>
-                        </div>
-                      <% end %>
-                      <% widgets[:sliders].select{|slider| slider.desc.match(/.*#{heating_actor}/) and slider.org_unit == org_unit.key}.each do |slider| %>
-                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                          <div class="card-body">
-                            <h5 class="mt-2"><%= slider.desc[/(.*)( - Heizungsaktor.*)/, 1] %></h5>
-                            <div class="">
-                              <%= form_for :widget, url: "/#{I18n.locale}/widgets/#{slider.id}", remote: true,
-                                           html: { id: "edit_widget_#{slider.id}",
-                                                   class: "edit_widget" }, method: :patch do |f| %>
-                                <%= f.hidden_field :authenticity_token, value: form_authenticity_token,
-                                                   name: "authenticity_token" %>
-                                <%= f.hidden_field :user, value: current_user.username, name: "user[username]" %>
-                                <div class="slider-wrapper-horizontal">
-                                  <%= f.range_field :status, id: "widget_active_#{slider.id}",
-                                                    class: "custom-range", type: "range",
-                                                    disabled: (current_user.has_role? :observer),
-                                                    min: 0, max: 100, step: 1, value: slider.status %>
-                                </div>
-                              <% end %>
-                            </div>
                           </div>
                         </div>
                       <% end %>

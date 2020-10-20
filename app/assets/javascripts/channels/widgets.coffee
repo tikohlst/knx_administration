@@ -61,15 +61,16 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
               $('#widget_active_' + data.id + ' > .red-note').removeClass('d-none')
           when '9.001'
             # Update temperature
-            switch data.desc
-              when 'Temperatur'
-                $('#canvas-temperature').attr('data-value', data.status)
-              when 'Temperatur rechts'
-                $('#canvas-temperature-right').attr('data-value', data.status)
-              when 'Temperatur links'
-                $('#canvas-temperature-left').attr('data-value', data.status)
-              when 'Ist-Temperatur - Heizungsaktor 1'
-                $('#canvas-temperature-radiators' + data.id).attr('data-value', data.status)
+            if /Ist-Temperatur - Heizungsaktor/.test data.desc
+              $('#canvas-temperature-radiators' + data.id).attr('data-value', data.status)
+            else
+              switch data.desc
+                when 'Temperatur'
+                  $('#canvas-temperature').attr('data-value', data.status)
+                when 'Temperatur rechts'
+                  $('#canvas-temperature-right').attr('data-value', data.status)
+                when 'Temperatur links'
+                  $('#canvas-temperature-left').attr('data-value', data.status)
           when '9.004'
             # Update brightness
             $('#canvas-brightness').attr('data-value', Math.log10(parseFloat(data.status)))
