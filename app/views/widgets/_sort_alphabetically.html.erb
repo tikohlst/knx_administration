@@ -226,7 +226,7 @@
                     </div>
                     <div class="col-6">
                       <div class="float-right" id="widget_active_<%= text_field.id %>">
-                        <% if text_field.status == 0 %>
+                        <% if text_field.status == "on" %>
                           <div class="red-note"><%= t 'views.widget.window.open' %></div>
                           <div class="green-note d-none"><%= t 'views.widget.window.closed' %></div>
                         <% else %>
