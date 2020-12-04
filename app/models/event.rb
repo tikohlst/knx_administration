@@ -12,7 +12,7 @@ class Event < ApplicationRecord
   require 'date'
   require 'json'
   require 'rexml/document'
-  include KNX
+  include KNX4R
   include ::EventConcern
 
   def self.write_schedules

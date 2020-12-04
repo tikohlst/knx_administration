@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'rexml/document'
-include KNX
+include KNX4R
 
 class WidgetTest < ActiveSupport::TestCase
   setup do

@@ -1,5 +1,5 @@
 require 'rexml/document'
-include KNX
+include KNX4R
 
 ###################################################################################
 # Create Roles, Users, OrgUnits and Accesses in the database                      #

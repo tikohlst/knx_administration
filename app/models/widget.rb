@@ -1,5 +1,5 @@
 class Widget
-  include KNX
+  include KNX4R
 
   attr_reader :id, :desc, :org_unit, :location, :use, :dpt
 
@@ -164,7 +164,7 @@ class Widget
       # Find widget for actual device
       @widget = self.class.find_by_id(self.id)
       # Update widget status
-      if status.class == KNX::Status_of_Slider
+      if status.class == KNX4R::Status_of_Slider
         @widget.status = status.position.to_i
       else
         @widget.status = status
