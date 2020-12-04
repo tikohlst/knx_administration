@@ -40,7 +40,8 @@ cd /path/to/knx_administration
 export RAILS_ENV=production HOST_IP=own_ip_address KNX_CONNECTION=0
 gem install --local knx4r-0.8.11.gem
 gem install bundler
-bundle --without development
+bundle config set without 'development'
+bundle
 ```
 
 ## Setup your database in the project
