@@ -23,7 +23,8 @@
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+/config/credentials/production.key
+/config/credentials.yml.enc
 
 .idea/workspace.xml
 .idea/inspectionProfiles/Project_Default.xml
