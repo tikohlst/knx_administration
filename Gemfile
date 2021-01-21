@@ -15,7 +15,7 @@ gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'bootstrap-toggle-rails'
 gem 'glyphicons'
 gem 'flag-icons-rails'
-gem 'knx4r'
+gem 'knx4r', '0.8.12'
 # Simplifies the handling with nokogiri
 gem 'pkg-config', '~> 1.1', '>= 1.1.7'
 # Use mysql as the database for Active Record
@@ -38,7 +38,7 @@ gem 'jbuilder', '~> 2.10'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.2.1'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '3.1.12'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
