@@ -59,7 +59,7 @@ the credentials:
 ```
 rm config/credentials.yml.enc
 bin/rails secret
-EDITOR=nano KNX_ADMINISTRATION_DATABASE_PASSWORD=1 bundle exec rails credentials:edit
+EDITOR=vim bundle exec rails credentials:edit --environment production
 ```
 
 ```
@@ -72,6 +72,9 @@ test:
   mysql:
     password: own_test_database_password
 ```
+
+Or set an environment variable:
+http://guides.rubyonrails.org/configuring.html#configuring-a-database
 
 ## Database creation
 
