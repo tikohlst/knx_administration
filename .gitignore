@@ -24,7 +24,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/credentials/production.key
-/config/credentials.yml.enc
+/config/credentials/production.yml.enc
 
 .idea/workspace.xml
 .idea/inspectionProfiles/Project_Default.xml
