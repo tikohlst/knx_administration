@@ -39,6 +39,9 @@ App.widgets = App.cable.subscriptions.create "WidgetsChannel",
             when '9.004', '9.005'
               # Show brightness and wind speed as integers
               $('#widget_active_' + data.id).text(Math.round(data.status))
+            when '9.007'
+              # Show relative humidity
+              $('#widget_active_' + data.id).text(parseFloat(data.status).toFixed(1))
             else
               $('#widget_active_' + data.id).text(data.status)
         # Update the graphical representation

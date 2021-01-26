@@ -201,9 +201,23 @@
               <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
                 <div class="card-body">
                   <h5 class="mt-2"><%= text_field.desc %></h5>
-                  <div class="">
+                  <div>
                     <div id="widget_active_<%= text_field.id %>">
-                      <%= text_field.status %>
+                      <% if text_field.dpt == '9.008' %>
+                        <%= text_field.status %>
+                      <% end %>
+                      <% if text_field.dpt == '9.007' %>
+                        <%= '%.1f' % text_field.status %>
+                      <% end %>
+                    </div>
+                    <div class="margin-left">
+                      <% case text_field.dpt %>
+                      <% when '9.007' %>
+                        %
+                      <% when '9.008' %>
+                        ppm
+                      <% else %>
+                      <% end %>
                     </div>
                   </div>
                 </div>

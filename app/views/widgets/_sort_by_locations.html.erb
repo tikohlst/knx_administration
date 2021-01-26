@@ -265,14 +265,52 @@
         </div>
       </div>
       <div class="tab-pane fade" id="nav-mc" role="tabpanel" aria-labelledby="nav-mc-tab">
-        <div class="d-flex align-content-start flex-wrap">
-          <% widgets[:text_fields].each do |text_field| %>
-            <% if text_field.use == "Monitoring_Control" and text_field.dpt != '1.009' and text_field.dpt != '1.017' and text_field.dpt != '1.002' and text_field.dpt != '9.001'%>
-              <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                <div class="card-body">
-                  <h5 class="mt-2"><%= text_field.desc %></h5>
-                  <div id="widget_active_<%= text_field.id %>">
-                    <%= text_field.status %>
+        <div id="accordion-mc" class="accordion">
+          <% $locations.each do |key, location| %>
+            <% if widgets[:text_fields].any?{|text_field| text_field.location == key and text_field.use == 'Monitoring_Control' and (text_field.dpt == '9.008' or text_field.dpt == '9.007') } %>
+              <div>
+                <div class="mb-2" id="heading<%= key %>_mc">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link pl-0" data-toggle="collapse" data-target="#collapse<%= key %>_mc" aria-expanded="true" aria-controls="collapse<%= key %>_mc">
+                          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                          <%= location %>
+                        </button>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <div id="collapse<%= key %>_mc" class="collapse" aria-labelledby="heading<%= key %>_mc" data-parent="#accordion-mc">
+                  <div class="d-flex align-content-start flex-wrap">
+                    <% widgets[:text_fields].each do |text_field| %>
+                      <% if text_field.use == "Monitoring_Control" and text_field.location == key and (text_field.dpt == '9.008' or text_field.dpt == '9.007' ) %>
+                        <div class="widget card bg-light col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                          <div class="card-body">
+                            <h5 class="mt-2"><%= text_field.desc %></h5>
+                            <div>
+                              <div id="widget_active_<%= text_field.id %>">
+                                <% if text_field.dpt == '9.008' %>
+                                  <%= text_field.status %>
+                                <% end %>
+                                <% if text_field.dpt == '9.007' %>
+                                  <%= '%.1f' % text_field.status %>
+                                <% end %>
+                              </div>
+                              <div class="margin-left">
+                                <% case text_field.dpt %>
+                                <% when '9.007' %>
+                                  %
+                                <% when '9.008' %>
+                                  ppm
+                                <% else %>
+                                <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% end %>
                   </div>
                 </div>
               </div>
