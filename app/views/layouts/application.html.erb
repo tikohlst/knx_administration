@@ -107,6 +107,13 @@
       <% if user_signed_in? %>
         <div class="card mb-3">
           <div class="card-header">
+            <% if current_user.has_role? :admin %>
+              <div class="row">
+                <div class="col-sm">
+                  <a href="/download">Download CSV</a>
+                </div>
+              </div>
+            <% end %>
             <div class="row">
               <div class="col-sm">
                 <%= t 'views.logged_in_as' %>

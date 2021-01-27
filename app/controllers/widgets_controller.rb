@@ -104,6 +104,10 @@ class WidgetsController < ApplicationController
     end
   end
 
+  def download
+    send_file './statuslogger.csv', type: 'csv'
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def widget_params
